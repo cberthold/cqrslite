@@ -258,6 +258,9 @@
     <Content Include="app\scripts\directives\timeline\timeline.html" />
     <Content Include="app\scripts\directives\timeline\timeline.js" />
     <Content Include="app\views\chart.html" />
+    <Content Include="app\views\customers\add.html" />
+    <Content Include="app\views\customers\list.html" />
+    <Content Include="app\views\customers\main.html" />
     <Content Include="app\views\dashboard\home.html" />
     <Content Include="app\views\dashboard\main.html" />
     <Content Include="app\views\form.html" />
