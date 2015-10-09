@@ -13,6 +13,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'customersModule'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
@@ -24,77 +25,20 @@ angular
       $urlRouterProvider.otherwise('/dashboard/home');
 
       $stateProvider
-        .state('customers', {
-            url: '/customers',
-            templateUrl: '/app/views/customers/main.html',
-            resolve: {
-                loadMyDirectives: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(
-                    {
-                        name: 'sbAdminApp',
-                        files: [
-                        '/app/scripts/directives/header/header.js',
-                        '/app/scripts/directives/header/header-notification/header-notification.js',
-                        '/app/scripts/directives/sidebar/sidebar.js',
-                        '/app/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
-                        ]
-                    }),
-                    $ocLazyLoad.load(
-                    {
-                        name: 'toggle-switch',
-                        files: ["bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-                               "bower_components/angular-toggle-switch/angular-toggle-switch.css"
-                        ]
-                    }),
-                    $ocLazyLoad.load(
-                    {
-                        name: 'ngAnimate',
-                        files: ['bower_components/angular-animate/angular-animate.js']
-                    })
-                    $ocLazyLoad.load(
-                    {
-                        name: 'ngCookies',
-                        files: ['bower_components/angular-cookies/angular-cookies.js']
-                    })
-                    $ocLazyLoad.load(
-                    {
-                        name: 'ngResource',
-                        files: ['bower_components/angular-resource/angular-resource.js']
-                    })
-                    $ocLazyLoad.load(
-                    {
-                        name: 'ngSanitize',
-                        files: ['bower_components/angular-sanitize/angular-sanitize.js']
-                    })
-                    $ocLazyLoad.load(
-                    {
-                        name: 'ngTouch',
-                        files: ['bower_components/angular-touch/angular-touch.js']
-                    })
-                }
-            }
-        })
-          .state('customers.add', {
-              templateUrl: '/app/views/customers/add.html',
-              url: '/add'
-          })
-        .state('customers.list', {
-            templateUrl: '/app/views/customers/list.html',
-            url: '/list'
-        })
+        
         .state('dashboard', {
             url: '/dashboard',
-            templateUrl: '/app/views/dashboard/main.html',
+            templateUrl: '/app/dashboard/views/dashboard/main.html',
             resolve: {
                 loadMyDirectives: function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                     {
                         name: 'sbAdminApp',
                         files: [
-                        '/app/scripts/directives/header/header.js',
-                        '/app/scripts/directives/header/header-notification/header-notification.js',
-                        '/app/scripts/directives/sidebar/sidebar.js',
-                        '/app/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                        '/app/dashboard/scripts/directives/header/header.js',
+                        '/app/dashboard/scripts/directives/header/header-notification/header-notification.js',
+                        '/app/dashboard/scripts/directives/sidebar/sidebar.js',
+                        '/app/dashboard/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
                         ]
                     }),
                     $ocLazyLoad.load(
@@ -135,17 +79,17 @@ angular
         .state('dashboard.home', {
             url: '/home',
             controller: 'MainCtrl',
-            templateUrl: '/app/views/dashboard/home.html',
+            templateUrl: '/app/dashboard/views/dashboard/home.html',
             resolve: {
                 loadMyFiles: function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'sbAdminApp',
                         files: [
-                        '/app/scripts/controllers/main.js',
-                        '/app/scripts/directives/timeline/timeline.js',
-                        '/app/scripts/directives/notifications/notifications.js',
-                        '/app/scripts/directives/chat/chat.js',
-                        '/app/scripts/directives/dashboard/stats/stats.js'
+                        '/app/dashboard/scripts/controllers/main.js',
+                        '/app/dashboard/scripts/directives/timeline/timeline.js',
+                        '/app/dashboard/scripts/directives/notifications/notifications.js',
+                        '/app/dashboard/scripts/directives/chat/chat.js',
+                        '/app/dashboard/scripts/directives/dashboard/stats/stats.js'
                         ]
                     })
                 }
@@ -153,19 +97,19 @@ angular
         })
 
         .state('dashboard.form', {
-            templateUrl: '/app/views/form.html',
+            templateUrl: '/app/dashboard/views/form.html',
             url: '/form'
         })
         .state('dashboard.blank', {
-            templateUrl: '/app/views/pages/blank.html',
+            templateUrl: '/app/dashboard/views/pages/blank.html',
             url: '/blank'
         })
         .state('login', {
-            templateUrl: '/app/views/pages/login.html',
+            templateUrl: '/app/dashboard/views/pages/login.html',
             url: '/login'
         })
         .state('dashboard.chart', {
-            templateUrl: '/app/views/chart.html',
+            templateUrl: '/app/dashboard/views/chart.html',
             url: '/chart',
             controller: 'ChartCtrl',
             resolve: {
@@ -179,37 +123,37 @@ angular
                     }),
                     $ocLazyLoad.load({
                         name: 'sbAdminApp',
-                        files: ['/app/scripts/controllers/chartContoller.js']
+                        files: ['/app/dashboard/scripts/controllers/chartContoller.js']
                     })
                 }
             }
         })
         .state('dashboard.table', {
-            templateUrl: '/app/views/table.html',
+            templateUrl: '/app/dashboard/views/table.html',
             url: '/table'
         })
         .state('dashboard.panels-wells', {
-            templateUrl: '/app/views/ui-elements/panels-wells.html',
+            templateUrl: '/app/dashboard/views/ui-elements/panels-wells.html',
             url: '/panels-wells'
         })
         .state('dashboard.buttons', {
-            templateUrl: '/app/views/ui-elements/buttons.html',
+            templateUrl: '/app/dashboard/views/ui-elements/buttons.html',
             url: '/buttons'
         })
         .state('dashboard.notifications', {
-            templateUrl: '/app/views/ui-elements/notifications.html',
+            templateUrl: '/app/dashboard/views/ui-elements/notifications.html',
             url: '/notifications'
         })
         .state('dashboard.typography', {
-            templateUrl: '/app/views/ui-elements/typography.html',
+            templateUrl: '/app/dashboard/views/ui-elements/typography.html',
             url: '/typography'
         })
         .state('dashboard.icons', {
-            templateUrl: '/app/views/ui-elements/icons.html',
+            templateUrl: '/app/dashboard/views/ui-elements/icons.html',
             url: '/icons'
         })
         .state('dashboard.grid', {
-            templateUrl: '/app/views/ui-elements/grid.html',
+            templateUrl: '/app/dashboard/views/ui-elements/grid.html',
             url: '/grid'
         })
   }]);

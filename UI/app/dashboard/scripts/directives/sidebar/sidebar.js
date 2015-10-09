@@ -10,7 +10,7 @@
 angular.module('sbAdminApp')
   .directive('sidebar',['$location',function() {
     return {
-        templateUrl: '/app/scripts/directives/sidebar/sidebar.html',
+        templateUrl: '/app/dashboard/scripts/directives/sidebar/sidebar.html',
       restrict: 'E',
       replace: true,
       scope: {

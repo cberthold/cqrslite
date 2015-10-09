@@ -10,7 +10,7 @@
 angular.module('sbAdminApp')
   .directive('sidebarSearch',function() {
     return {
-        templateUrl: '/app/scripts/directives/sidebar/sidebar-search/sidebar-search.html',
+        templateUrl: '/app/dashboard/scripts/directives/sidebar/sidebar-search/sidebar-search.html',
       restrict: 'E',
       replace: true,
       scope: {
