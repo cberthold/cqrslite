@@ -70,7 +70,16 @@ angular
         })
           .state('customers.add', {
               templateUrl: '/app/customers/views/add.html',
-              url: '/add'
+              url: '/add',
+              controller: 'CustomerAddController',
+              resolve: {
+                  loadMyFile: function ($ocLazyLoad) {
+                      return $ocLazyLoad.load({
+                          name: 'customersModule',
+                          files: ['/app/customers/scripts/controllers/customer-add.js']
+                      })
+                  }
+              }
           })
         .state('customers.list', {
             templateUrl: '/app/customers/views/list.html',

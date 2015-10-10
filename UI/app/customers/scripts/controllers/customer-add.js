@@ -1,12 +1,25 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name customersModule.controller:CustomerAddController
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # CustomerAddController
+ * Controller of the customersModule
  */
 angular.module('customersModule')
-  .controller('FormCtrl', function($scope) {
-    
+  .controller('CustomerAddController', function ($scope) {
+      var vm = this;
+      vm.name = "input name";
+      vm.address1 = "";
+      vm.address2 = "";
+      vm.city = "";
+      vm.state = "";
+      vm.zipcode = "";
+
+
+      $scope.reset = function()
+      {
+          $scope.$setPristine();
+          vm.name = "reset customer";
+      }
 });
