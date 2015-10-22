@@ -52,35 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\SnapshotCreator.cs" />
-    <Compile Include="Contract.cs" />
-    <Compile Include="Domain\IMementoCreator.cs" />
-    <Compile Include="Domain\ValueObject.cs" />
-    <Compile Include="Events\Event.cs" />
-    <Compile Include="Events\IEventHandler.cs" />
-    <Compile Include="Events\IEventHandlerFactory.cs" />
-    <Compile Include="Events\Polling\CommitObserverStarter.cs" />
-    <Compile Include="Events\Polling\ICheckpointRepository.cs" />
-    <Compile Include="Events\Polling\LowLatencyPollingPipelineHook.cs" />
-    <Compile Include="Events\Rebuilding\EventsRebuilder.cs" />
-    <Compile Include="Events\Rebuilding\IEventsRebuilder.cs" />
-    <Compile Include="Events\Versioning\NewtonsoftJsonSerializer.cs" />
-    <Compile Include="Events\Versioning\VersionedEventAttribute.cs" />
-    <Compile Include="Events\Versioning\VersionedEventSerializationBinder.cs" />
-    <Compile Include="IBus.cs" />
-    <Compile Include="Commands\ICommandHandler.cs" />
-    <Compile Include="Commands\ICommandHandlerFactory.cs" />
-    <Compile Include="Commands\ICommandValidatorFactory.cs" />
-    <Compile Include="Commands\IHandleMessages.cs" />
-    <Compile Include="IHandleMessages.cs" />
-    <Compile Include="IMessage.cs" />
-    <Compile Include="InMemoryBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

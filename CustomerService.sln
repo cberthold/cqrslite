@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akka.FirstTest", "Akka.FirstTest\Akka.FirstTest.csproj", "{179C4D51-BAB1-4C6E-88C9-5190AD9948F9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{44DA2E8F-70B2-4E54-B96F-955E955149C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.BoundedContext", "Customer.BoundedContext\Customer.BoundedContext.csproj", "{5B3EDD0F-B30A-47EB-AECC-455976745A57}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{179C4D51-BAB1-4C6E-88C9-5190AD9948F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{179C4D51-BAB1-4C6E-88C9-5190AD9948F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{179C4D51-BAB1-4C6E-88C9-5190AD9948F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{179C4D51-BAB1-4C6E-88C9-5190AD9948F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44DA2E8F-70B2-4E54-B96F-955E955149C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44DA2E8F-70B2-4E54-B96F-955E955149C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44DA2E8F-70B2-4E54-B96F-955E955149C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
