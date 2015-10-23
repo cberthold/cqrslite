@@ -58,7 +58,10 @@
     <Compile Include="Domain\DomainRepositoryBase.cs" />
     <Compile Include="Domain\IAggregate.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
+    <Compile Include="Domain\InMemoryDomainRepository.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Exceptions\AggregateNotFoundException.cs" />
+    <Compile Include="Exceptions\WrongExpectedVersionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
