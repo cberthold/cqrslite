@@ -25,7 +25,7 @@ namespace Infrastructure.Domain
 
         public override IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate)
         {
-            var eventsToSave = aggregate.UncommitedEvents().ToList();
+            var eventsToSave = aggregate.GetUncommitedEvents().ToList();
             var serializedEvents = eventsToSave.Select(Serialize).ToList();
             var expectedVersion = CalculateExpectedVersion(aggregate, eventsToSave);
             if (expectedVersion < 0)

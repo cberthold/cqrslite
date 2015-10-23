@@ -9,7 +9,7 @@ namespace Infrastructure.Domain
 {
     public interface IAggregate
     {
-        IEnumerable<IEvent> UncommitedEvents();
+        IEnumerable<IEvent> GetUncommitedEvents();
         void ClearUncommitedEvents();
         int Version { get; }
         Guid Id { get; }
