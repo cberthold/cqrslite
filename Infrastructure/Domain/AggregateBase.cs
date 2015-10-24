@@ -10,10 +10,14 @@ namespace Infrastructure.Domain
     public abstract class AggregateBase : IAggregate
     {
         public Guid Id { get; protected set; }
-        public int Version { get; protected set; }
+        public int Version {
+            get { return version; }
+            protected set { version = value; }
+        }
 
         private IList<IEvent> uncommittedEvents;
         private IDictionary<Type, Action<IEvent>> eventRoutes;
+        private int version = -1;
 
 
         public AggregateBase()
