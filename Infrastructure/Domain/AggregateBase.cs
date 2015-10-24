@@ -48,9 +48,14 @@ namespace Infrastructure.Domain
             Version++;
         }
 
+        protected void RegisterTransition<T>(Action<T> transition) where T : class
+        {
+            eventRoutes.Add(typeof(T), o => transition(o as T));
+        }
+
         public void ClearUncommitedEvents()
         {
-            throw new NotImplementedException();
+            uncommittedEvents.Clear();
         }
 
         public IEnumerable<IEvent> GetUncommitedEvents()
