@@ -45,12 +45,29 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="TestDomainObjectTests\Domain\TestDomainEntry.cs" />
+    <Compile Include="TestDomainObjectTests\Domain\TestDomainObject.cs" />
+    <Compile Include="TestDomainObjectTests\Domain\TestDomainObjectCommandHandler.cs" />
+    <Compile Include="TestDomainObjectTests\DomainObjectCreatedTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.Tests.Contracts\Infrastructure.Tests.Contracts.fsproj">
+      <Project>{9999547a-b912-4ec5-893e-296494daee55}</Project>
+      <Name>Infrastructure.Tests.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{44da2e8f-70b2-4e54-b96f-955e955149c4}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
