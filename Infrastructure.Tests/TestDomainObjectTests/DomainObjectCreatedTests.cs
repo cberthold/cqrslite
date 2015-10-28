@@ -54,6 +54,15 @@ namespace Infrastructure.Tests
         }
 
         [TestMethod]
+        public void WhenRenamingTheDomainObject_TheDomainObjectShouldBeRenamedWithTheRightName()
+        {
+            Guid id = Guid.NewGuid();
+            Given(new DomainObjectCreated(id, "Some other guy"));
+            When(new RenameDomainObject(id, "Bob S"));
+            Then(new DomainObjectRenamed(id, "Bob S"));
+        }
+
+        [TestMethod]
         public void GivenAUserWithIdXExists_WhenCreatingACustomerWithIdX_IShouldGetNotifiedThatTheUserAlreadyExists()
         {
             Guid id = Guid.NewGuid();
