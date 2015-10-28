@@ -9,17 +9,30 @@
 angular.module('customersModule')
   .controller('CustomerAddController', function ($scope) {
       var vm = this;
-      vm.name = "input name";
-      vm.address1 = "";
-      vm.address2 = "";
-      vm.city = "";
-      vm.state = "";
-      vm.zipcode = "";
 
+      var data = {};
+      vm.data = data;
 
-      $scope.reset = function()
+      data.name = "input name";
+      data.address = {};
+
+      var address = data.address;
+      address.address1 = "";
+      address.address2 = "";
+      address.city = "";
+      address.state = "";
+      address.zipcode = "";
+
+      var original = angular.copy(vm.data);
+
+      vm.reset = function()
       {
-          $scope.$setPristine();
-          vm.name = "reset customer";
+          vm.data = angular.copy(original);
+          vm.form1.$setPristine();
+      }
+
+      vm.create = function()
+      {
+          alert(vm.data);
       }
 });
