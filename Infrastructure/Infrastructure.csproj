@@ -59,9 +59,7 @@
     <Compile Include="Commands\CommandDispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\IHandle.cs" />
-    <Compile Include="Domain\AggregateBase.cs" />
     <Compile Include="Domain\DomainRepositoryBase.cs" />
-    <Compile Include="Domain\IAggregate.cs" />
     <Compile Include="Domain\IdGenerator.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
     <Compile Include="Domain\InMemoryDomainRepository.cs" />

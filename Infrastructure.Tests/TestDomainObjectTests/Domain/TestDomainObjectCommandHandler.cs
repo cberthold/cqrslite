@@ -1,4 +1,5 @@
-﻿using Infrastructure.Commands;
+﻿using CommonDomain;
+using Infrastructure.Commands;
 using Infrastructure.Domain;
 using Infrastructure.Exceptions;
 using Infrastructure.Tests.Contracts.Commands;

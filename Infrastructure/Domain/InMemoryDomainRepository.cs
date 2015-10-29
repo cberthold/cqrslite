@@ -22,10 +22,11 @@ namespace Infrastructure.Domain
                 TypeNameHandling = TypeNameHandling.All
             };
         }
-
+        
         public override IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate)
         {
-            var eventsToSave = aggregate.GetUncommitedEvents().ToList();
+
+            var eventsToSave = aggregate.GetUncommittedEvents().Cast<IEvent>().ToList();
             var serializedEvents = eventsToSave.Select(Serialize).ToList();
             var expectedVersion = CalculateExpectedVersion(aggregate, eventsToSave);
             if (expectedVersion < 0)
@@ -44,7 +45,7 @@ namespace Infrastructure.Domain
                 existingEvents.AddRange(serializedEvents);
             }
             _latestEvents.AddRange(eventsToSave);
-            aggregate.ClearUncommitedEvents();
+            aggregate.ClearUncommittedEvents();
             return eventsToSave;
         }
 

@@ -1,4 +1,6 @@
-﻿using Infrastructure.Domain;
+﻿using CommonDomain;
+using CommonDomain.Core;
+using Infrastructure.Domain;
 using Infrastructure.Tests.Contracts.Events;
 using System;
 using System.Collections.Generic;
@@ -15,8 +17,8 @@ namespace Infrastructure.Tests
 
         public TestDomainObject()
         {
-            RegisterTransition<DomainObjectCreated>(Apply);
-            RegisterTransition<DomainObjectRenamed>(Apply);
+            Register<DomainObjectCreated>(Apply);
+            Register<DomainObjectRenamed>(Apply);
         }
 
         private void Apply(DomainObjectRenamed obj)
