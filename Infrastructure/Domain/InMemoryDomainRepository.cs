@@ -29,14 +29,14 @@ namespace Infrastructure.Domain
             var eventsToSave = aggregate.GetUncommittedEvents().Cast<IEvent>().ToList();
             var serializedEvents = eventsToSave.Select(Serialize).ToList();
             var expectedVersion = CalculateExpectedVersion(aggregate, eventsToSave);
-            if (expectedVersion < 0)
+            if (expectedVersion == 0)
             {
                 _eventStore.Add(aggregate.Id, serializedEvents);
             }
             else
             {
                 var existingEvents = _eventStore[aggregate.Id];
-                var currentversion = existingEvents.Count - 1;
+                var currentversion = existingEvents.Count;
                 if (currentversion != expectedVersion)
                 {
                     throw new WrongExpectedVersionException("Expected version " + expectedVersion +
