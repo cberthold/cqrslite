@@ -39,6 +39,10 @@ namespace Customer.API.Controllers
         // DELETE: api/Customer/5
         public void Delete(Guid id)
         {
+            var command = new DeactivateCustomer()
+            {
+                Id = id
+            };
 
         }
     }

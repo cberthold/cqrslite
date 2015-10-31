@@ -17,6 +17,7 @@ namespace Customer.BoundedContext.Domain
 
         public string Name { get; protected set; }
         public Address BillingAddress { get; protected set; }
+        public bool IsActive { get; protected set; }
 
         #endregion
 
@@ -27,6 +28,8 @@ namespace Customer.BoundedContext.Domain
             Register<CustomerCreated>(Apply);
             Register<CustomerUpdated>(Apply);
             Register<CustomerBillingAddressUpdated>(Apply);
+            Register<CustomerActivated>(Apply);
+            Register<CustomerDeactivated>(Apply);
         }
 
         #endregion
@@ -59,28 +62,49 @@ namespace Customer.BoundedContext.Domain
 
         }
 
-        internal static CustomerAggregate Create(Guid id, string name)
+        private void Apply(CustomerActivated @event)
         {
-            return new CustomerAggregate()
+            IsActive = true;
+        }
+
+        private void Apply(CustomerDeactivated @event)
+        {
+            IsActive = false;
+        }
+
+        #endregion
+
+        #region Aggregate Creation
+
+        private CustomerAggregate(Guid id, string name) : this()
+        {
+            RaiseEvent(new CustomerCreated()
             {
                 Id = id,
                 Name = name
-            };
+            });
         }
-        
+
+        internal static CustomerAggregate Create(Guid id, string name)
+        {
+            return new CustomerAggregate(
+                id,
+                name
+                );
+
+        }
+
+        #endregion
+
+        #region Domain methods
 
         internal void UpdateBillingAddress(Address billingAddress)
         {
-            var addr = billingAddress;
-
-            BillingAddress = new Address()
+            RaiseEvent(new CustomerBillingAddressUpdated()
             {
-                Address1 = addr.Address1,
-                Address2 = addr.Address2,
-                City = addr.City,
-                State = addr.State,
-                Zipcode = addr.Zipcode
-            };
+                Id = this.Id,
+                BillingAddress = billingAddress
+            });
 
         }
 

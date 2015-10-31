@@ -44,11 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ActivateCustomer.cs" />
     <Compile Include="Commands\CreateCustomer.cs" />
+    <Compile Include="Commands\DeactivateCustomer.cs" />
     <Compile Include="Commands\UpdateCustomer.cs" />
     <Compile Include="Domain\CustomerAggregate.cs" />
+    <Compile Include="Events\CustomerActivated.cs" />
     <Compile Include="Events\CustomerBillingAddressUpdated.cs" />
     <Compile Include="Events\CustomerCreated.cs" />
+    <Compile Include="Events\CustomerDeactivated.cs" />
     <Compile Include="Events\CustomerUpdated.cs" />
     <Compile Include="Handlers\CustomerCommandHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
