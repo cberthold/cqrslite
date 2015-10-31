@@ -63,6 +63,7 @@
     <Compile Include="Domain\IdGenerator.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
     <Compile Include="Domain\InMemoryDomainRepository.cs" />
+    <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Exceptions\AggregateAlreadyExistsException.cs" />
     <Compile Include="Exceptions\AggregateNotFoundException.cs" />
