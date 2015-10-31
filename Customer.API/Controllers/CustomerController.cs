@@ -1,4 +1,5 @@
-﻿using Infrastructure.Domain;
+﻿using Customer.BoundedContext.Commands;
+using Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +20,26 @@ namespace Customer.API.Controllers
         }
 
         // GET: api/Customer/5
-        public string Get(int id)
+        public string Get(Guid id)
         {
             return "value";
         }
 
         // POST: api/Customer
-        public void Post([FromBody]string value)
+        public void Post([FromBody]CreateCustomer command)
         {
+
         }
 
         // PUT: api/Customer/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(Guid id, [FromBody]UpdateCustomer command)
         {
         }
 
         // DELETE: api/Customer/5
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+
         }
     }
 }

@@ -44,8 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Customer.cs" />
+    <Compile Include="Commands\CreateCustomer.cs" />
+    <Compile Include="Commands\UpdateCustomer.cs" />
+    <Compile Include="Domain\CustomerAggregate.cs" />
+    <Compile Include="Events\CustomerBillingAddressUpdated.cs" />
+    <Compile Include="Events\CustomerCreated.cs" />
+    <Compile Include="Events\CustomerUpdated.cs" />
+    <Compile Include="Handlers\CustomerCommandHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\Address.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
@@ -56,9 +63,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
