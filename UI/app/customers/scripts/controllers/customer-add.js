@@ -13,15 +13,15 @@ angular.module('customersModule')
       var data = {};
       vm.data = data;
 
-      data.name = "input name";
-      data.address = {};
+      data.Name = "input name";
+      data.BillingAddress = {};
 
-      var address = data.address;
-      address.address1 = "";
-      address.address2 = "";
-      address.city = "";
-      address.state = "";
-      address.zipcode = "";
+      var address = data.BillingAddress;
+      address.Address1 = "";
+      address.Address2 = "";
+      address.City = "";
+      address.State = "";
+      address.Zipcode = "";
 
       var original = angular.copy(vm.data);
 
