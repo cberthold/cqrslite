@@ -14,7 +14,9 @@ namespace Customer.BoundedContext.Handlers
 {
     public class CustomerCommandHandlers :
         IHandle<CreateCustomer>,
-        IHandle<UpdateCustomer>
+        IHandle<UpdateCustomer>,
+        IHandle<DeactivateCustomer>,
+        IHandle<ActivateCustomer>
     {
         private readonly IDomainRepository repository;
 
@@ -35,14 +37,14 @@ namespace Customer.BoundedContext.Handlers
                 // We expect not to find anything
             }
             var newCustomer = CustomerAggregate.Create(command.Id, command.Name);
-            
-            if(command.BillingAddress != null)
+
+            if (command.BillingAddress != null)
             {
                 newCustomer.UpdateBillingAddress(command.BillingAddress);
             }
 
             return newCustomer;
-            
+
         }
 
         public IAggregate Handle(UpdateCustomer command)
@@ -50,7 +52,7 @@ namespace Customer.BoundedContext.Handlers
             var customer = repository.GetById<CustomerAggregate>(command.Id);
             customer.Update(command.Name);
 
-            if(customer.BillingAddress != command.BillingAddress)
+            if (customer.BillingAddress != command.BillingAddress)
             {
                 customer.UpdateBillingAddress(command.BillingAddress);
             }
@@ -58,5 +60,18 @@ namespace Customer.BoundedContext.Handlers
             return customer;
         }
 
+        public IAggregate Handle(DeactivateCustomer command)
+        {
+            var customer = repository.GetById<CustomerAggregate>(command.Id);
+            customer.Deactivate();
+            return customer;
+        }
+
+        public IAggregate Handle(ActivateCustomer command)
+        {
+            var customer = repository.GetById<CustomerAggregate>(command.Id);
+            customer.Activate();
+            return customer;
+        }
     }
 }

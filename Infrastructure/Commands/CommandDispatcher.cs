@@ -1,5 +1,6 @@
 ﻿using CommonDomain;
 using Infrastructure.Domain;
+using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Infrastructure.Commands
     {
         private Dictionary<Type, Func<object, IAggregate>> _routes;
         private IDomainRepository _domainRepository;
-        private readonly IEnumerable<Action<object>> _postExecutionPipe;
+        private readonly IEnumerable<Action<IEvent>> _postExecutionPipe;
         private readonly IEnumerable<Action<ICommand>> _preExecutionPipe;
 
-        public CommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<object>> postExecutionPipe)
+        public CommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<IEvent>> postExecutionPipe)
         {
             _domainRepository = domainRepository;
             _postExecutionPipe = postExecutionPipe;
@@ -50,7 +51,7 @@ namespace Infrastructure.Commands
             }
         }
 
-        private void RunPostExecutionPipe(IEnumerable<object> savedEvents)
+        private void RunPostExecutionPipe(IEnumerable<IEvent> savedEvents)
         {
             foreach (var savedEvent in savedEvents)
             {

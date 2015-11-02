@@ -1,4 +1,6 @@
 ﻿using Customer.BoundedContext.Commands;
+using Customer.BoundedContext.Handlers;
+using Infrastructure.Commands;
 using Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,19 @@ namespace Customer.API.Controllers
     public class CustomerController : ApiController
     {
         private static readonly InMemoryDomainRespository repository = new InMemoryDomainRespository();
+        private CommandDispatcher dispatcher;
+        private CustomerCommandHandlers handler;
+
+        public CustomerController()
+        {
+            dispatcher = new CommandDispatcher(repository, null, null);
+            handler = new CustomerCommandHandlers(repository);
+            dispatcher.RegisterHandler<CreateCustomer>(handler);
+            dispatcher.RegisterHandler<UpdateCustomer>(handler);
+            dispatcher.RegisterHandler<DeactivateCustomer>(handler);
+            dispatcher.RegisterHandler<ActivateCustomer>(handler);
+        }
+
 
         // GET: api/Customer
         public IEnumerable<string> Get()
@@ -28,12 +43,13 @@ namespace Customer.API.Controllers
         // POST: api/Customer
         public void Post([FromBody]CreateCustomer command)
         {
-
+            dispatcher.ExecuteCommand(command);
         }
 
         // PUT: api/Customer/5
         public void Put(Guid id, [FromBody]UpdateCustomer command)
         {
+            dispatcher.ExecuteCommand(command);
         }
 
         // DELETE: api/Customer/5
@@ -43,6 +59,8 @@ namespace Customer.API.Controllers
             {
                 Id = id
             };
+
+            dispatcher.ExecuteCommand(command);
 
         }
     }
