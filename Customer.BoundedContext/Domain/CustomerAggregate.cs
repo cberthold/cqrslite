@@ -83,6 +83,10 @@ namespace Customer.BoundedContext.Domain
                 Id = id,
                 Name = name
             });
+            RaiseEvent(new CustomerActivated()
+            {
+                Id = id
+            });
         }
 
         internal static CustomerAggregate Create(Guid id, string name)
@@ -97,6 +101,23 @@ namespace Customer.BoundedContext.Domain
         #endregion
 
         #region Domain methods
+
+        internal void Activate()
+        {
+            RaiseEvent(new CustomerActivated()
+            {
+                Id = this.Id
+            });
+        }
+
+        internal void Deactivate()
+        {
+            RaiseEvent(new CustomerDeactivated()
+            {
+                Id = this.Id
+            });
+        }
+
 
         internal void UpdateBillingAddress(Address billingAddress)
         {
