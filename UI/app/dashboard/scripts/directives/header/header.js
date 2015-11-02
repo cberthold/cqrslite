@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp')
+angular.module('MainApp')
 	.directive('header',function(){
 		return {
 		    templateUrl: '/app/dashboard/scripts/directives/header/header.html',

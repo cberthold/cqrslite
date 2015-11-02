@@ -7,7 +7,7 @@
  * # adminPosHeader
  */
 
-angular.module('sbAdminApp')
+angular.module('MainApp')
   .directive('sidebarSearch',function() {
     return {
         templateUrl: '/app/dashboard/scripts/directives/sidebar/sidebar-search/sidebar-search.html',

@@ -7,7 +7,7 @@
  * # adminPosHeader
  */
 
-angular.module('sbAdminApp')
+angular.module('MainApp')
   .directive('sidebar',['$location',function() {
     return {
         templateUrl: '/app/dashboard/scripts/directives/sidebar/sidebar.html',

@@ -13,7 +13,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'sbAdminApp'
+    'MainApp'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 

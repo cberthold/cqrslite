@@ -236,6 +236,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.js" />
+    <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.min.js" />
     <Content Include="app\customers\scripts\controllers\customer-add.js" />
     <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.html" />
     <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.js" />

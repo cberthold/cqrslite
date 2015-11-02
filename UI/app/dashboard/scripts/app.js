@@ -1,14 +1,14 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name sbAdminApp
+ * @name MainApp
  * @description
- * # sbAdminApp
+ * # MainApp
  *
  * Main module of the application.
  */
 angular
-  .module('sbAdminApp', [
+  .module('MainApp', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -33,7 +33,7 @@ angular
                 loadMyDirectives: function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                     {
-                        name: 'sbAdminApp',
+                        name: 'MainApp',
                         files: [
                         '/app/dashboard/scripts/directives/header/header.js',
                         '/app/dashboard/scripts/directives/header/header-notification/header-notification.js',
@@ -83,7 +83,7 @@ angular
             resolve: {
                 loadMyFiles: function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'sbAdminApp',
+                        name: 'MainApp',
                         files: [
                         '/app/dashboard/scripts/controllers/main.js',
                         '/app/dashboard/scripts/directives/timeline/timeline.js',
@@ -122,7 +122,7 @@ angular
                         ]
                     }),
                     $ocLazyLoad.load({
-                        name: 'sbAdminApp',
+                        name: 'MainApp',
                         files: ['/app/dashboard/scripts/controllers/chartContoller.js']
                     })
                 }

@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp')
+angular.module('MainApp')
     .directive('stats',function() {
     	return {
     	    templateUrl: '/app/dashboard/scripts/directives/dashboard/stats/stats.html',

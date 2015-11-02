@@ -6,7 +6,7 @@
  * @description
  * # adminPosHeader
  */
-angular.module('sbAdminApp')
+angular.module('MainApp')
 	.directive('headerNotification',function(){
 		return {
 		    templateUrl: '/app/dashboard/scripts/directives/header/header-notification/header-notification.html',
