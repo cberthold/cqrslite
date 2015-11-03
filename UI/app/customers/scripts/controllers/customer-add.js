@@ -7,12 +7,12 @@
  * Controller of the customersModule
  */
 angular.module('customersModule')
-  .controller('CustomerAddController', ['$scope', 'CustomerResource', function ($scope, CustomerResource) {
+  .controller('CustomerAddController', ['$scope', 'CustomerResource', 'rfc4122', function ($scope, CustomerResource, rfc4122) {
       var vm = this;
 
       var data = {};
       vm.data = data;
-
+      
       data.Name = "input name";
       data.BillingAddress = {};
 
@@ -25,15 +25,22 @@ angular.module('customersModule')
 
       var original = angular.copy(vm.data);
 
-      vm.reset = function()
-      {
+      vm.reset = function () {
           vm.data = angular.copy(original);
           vm.form1.$setPristine();
       }
 
-      vm.create = function()
-      {
-          alert(vm.data);
-          var query = CustomerResource.query();
+      vm.create = function () {
+
+          vm.data.Id = rfc4122.v4();
+
+          var query = CustomerResource.save(vm.data).$promise
+            .then(function (result) {
+                console.log(result);
+            },
+            // on failure...
+            function(errorMsg) {
+                console.log('Something went wrong: ' + errorMsg);
+            });
       }
-}]);
+  }]);

@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="name">Customer Name</label>
                                     <div class="col-md-8">
-                                        <input id="name" name="name" type="text" placeholder="Required" class="form-control input-md" required="" ng-model="vm.data.name">
+                                        <input id="name" name="name" type="text" placeholder="Required" class="form-control input-md" required="" ng-model="vm.data.Name">
                                         <span class="help-block">Enter the customer name</span>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                     <div class="col-md-8">
                                         <div class="input-group">
                                             <span class="input-group-addon">Address 1</span>
-                                            <input id="addressLine1" name="addressLine1" class="form-control" placeholder="Address Line 1" type="text" ng-model="vm.data.address.address1">
+                                            <input id="addressLine1" name="addressLine1" class="form-control" placeholder="Address Line 1" type="text" ng-model="vm.data.BillingAddress.Address1">
                                         </div>
 
                                     </div>
@@ -56,7 +56,7 @@
                                     <div class="col-md-8">
                                         <div class="input-group">
                                             <span class="input-group-addon">Address 2</span>
-                                            <input id="addressLine2" name="addressLine2" class="form-control" placeholder="Address Line 2" type="text" ng-model="vm.data.address.address2">
+                                            <input id="addressLine2" name="addressLine2" class="form-control" placeholder="Address Line 2" type="text" ng-model="vm.data.BillingAddress.Address2">
                                         </div>
 
                                     </div>
@@ -68,7 +68,7 @@
                                     <div class="col-md-8">
                                         <div class="input-group">
                                             <span class="input-group-addon">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <input id="addressCity" name="addressCity" class="form-control" placeholder="City" type="text" ng-model="vm.data.address.city">
+                                            <input id="addressCity" name="addressCity" class="form-control" placeholder="City" type="text" ng-model="vm.data.BillingAddress.City">
                                         </div>
 
                                     </div>
@@ -80,7 +80,7 @@
                                     <div class="col-md-8">
                                         <div class="input-group">
                                             <span class="input-group-addon">State</span>
-                                            <select id="addressState" name="addressState" class="form-control" ng-model="vm.data.address.state">
+                                            <select id="addressState" name="addressState" class="form-control" ng-model="vm.data.BillingAddress.State">
                                                 <option value="">-</option>
                                                 <option value="AL">Alabama</option>
                                                 <option value="AK">Alaska</option>
@@ -107,7 +107,7 @@
                                     <div class="col-md-5">
                                         <div class="input-group">
                                             <span class="input-group-addon">Zip Code</span>
-                                            <input id="addressZipcode" name="addressZipcode" class="form-control" placeholder="Zip Code" type="text" ng-model="vm.data.address.zipcode">
+                                            <input id="addressZipcode" name="addressZipcode" class="form-control" placeholder="Zip Code" type="text" ng-model="vm.data.BillingAddress.Zipcode">
                                         </div>
 
                                     </div>
