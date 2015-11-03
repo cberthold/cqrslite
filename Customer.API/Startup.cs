@@ -12,7 +12,9 @@ namespace Customer.API
     {
         public void Configuration(IAppBuilder app)
         {
+            ConfigureCors(app);
             ConfigureAuth(app);
+            
         }
     }
 }

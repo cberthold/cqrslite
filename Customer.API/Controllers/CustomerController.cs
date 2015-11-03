@@ -44,12 +44,14 @@ namespace Customer.API.Controllers
         public void Post([FromBody]CreateCustomer command)
         {
             dispatcher.ExecuteCommand(command);
+            Ok();
         }
 
         // PUT: api/Customer/5
         public void Put(Guid id, [FromBody]UpdateCustomer command)
         {
             dispatcher.ExecuteCommand(command);
+            Ok();
         }
 
         // DELETE: api/Customer/5
@@ -61,6 +63,8 @@ namespace Customer.API.Controllers
             };
 
             dispatcher.ExecuteCommand(command);
+
+            Ok();
 
         }
     }
