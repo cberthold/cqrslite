@@ -19,7 +19,7 @@ namespace Infrastructure.Commands
         public CommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<IEvent>> postExecutionPipe)
         {
             _domainRepository = domainRepository;
-            _postExecutionPipe = postExecutionPipe;
+            _postExecutionPipe = postExecutionPipe ?? Enumerable.Empty<Action<IEvent>>();
             _preExecutionPipe = preExecutionPipe ?? Enumerable.Empty<Action<ICommand>>();
             _routes = new Dictionary<Type, Func<object, IAggregate>>();
         }
@@ -62,6 +62,6 @@ namespace Infrastructure.Commands
             }
         }
 
-       
+
     }
 }
