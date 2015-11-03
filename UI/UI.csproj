@@ -236,6 +236,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\common\scripts\app.js" />
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.js" />
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.min.js" />
     <Content Include="app\customers\scripts\controllers\customer-add.js" />
@@ -247,6 +248,8 @@
     <Content Include="app\customers\scripts\directives\sidebar\sidebar-search\sidebar-search.js" />
     <Content Include="app\customers\scripts\directives\sidebar\sidebar.html" />
     <Content Include="app\customers\scripts\directives\sidebar\sidebar.js" />
+    <Content Include="app\customers\scripts\factory\customerApiConfigProvider.js" />
+    <Content Include="app\customers\scripts\factory\customerResource.js" />
     <Content Include="app\favicon.ico" />
     <Content Include="app\js\sb-admin-2.js" />
     <Content Include="app\dashboard\scripts\app.js" />
@@ -378,7 +381,6 @@
     <Content Include="Views\Home\404.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\dashboard\scripts\customers\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

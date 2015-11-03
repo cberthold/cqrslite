@@ -7,14 +7,18 @@
  *
  * Main module of the application.
  */
+angular.module('customersModuleProviders', []);
+
 angular
   .module('customersModule', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'MainApp'
+    'uuid',
+    'customersModuleProviders'
   ])
+    
   .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
       $stateProvider
@@ -44,17 +48,17 @@ angular
                     {
                         name: 'ngAnimate',
                         files: ['bower_components/angular-animate/angular-animate.js']
-                    })
+                    }),
                     $ocLazyLoad.load(
                     {
                         name: 'ngCookies',
                         files: ['bower_components/angular-cookies/angular-cookies.js']
-                    })
+                    }),
                     $ocLazyLoad.load(
                     {
                         name: 'ngResource',
                         files: ['bower_components/angular-resource/angular-resource.js']
-                    })
+                    }),
                     $ocLazyLoad.load(
                     {
                         name: 'ngSanitize',
@@ -65,19 +69,33 @@ angular
                         name: 'ngTouch',
                         files: ['bower_components/angular-touch/angular-touch.js']
                     })
+                    $ocLazyLoad.load({
+                        name: 'CustomerApiConfig',
+                        files: [
+                            'app/customers/scripts/factory/customerApiConfigProvider.js',
+                            'app/customers/scripts/factory/customerResource.js'
+                        ]
+                    })
                 }
             }
         })
           .state('customers.add', {
               templateUrl: '/app/customers/views/add.html',
               url: '/add',
-              controller: 'CustomerAddController',
+              controller: 'CustomerAddController as vm',
               resolve: {
                   loadMyFile: function ($ocLazyLoad) {
                       return $ocLazyLoad.load({
                           name: 'customersModule',
                           files: ['/app/customers/scripts/controllers/customer-add.js']
-                      })
+                      }),
+                    $ocLazyLoad.load({
+                        name: 'CustomerApiConfig',
+                        files: [
+                            'app/customers/scripts/factory/customerApiConfigProvider.js',
+                            'app/customers/scripts/factory/customerResource.js'
+                        ]
+                    })
                   }
               }
           })

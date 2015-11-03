@@ -7,7 +7,7 @@
  * Controller of the customersModule
  */
 angular.module('customersModule')
-  .controller('CustomerAddController', function ($scope) {
+  .controller('CustomerAddController', ['$scope', 'CustomerResource', function ($scope, CustomerResource) {
       var vm = this;
 
       var data = {};
@@ -34,5 +34,6 @@ angular.module('customersModule')
       vm.create = function()
       {
           alert(vm.data);
+          var query = CustomerResource.query();
       }
-});
+}]);

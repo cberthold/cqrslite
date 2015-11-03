@@ -1,27 +1,22 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name MainApp
+ * @name dashboardModule
  * @description
- * # MainApp
+ * # dashboardModule
  *
- * Main module of the application.
+ * dashboard module of the application.
  */
 angular
-  .module('MainApp', [
+  .module('dashboardModule', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
-    'angular-loading-bar',
-    'customersModule'
+    'angular-loading-bar'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
-      $ocLazyLoadProvider.config({
-          debug: false,
-          events: true,
-      });
-
+      
       $urlRouterProvider.otherwise('/dashboard/home');
 
       $stateProvider
@@ -33,7 +28,7 @@ angular
                 loadMyDirectives: function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                     {
-                        name: 'MainApp',
+                        name: 'dashboardModule',
                         files: [
                         '/app/dashboard/scripts/directives/header/header.js',
                         '/app/dashboard/scripts/directives/header/header-notification/header-notification.js',
@@ -83,7 +78,7 @@ angular
             resolve: {
                 loadMyFiles: function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MainApp',
+                        name: 'dashboardModule',
                         files: [
                         '/app/dashboard/scripts/controllers/main.js',
                         '/app/dashboard/scripts/directives/timeline/timeline.js',
@@ -122,7 +117,7 @@ angular
                         ]
                     }),
                     $ocLazyLoad.load({
-                        name: 'MainApp',
+                        name: 'dashboardModule',
                         files: ['/app/dashboard/scripts/controllers/chartContoller.js']
                     })
                 }
