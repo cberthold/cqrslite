@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Commands
 {
-    public class DeactivateCustomer : ICommand
+    public class DeactivateCustomer : ICommand<DeactivateCustomer>
     {
         public Guid Id { get; set; }
     }

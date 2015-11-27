@@ -4,29 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Events;
-using CommonDomain;
+
 
 namespace Infrastructure.Domain
 {
     public abstract class DomainRepositoryBase : IDomainRepository
     {
-        public abstract IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate;
-        public abstract TResult GetById<TResult>(Guid id) where TResult : IAggregate, new();
 
-        protected int CalculateExpectedVersion<T>(IAggregate aggregate, List<T> events)
+        protected int CalculateExpectedVersion<TAggregate>(TAggregate aggregate, List<IEvent<TAggregate>> events)
+            where TAggregate : IAggregate<TAggregate>
         {
             var expectedVersion = aggregate.Version - events.Count;
             return expectedVersion;
         }
 
-        protected TResult BuildAggregate<TResult>(IEnumerable<IEvent> events) where TResult : IAggregate, new()
+        protected TAggregate BuildAggregate<TAggregate>(IEnumerable<IEvent<TAggregate>> events) 
+            where TAggregate : IAggregate<TAggregate>, new()
         {
-            var result = new TResult();
+            var result = new TAggregate();
             foreach (var @event in events)
             {
                 result.ApplyEvent(@event);
             }
             return result;
         }
+
+        public abstract IEnumerable<IEvent<TAggregate>> Save<TAggregate>(TAggregate aggregate) 
+            where TAggregate : IAggregate<TAggregate>;
+
+        public abstract TResult GetById<TResult>(Guid id) 
+            where TResult : IAggregate<TResult>, new();
+        
     }
 }

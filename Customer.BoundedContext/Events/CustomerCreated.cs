@@ -1,4 +1,5 @@
-﻿using Infrastructure.Events;
+﻿using Customer.BoundedContext.Domain;
+using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerCreated : IEvent
+    public class CustomerCreated : EventBase<CustomerCreated, CustomerAggregate>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
 
+        public CustomerCreated(Guid id, string name) : base(id)
+        {
+            Name = name;
+        }
         
     }
 }

@@ -34,12 +34,12 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NEventStore, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NEventStore.5.2.0\lib\net40\NEventStore.dll</HintPath>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -47,6 +47,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,22 +60,35 @@
     <Compile Include="Commands\CommandDispatcher.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\IHandle.cs" />
+    <Compile Include="Domain\AggregateBase.cs" />
+    <Compile Include="Domain\ConventionEventRouter.cs" />
     <Compile Include="Domain\DomainRepositoryBase.cs" />
+    <Compile Include="Domain\ExtensionMethods.cs" />
+    <Compile Include="Domain\IAggregate.cs" />
     <Compile Include="Domain\IdGenerator.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
+    <Compile Include="Domain\IMemento.cs" />
     <Compile Include="Domain\InMemoryDomainRepository.cs" />
+    <Compile Include="Domain\IRouteEvents.cs" />
+    <Compile Include="Domain\SequentialGuid.cs" />
+    <Compile Include="Domain\SqlDomainRepository.cs" />
     <Compile Include="Domain\ValueObject.cs" />
+    <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\IEventSerializer.cs" />
     <Compile Include="Exceptions\AggregateAlreadyExistsException.cs" />
     <Compile Include="Exceptions\AggregateNotFoundException.cs" />
     <Compile Include="Exceptions\WrongExpectedVersionException.cs" />
     <Compile Include="IoC\InfrastructureModule.cs" />
+    <Compile Include="Messages\IMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Bus\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

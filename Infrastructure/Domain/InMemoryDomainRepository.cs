@@ -1,4 +1,5 @@
-﻿using Infrastructure.Events;
+﻿using Infrastructure.Domain;
+using Infrastructure.Events;
 using Infrastructure.Exceptions;
 using Newtonsoft.Json;
 using System;
@@ -23,10 +24,40 @@ namespace Infrastructure.Domain
             };
         }
         
-        public override IEnumerable<IEvent> Save<TAggregate>(TAggregate aggregate)
-        {
 
-            var eventsToSave = aggregate.GetUncommittedEvents().Cast<IEvent>().ToList();
+        private string Serialize(IEvent arg)
+        {
+            var outputString = JsonConvert.SerializeObject(arg, _serializationSettings);
+            return outputString;
+        }
+
+        public IEnumerable<IEvent> GetLatestEvents()
+        {
+            return _latestEvents;
+        }
+
+        public override TResult GetById<TResult>(Guid id)
+        {
+            if (_eventStore.ContainsKey(id))
+            {
+                var events = _eventStore[id];
+                var deserializedEvents = events.Select(e => JsonConvert.DeserializeObject(e, _serializationSettings) as IEvent<TResult>);
+                return BuildAggregate<TResult>(deserializedEvents);
+            }
+            throw new AggregateNotFoundException("Could not found aggregate of type " + typeof(TResult) + " and id " + id);
+        }
+
+        public void AddEvents(Dictionary<Guid, IEnumerable<IEvent>> eventsForAggregates)
+        {
+            foreach (var eventsForAggregate in eventsForAggregates)
+            {
+                _eventStore.Add(eventsForAggregate.Key, eventsForAggregate.Value.Select(Serialize).ToList());
+            }
+        }
+
+        public override IEnumerable<IEvent<TAggregate>> Save<TAggregate>(TAggregate aggregate)
+        {
+            var eventsToSave = aggregate.GetUncommittedEvents().ToList();
             var serializedEvents = eventsToSave.Select(Serialize).ToList();
             var expectedVersion = CalculateExpectedVersion(aggregate, eventsToSave);
             if (expectedVersion == 0)
@@ -48,34 +79,6 @@ namespace Infrastructure.Domain
             aggregate.ClearUncommittedEvents();
             return eventsToSave;
         }
-
-        private string Serialize(IEvent arg)
-        {
-            return JsonConvert.SerializeObject(arg, _serializationSettings);
-        }
-
-        public IEnumerable<IEvent> GetLatestEvents()
-        {
-            return _latestEvents;
-        }
-
-        public override TResult GetById<TResult>(Guid id)
-        {
-            if (_eventStore.ContainsKey(id))
-            {
-                var events = _eventStore[id];
-                var deserializedEvents = events.Select(e => JsonConvert.DeserializeObject(e, _serializationSettings) as IEvent);
-                return BuildAggregate<TResult>(deserializedEvents);
-            }
-            throw new AggregateNotFoundException("Could not found aggregate of type " + typeof(TResult) + " and id " + id);
-        }
-
-        public void AddEvents(Dictionary<Guid, IEnumerable<IEvent>> eventsForAggregates)
-        {
-            foreach (var eventsForAggregate in eventsForAggregates)
-            {
-                _eventStore.Add(eventsForAggregate.Key, eventsForAggregate.Value.Select(Serialize).ToList());
-            }
-        }
+        
     }
 }

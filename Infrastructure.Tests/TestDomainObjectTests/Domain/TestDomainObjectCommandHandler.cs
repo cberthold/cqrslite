@@ -1,5 +1,4 @@
-﻿using CommonDomain;
-using Infrastructure.Commands;
+﻿using Infrastructure.Commands;
 using Infrastructure.Domain;
 using Infrastructure.Exceptions;
 using Infrastructure.Tests.Contracts.Commands;
@@ -15,32 +14,33 @@ namespace Infrastructure.Tests
     IHandle<CreateDomainObject>,
     IHandle<RenameDomainObject>
     {
-        private readonly IDomainRepository _domainRepository;
+        private readonly IDomainRepository domainRepository;
 
         public TestDomainObjectCommandHandler(IDomainRepository domainRepository)
         {
-            _domainRepository = domainRepository;
+            this.domainRepository = domainRepository;
         }
 
-        public IAggregate Handle(CreateDomainObject command)
+        public void Handle(CreateDomainObject command)
         {
             try
             {
-                var customer = _domainRepository.GetById<TestDomainObject>(command.Id);
+                var customer = domainRepository.GetById<TestDomainObject>(command.Id);
                 throw new AggregateAlreadyExistsException<TestDomainObject>(command.Id);
             }
             catch (AggregateNotFoundException)
             {
                 // We expect not to find anything
             }
-            return TestDomainObject.Create(command.Id, command.Name);
+            var aggregate = TestDomainObject.Create(command.Id, command.Name);
+            domainRepository.Save(aggregate);
         }
 
-        public IAggregate Handle(RenameDomainObject command)
+        public void Handle(RenameDomainObject command)
         {
-            var domainObject = _domainRepository.GetById<TestDomainObject>(command.Id);
+            var domainObject = domainRepository.GetById<TestDomainObject>(command.Id);
             domainObject.Rename(command.Name);
-            return domainObject;
+            domainRepository.Save(domainObject);
         }
     }
 }

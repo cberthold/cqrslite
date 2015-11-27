@@ -1,7 +1,9 @@
-﻿using Customer.BoundedContext.Commands;
+﻿
+using Customer.BoundedContext.Commands;
 using Customer.BoundedContext.Handlers;
 using Infrastructure.Commands;
 using Infrastructure.Domain;
+using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,29 @@ namespace Customer.API.Controllers
 {
     public class CustomerController : ApiController
     {
-        private static readonly InMemoryDomainRespository repository = new InMemoryDomainRespository();
+        
+        private IDomainRepository domainRepository;
+
         private CommandDispatcher dispatcher;
         private CustomerCommandHandlers handler;
+        
+
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+              
+            }
+
+            base.Dispose(disposing);
+        }
 
         public CustomerController()
         {
-            dispatcher = new CommandDispatcher(repository, null, null);
-            handler = new CustomerCommandHandlers(repository);
+            //domainRepository = new InMemoryDomainRespository();
+            domainRepository = new SqlDomainRepository("DefaultConnection");
+            handler = new CustomerCommandHandlers(domainRepository);
+            dispatcher = new CommandDispatcher();
             dispatcher.RegisterHandler<CreateCustomer>(handler);
             dispatcher.RegisterHandler<UpdateCustomer>(handler);
             dispatcher.RegisterHandler<DeactivateCustomer>(handler);

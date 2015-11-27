@@ -1,10 +1,14 @@
-﻿using Infrastructure.Events;
+﻿using Customer.BoundedContext.Domain;
+using Infrastructure.Events;
 using System;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerDeactivated : IEvent
+    public class CustomerDeactivated : EventBase<CustomerDeactivated, CustomerAggregate>
     {
-        public Guid Id { get; set; }
+        public CustomerDeactivated(Guid id) : base(id)
+        {
+
+        }
     }
 }

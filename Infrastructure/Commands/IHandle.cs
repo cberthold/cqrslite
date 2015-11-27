@@ -1,4 +1,4 @@
-﻿using CommonDomain;
+﻿
 using Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Infrastructure.Commands
 {
     public interface IHandle<in TCommand>
-        where TCommand : ICommand
+        where TCommand : ICommand<TCommand>
     {
-        IAggregate Handle(TCommand command);
+        void Handle(TCommand command);
     }
 }

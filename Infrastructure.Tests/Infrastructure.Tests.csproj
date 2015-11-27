@@ -35,10 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NEventStore, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NEventStore.5.2.0\lib\net40\NEventStore.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -56,6 +52,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Contracts\Commands\CreateDomainObject.cs" />
+    <Compile Include="Contracts\Commands\RenameDomainObject.cs" />
+    <Compile Include="Contracts\Events\DomainObjectCreated.cs" />
+    <Compile Include="Contracts\Events\DomainObjectRenamed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestDomainObjectTests\Domain\TestDomainEntry.cs" />
@@ -64,17 +64,10 @@
     <Compile Include="TestDomainObjectTests\DomainObjectCreatedTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.Tests.Contracts\Infrastructure.Tests.Contracts.fsproj">
-      <Project>{9999547a-b912-4ec5-893e-296494daee55}</Project>
-      <Name>Infrastructure.Tests.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{44da2e8f-70b2-4e54-b96f-955e955149c4}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

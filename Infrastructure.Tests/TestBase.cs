@@ -94,7 +94,9 @@ namespace Infrastructure.Tests
 
             for (int i = 0; i < latestEvents.Count; i++)
             {
-                Assert.AreEqual(expectedEvents[i], latestEvents[i]);
+                var expectedEvent = expectedEvents[i];
+                var latestEvent = latestEvents[i];
+                Assert.AreEqual(expectedEvent, latestEvent);
             }
         }
 

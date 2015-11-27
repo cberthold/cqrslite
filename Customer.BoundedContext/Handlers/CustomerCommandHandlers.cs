@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommonDomain;
+
 using Infrastructure.Domain;
 using Customer.BoundedContext.Domain;
 using Infrastructure.Exceptions;
@@ -25,7 +25,7 @@ namespace Customer.BoundedContext.Handlers
             this.repository = repository;
         }
 
-        public IAggregate Handle(CreateCustomer command)
+        public void Handle(CreateCustomer command)
         {
             try
             {
@@ -43,11 +43,10 @@ namespace Customer.BoundedContext.Handlers
                 newCustomer.UpdateBillingAddress(command.BillingAddress);
             }
 
-            return newCustomer;
-
+            repository.Save(newCustomer);
         }
 
-        public IAggregate Handle(UpdateCustomer command)
+        public void Handle(UpdateCustomer command)
         {
             var customer = repository.GetById<CustomerAggregate>(command.Id);
             customer.Update(command.Name);
@@ -57,21 +56,22 @@ namespace Customer.BoundedContext.Handlers
                 customer.UpdateBillingAddress(command.BillingAddress);
             }
 
-            return customer;
+            repository.Save(customer);
+
         }
 
-        public IAggregate Handle(DeactivateCustomer command)
+        public void Handle(DeactivateCustomer command)
         {
             var customer = repository.GetById<CustomerAggregate>(command.Id);
             customer.Deactivate();
-            return customer;
+            repository.Save(customer);
         }
 
-        public IAggregate Handle(ActivateCustomer command)
+        public void Handle(ActivateCustomer command)
         {
             var customer = repository.GetById<CustomerAggregate>(command.Id);
             customer.Activate();
-            return customer;
+            repository.Save(customer);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Commands
 {
-    public class CreateCustomer : ICommand
+    public class CreateCustomer : ICommand<CreateCustomer>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

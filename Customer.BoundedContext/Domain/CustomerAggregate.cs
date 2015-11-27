@@ -1,4 +1,4 @@
-﻿using CommonDomain.Core;
+﻿
 using Customer.BoundedContext.Events;
 using Customer.BoundedContext.ValueObjects;
 using Infrastructure.Domain;
@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommonDomain;
+
 
 namespace Customer.BoundedContext.Domain
 {
-    public class CustomerAggregate : AggregateBase
+    public class CustomerAggregate : AggregateBase<CustomerAggregate>
     {
         #region Domain Properties
 
@@ -78,15 +78,8 @@ namespace Customer.BoundedContext.Domain
 
         private CustomerAggregate(Guid id, string name) : this()
         {
-            RaiseEvent(new CustomerCreated()
-            {
-                Id = id,
-                Name = name
-            });
-            RaiseEvent(new CustomerActivated()
-            {
-                Id = id
-            });
+            RaiseEvent(new CustomerCreated(id, name));
+            RaiseEvent(new CustomerActivated(id));
         }
 
         internal static CustomerAggregate Create(Guid id, string name)
@@ -104,29 +97,18 @@ namespace Customer.BoundedContext.Domain
 
         internal void Activate()
         {
-            RaiseEvent(new CustomerActivated()
-            {
-                Id = this.Id
-            });
+            RaiseEvent(new CustomerActivated(Id));
         }
 
         internal void Deactivate()
         {
-            RaiseEvent(new CustomerDeactivated()
-            {
-                Id = this.Id
-            });
+            RaiseEvent(new CustomerDeactivated(Id));
         }
 
 
         internal void UpdateBillingAddress(Address billingAddress)
         {
-            RaiseEvent(new CustomerBillingAddressUpdated()
-            {
-                Id = this.Id,
-                BillingAddress = billingAddress
-            });
-
+            RaiseEvent(new CustomerBillingAddressUpdated(Id, billingAddress));
         }
 
         internal void Update(string name)

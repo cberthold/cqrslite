@@ -1,10 +1,12 @@
-﻿using Infrastructure.Events;
+﻿using Customer.BoundedContext.Domain;
+using Infrastructure.Events;
 using System;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerActivated : IEvent
+    public class CustomerActivated : EventBase<CustomerActivated, CustomerAggregate>
     {
-        public Guid Id { get; set; }
+        public CustomerActivated(Guid id) : base(id)
+        { }
     }
 }

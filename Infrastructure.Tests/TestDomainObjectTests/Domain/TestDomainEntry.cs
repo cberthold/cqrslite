@@ -13,11 +13,9 @@ namespace Infrastructure.Tests
     {
         private readonly CommandDispatcher _commandDispatcher;
 
-        public TestDomainEntry(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe = null, IEnumerable<Action<object>> postExecutionPipe = null)
+        public TestDomainEntry(IDomainRepository domainRepository)
         {
-            preExecutionPipe = preExecutionPipe ?? Enumerable.Empty<Action<ICommand>>();
-            postExecutionPipe = CreatePostExecutionPipe(postExecutionPipe);
-            _commandDispatcher = CreateCommandDispatcher(domainRepository, preExecutionPipe, postExecutionPipe);
+            _commandDispatcher = CreateCommandDispatcher(domainRepository);
         }
 
         public void ExecuteCommand<TCommand>(TCommand command) where TCommand : ICommand
@@ -25,9 +23,9 @@ namespace Infrastructure.Tests
             _commandDispatcher.ExecuteCommand(command);
         }
 
-        private CommandDispatcher CreateCommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<object>> postExecutionPipe)
+        private CommandDispatcher CreateCommandDispatcher(IDomainRepository domainRepository)
         {
-            var commandDispatcher = new CommandDispatcher(domainRepository, preExecutionPipe, postExecutionPipe);
+            var commandDispatcher = new CommandDispatcher();
 
             var domainObjectHandler = new TestDomainObjectCommandHandler(domainRepository);
             commandDispatcher.RegisterHandler<CreateDomainObject>(domainObjectHandler);
@@ -35,16 +33,6 @@ namespace Infrastructure.Tests
             
             return commandDispatcher;
         }
-
-        private IEnumerable<Action<object>> CreatePostExecutionPipe(IEnumerable<Action<object>> postExecutionPipe)
-        {
-            if (postExecutionPipe != null)
-            {
-                foreach (var action in postExecutionPipe)
-                {
-                    yield return action;
-                }
-            }
-        }
+        
     }
 }

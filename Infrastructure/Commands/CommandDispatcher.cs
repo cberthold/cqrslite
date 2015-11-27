@@ -1,5 +1,4 @@
-﻿using CommonDomain;
-using Infrastructure.Domain;
+﻿using Infrastructure.Domain;
 using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
@@ -11,57 +10,32 @@ namespace Infrastructure.Commands
 {
     public class CommandDispatcher
     {
-        private Dictionary<Type, Func<object, IAggregate>> _routes;
-        private IDomainRepository _domainRepository;
-        private readonly IEnumerable<Action<IEvent>> _postExecutionPipe;
-        private readonly IEnumerable<Action<ICommand>> _preExecutionPipe;
+        private Dictionary<Type, Action<ICommand>> _routes;
 
-        public CommandDispatcher(IDomainRepository domainRepository, IEnumerable<Action<ICommand>> preExecutionPipe, IEnumerable<Action<IEvent>> postExecutionPipe)
+        public CommandDispatcher()
         {
-            _domainRepository = domainRepository;
-            _postExecutionPipe = postExecutionPipe ?? Enumerable.Empty<Action<IEvent>>();
-            _preExecutionPipe = preExecutionPipe ?? Enumerable.Empty<Action<ICommand>>();
-            _routes = new Dictionary<Type, Func<object, IAggregate>>();
+           _routes = new Dictionary<Type, Action<ICommand>>();
         }
 
-        public void RegisterHandler<TCommand>(IHandle<TCommand> handler) where TCommand : class, ICommand
+        public void RegisterHandler<TCommand>(IHandle<TCommand> handler) where TCommand : class, ICommand<TCommand>
         {
-            _routes.Add(typeof(TCommand), command => handler.Handle(command as TCommand));
+            var handler1 = handler;
+            Action<ICommand> action = (command) => handler1.Handle(command as TCommand);
+            _routes.Add(typeof(TCommand), action);
         }
 
         public void ExecuteCommand<TCommand>(TCommand command) where TCommand : ICommand
         {
             var commandType = command.GetType();
 
-            RunPreExecutionPipe(command);
             if (!_routes.ContainsKey(commandType))
             {
                 throw new ApplicationException("Missing handler for " + commandType.Name);
             }
-            var aggregate = _routes[commandType](command);
-            var savedEvents = _domainRepository.Save(aggregate);
-            RunPostExecutionPipe(savedEvents);
+            _routes[commandType](command);
         }
 
-        private void RunPreExecutionPipe(ICommand command)
-        {
-            foreach (var action in _preExecutionPipe)
-            {
-                action(command);
-            }
-        }
-
-        private void RunPostExecutionPipe(IEnumerable<IEvent> savedEvents)
-        {
-            foreach (var savedEvent in savedEvents)
-            {
-                foreach (var action in _postExecutionPipe)
-                {
-                    action(savedEvent);
-                }
-            }
-        }
-
+        
 
     }
 }

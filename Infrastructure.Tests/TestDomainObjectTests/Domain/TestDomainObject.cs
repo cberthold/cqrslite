@@ -1,5 +1,4 @@
-﻿using CommonDomain;
-using CommonDomain.Core;
+﻿
 using Infrastructure.Domain;
 using Infrastructure.Tests.Contracts.Events;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Tests
 {
-    public class TestDomainObject : AggregateBase
+    public class TestDomainObject : AggregateBase<TestDomainObject>
     {
 
         public string Name { get; protected set; }
@@ -42,7 +41,7 @@ namespace Infrastructure.Tests
             RaiseEvent(new DomainObjectRenamed(Id, name));
         }
 
-        internal static IAggregate Create(Guid id, string name)
+        internal static TestDomainObject Create(Guid id, string name)
         {
             return new TestDomainObject(id, name);
         }
