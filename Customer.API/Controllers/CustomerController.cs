@@ -1,7 +1,12 @@
 ﻿
+using CQRSlite.Bus;
+using CQRSlite.Commands;
+using CQRSlite.Domain;
 using Customer.BoundedContext.Commands;
+using Customer.BoundedContext.Domain;
 using Customer.BoundedContext.Handlers;
-using Infrastructure.Commands;
+using Customer.BoundedContext.ReadModel;
+using Customer.BoundedContext.ReadModel.DTO;
 using Infrastructure.Domain;
 using Infrastructure.Events;
 using System;
@@ -16,58 +21,43 @@ namespace Customer.API.Controllers
     public class CustomerController : ApiController
     {
         
-        private IDomainRepository domainRepository;
-
-        private CommandDispatcher dispatcher;
-        private CustomerCommandHandlers handler;
         
-
-        protected override void Dispose(bool disposing)
+        private ICommandSender dispatcher;
+        private ICustomerReadModelFacade readModel;
+        private IRepository writeRepository;
+        
+        
+        public CustomerController(ICommandSender dispatcher, ICustomerReadModelFacade readModel, IRepository writeRepository)
         {
-            if(disposing)
-            {
-              
-            }
-
-            base.Dispose(disposing);
-        }
-
-        public CustomerController()
-        {
-            //domainRepository = new InMemoryDomainRespository();
-            domainRepository = new SqlDomainRepository("DefaultConnection");
-            handler = new CustomerCommandHandlers(domainRepository);
-            dispatcher = new CommandDispatcher();
-            dispatcher.RegisterHandler<CreateCustomer>(handler);
-            dispatcher.RegisterHandler<UpdateCustomer>(handler);
-            dispatcher.RegisterHandler<DeactivateCustomer>(handler);
-            dispatcher.RegisterHandler<ActivateCustomer>(handler);
+            this.dispatcher = dispatcher;
+            this.readModel = readModel;
+            this.writeRepository = writeRepository;
         }
 
 
         // GET: api/Customer
-        public IEnumerable<string> Get()
+        public IEnumerable<CustomerListDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            return readModel.GetCustomers();
         }
 
         // GET: api/Customer/5
-        public string Get(Guid id)
+        public CustomerAggregate Get(Guid id)
         {
-            return "value";
+            return writeRepository.Get<CustomerAggregate>(id);
         }
 
         // POST: api/Customer
         public void Post([FromBody]CreateCustomer command)
         {
-            dispatcher.ExecuteCommand(command);
+            dispatcher.Send(command);
             Ok();
         }
 
         // PUT: api/Customer/5
         public void Put(Guid id, [FromBody]UpdateCustomer command)
         {
-            dispatcher.ExecuteCommand(command);
+            dispatcher.Send(command);
             Ok();
         }
 
@@ -79,7 +69,7 @@ namespace Customer.API.Controllers
                 Id = id
             };
 
-            dispatcher.ExecuteCommand(command);
+            dispatcher.Send(command);
 
             Ok();
 

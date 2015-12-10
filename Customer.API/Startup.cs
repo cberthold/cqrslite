@@ -12,9 +12,9 @@ namespace Customer.API
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureCors(app);
-            ConfigureAuth(app);
-            
+
+            ConfigureAutofac(app);
+            ConfigureCommandHandlers(app);
         }
     }
 }
