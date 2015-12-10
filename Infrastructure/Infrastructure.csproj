@@ -46,7 +46,20 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Client.3.0.30000\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Raven.Database, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <HintPath>..\packages\RavenDB.Database.3.0.30000\lib\net45\Raven.Database.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,37 +70,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandDispatcher.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\IHandle.cs" />
-    <Compile Include="Domain\AggregateBase.cs" />
-    <Compile Include="Domain\ConventionEventRouter.cs" />
-    <Compile Include="Domain\DomainRepositoryBase.cs" />
-    <Compile Include="Domain\ExtensionMethods.cs" />
-    <Compile Include="Domain\IAggregate.cs" />
-    <Compile Include="Domain\IdGenerator.cs" />
-    <Compile Include="Domain\IDomainRepository.cs" />
-    <Compile Include="Domain\IMemento.cs" />
-    <Compile Include="Domain\InMemoryDomainRepository.cs" />
-    <Compile Include="Domain\IRouteEvents.cs" />
     <Compile Include="Domain\SequentialGuid.cs" />
-    <Compile Include="Domain\SqlDomainRepository.cs" />
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\IEvent.cs" />
-    <Compile Include="Events\IEventSerializer.cs" />
     <Compile Include="Exceptions\AggregateAlreadyExistsException.cs" />
-    <Compile Include="Exceptions\AggregateNotFoundException.cs" />
-    <Compile Include="Exceptions\WrongExpectedVersionException.cs" />
-    <Compile Include="IoC\InfrastructureModule.cs" />
-    <Compile Include="Messages\IMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Raven.Studio.Html5.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bus\" />
+    <Folder Include="IoC\" />
+    <Folder Include="Messages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CQRSlite\Framework\CQRSlite\CQRSlite.csproj">
+      <Project>{dafd2a8a-d6b0-4433-8ddf-b98460c64ec6}</Project>
+      <Name>CQRSlite</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
