@@ -1,4 +1,4 @@
-﻿using Infrastructure.Commands;
+﻿using CQRSlite.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Commands
 {
-    public class ActivateCustomer : ICommand<ActivateCustomer>
+    public class ActivateCustomer : ICommand
     {
+        
         public Guid Id { get; set; }
+        public int ExpectedVersion { get; set; }
+
     }
 }
