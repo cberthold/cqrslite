@@ -1,4 +1,5 @@
 ﻿
+using CQRSlite.Domain;
 using Customer.BoundedContext.Events;
 using Customer.BoundedContext.ValueObjects;
 using Infrastructure.Domain;
@@ -11,26 +12,13 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Domain
 {
-    public class CustomerAggregate : AggregateBase<CustomerAggregate>
-    {
+    public class CustomerAggregate : AggregateRoot
+    { 
         #region Domain Properties
 
         public string Name { get; protected set; }
         public Address BillingAddress { get; protected set; }
         public bool IsActive { get; protected set; }
-
-        #endregion
-
-        #region Constructor and Event Registration
-
-        public CustomerAggregate()
-        {
-            Register<CustomerCreated>(Apply);
-            Register<CustomerUpdated>(Apply);
-            Register<CustomerBillingAddressUpdated>(Apply);
-            Register<CustomerActivated>(Apply);
-            Register<CustomerDeactivated>(Apply);
-        }
 
         #endregion
 
@@ -74,12 +62,18 @@ namespace Customer.BoundedContext.Domain
 
         #endregion
 
+        #region Private Constructor
+
+        private CustomerAggregate() { }
+
+        #endregion
+
         #region Aggregate Creation
 
-        private CustomerAggregate(Guid id, string name) : this()
+        protected CustomerAggregate(Guid id, string name)
         {
-            RaiseEvent(new CustomerCreated(id, name));
-            RaiseEvent(new CustomerActivated(id));
+            ApplyChange(new CustomerCreated(id, name));
+            ApplyChange(new CustomerActivated(id));
         }
 
         internal static CustomerAggregate Create(Guid id, string name)
@@ -97,23 +91,23 @@ namespace Customer.BoundedContext.Domain
 
         internal void Activate()
         {
-            RaiseEvent(new CustomerActivated(Id));
+            ApplyChange(new CustomerActivated(Id));
         }
 
         internal void Deactivate()
         {
-            RaiseEvent(new CustomerDeactivated(Id));
+            ApplyChange(new CustomerDeactivated(Id));
         }
 
 
         internal void UpdateBillingAddress(Address billingAddress)
         {
-            RaiseEvent(new CustomerBillingAddressUpdated(Id, billingAddress));
+            ApplyChange(new CustomerBillingAddressUpdated(Id, billingAddress));
         }
 
         internal void Update(string name)
         {
-            Name = name;
+            ApplyChange(new CustomerUpdated(Id, name));
         }
 
         #endregion
