@@ -7,7 +7,7 @@ using CQRSlite.Events;
 using Customer.BoundedContext.Handlers;
 using Customer.BoundedContext.ReadModel;
 using Customer.BoundedContext.ReadModel.Handlers;
-using Customer.BoundedContext.ReadModel.Repository;
+using Infrastructure.Repository;
 using Newtonsoft.Json;
 using Raven.Client;
 using Raven.Client.Embedded;
