@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerBillingAddressUpdated : EventBase<CustomerBillingAddressUpdated, CustomerAggregate>
+    public class CustomerBillingAddressUpdated : EventBase<CustomerAggregate>
     {
         public Address BillingAddress { get; set; }
 

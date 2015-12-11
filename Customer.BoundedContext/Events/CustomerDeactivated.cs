@@ -4,7 +4,7 @@ using System;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerDeactivated : EventBase<CustomerDeactivated, CustomerAggregate>
+    public class CustomerDeactivated : EventBase<CustomerAggregate>
     {
         public CustomerDeactivated(Guid id) : base(id)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerCreated : EventBase<CustomerCreated, CustomerAggregate>
+    public class CustomerCreated : EventBase<CustomerAggregate>
     {
         public string Name { get; set; }
 
