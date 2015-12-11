@@ -1,5 +1,4 @@
 ﻿using Customer.BoundedContext.Commands;
-using Infrastructure.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,28 +7,31 @@ using System.Threading.Tasks;
 
 using Infrastructure.Domain;
 using Customer.BoundedContext.Domain;
+using CQRSlite.Domain.Exception;
+using CQRSlite.Commands;
+using CQRSlite.Domain;
 using Infrastructure.Exceptions;
 
 namespace Customer.BoundedContext.Handlers
 {
     public class CustomerCommandHandlers :
-        IHandle<CreateCustomer>,
-        IHandle<UpdateCustomer>,
-        IHandle<DeactivateCustomer>,
-        IHandle<ActivateCustomer>
+        ICommandHandler<CreateCustomer>,
+        ICommandHandler<UpdateCustomer>,
+        ICommandHandler<DeactivateCustomer>,
+        ICommandHandler<ActivateCustomer>
     {
-        private readonly IDomainRepository repository;
+        private readonly ISession session;
 
-        public CustomerCommandHandlers(IDomainRepository repository)
+        public CustomerCommandHandlers(ISession session)
         {
-            this.repository = repository;
+            this.session = session;
         }
 
         public void Handle(CreateCustomer command)
         {
             try
             {
-                var customer = repository.GetById<CustomerAggregate>(command.Id);
+                var customer = session.Get<CustomerAggregate>(command.Id);
                 throw new AggregateAlreadyExistsException<CustomerAggregate>(command.Id);
             }
             catch (AggregateNotFoundException)
@@ -42,13 +44,13 @@ namespace Customer.BoundedContext.Handlers
             {
                 newCustomer.UpdateBillingAddress(command.BillingAddress);
             }
-
-            repository.Save(newCustomer);
+            session.Add(newCustomer);
+            session.Commit();
         }
 
         public void Handle(UpdateCustomer command)
         {
-            var customer = repository.GetById<CustomerAggregate>(command.Id);
+            var customer = session.Get<CustomerAggregate>(command.Id);
             customer.Update(command.Name);
 
             if (customer.BillingAddress != command.BillingAddress)
@@ -56,22 +58,28 @@ namespace Customer.BoundedContext.Handlers
                 customer.UpdateBillingAddress(command.BillingAddress);
             }
 
-            repository.Save(customer);
+            session.Add(customer);
+            session.Commit();
 
         }
 
         public void Handle(DeactivateCustomer command)
         {
-            var customer = repository.GetById<CustomerAggregate>(command.Id);
+            var customer = session.Get<CustomerAggregate>(command.Id);
             customer.Deactivate();
-            repository.Save(customer);
+            session.Add(customer);
+            session.Commit();
         }
 
         public void Handle(ActivateCustomer command)
         {
-            var customer = repository.GetById<CustomerAggregate>(command.Id);
+            var customer = session.Get<CustomerAggregate>(command.Id, command.ExpectedVersion);
             customer.Activate();
-            repository.Save(customer);
+            session.Add(customer);
+            session.Commit();
         }
+
     }
+
+   
 }
