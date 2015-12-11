@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Domain
+namespace Infrastructure.Repository
 {
-    public interface IMemento
+    public interface IEntity
     {
-        Guid Id { get; set; }
-
-        int Version { get; set; }
+        Guid Id { get; }
     }
 }
