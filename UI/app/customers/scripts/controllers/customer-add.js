@@ -7,7 +7,7 @@
  * Controller of the customersModule
  */
 angular.module('customersModule')
-  .controller('CustomerAddController', ['$scope', 'CustomerResource', 'rfc4122', function ($scope, CustomerResource, rfc4122) {
+  .controller('CustomerAddController', ['$scope', 'CustomerResource', 'rfc4122', '$state', function ($scope, CustomerResource, rfc4122, $state) {
       var vm = this;
 
       var data = {};
@@ -37,6 +37,7 @@ angular.module('customersModule')
           var query = CustomerResource.save(vm.data).$promise
             .then(function (result) {
                 console.log(result);
+                $state.transitionTo('customers.list');
             },
             // on failure...
             function(errorMsg) {
