@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -237,6 +237,8 @@
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.js" />
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.min.js" />
     <Content Include="app\customers\scripts\controllers\customer-add.js" />
+    <Content Include="app\customers\scripts\controllers\customer-edit.js" />
+    <Content Include="app\customers\scripts\controllers\customer-list.js" />
     <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.html" />
     <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.js" />
     <Content Include="app\customers\scripts\directives\header\header.html" />
@@ -247,6 +249,7 @@
     <Content Include="app\customers\scripts\directives\sidebar\sidebar.js" />
     <Content Include="app\customers\scripts\factory\customerApiConfigProvider.js" />
     <Content Include="app\customers\scripts\factory\customerResource.js" />
+    <Content Include="app\customers\views\edit.html" />
     <Content Include="app\favicon.ico" />
     <Content Include="app\js\sb-admin-2.js" />
     <Content Include="app\dashboard\scripts\app.js" />
