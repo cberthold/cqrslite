@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="Domain\SequentialGuid.cs" />
     <Compile Include="Domain\ValueObject.cs" />
+    <Compile Include="EventStore\InMemoryEventStore.cs" />
+    <Compile Include="EventStore\RavenDbEventStore.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Exceptions\AggregateAlreadyExistsException.cs" />

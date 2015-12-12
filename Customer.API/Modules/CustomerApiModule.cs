@@ -7,6 +7,7 @@ using CQRSlite.Events;
 using Customer.BoundedContext.Handlers;
 using Customer.BoundedContext.ReadModel;
 using Customer.BoundedContext.ReadModel.Handlers;
+using Infrastructure.EventStore;
 using Infrastructure.Repository;
 using Newtonsoft.Json;
 using Raven.Client;
@@ -85,96 +86,7 @@ namespace Customer.API.Modules
         }
     }
 
-    public class RavenDbEventStore : IEventStore
-    {
-        private static IDocumentStore store;
-        private static JsonSerializerSettings settings = new JsonSerializerSettings()
-        {
-            TypeNameHandling = TypeNameHandling.Objects
-        };
+    
 
-        static RavenDbEventStore()
-        {
-            store = new EmbeddableDocumentStore { ConnectionStringName = "EventStoreDb" };
-            store.Conventions.AllowQueriesOnId = true;
-            store.Initialize();
-        }
-
-        public IEnumerable<IEvent> Get(Guid aggregateId, int fromVersion)
-        {
-            using (var session = store.OpenSession())
-            {
-                var documents = from d in session.Query<DocumentData>()
-                             where d.AggregateId == aggregateId
-                             && d.Version > fromVersion
-                             orderby d.Version
-                             select d;
-
-                Func<string, IEvent> func = (data) =>
-                {
-                    var output = JsonConvert.DeserializeObject(data, settings);
-
-                    return (IEvent)output;
-                };
-
-
-                var events = from e in documents.ToList()
-                             select func(e.EventData);
-                
-
-
-                return events.Cast<IEvent>();
-            }
-        }
-
-        public void Save(IEvent @event)
-        {
-            var document = new DocumentData()
-            {
-                CommitId = Guid.NewGuid(),
-                AggregateId = @event.Id,
-                Version = @event.Version,
-                EventData = JsonConvert.SerializeObject(@event, settings)
-            };
-
-            using (var session = store.OpenSession())
-            {
-                session.Store(document);
-                session.SaveChanges();
-            }
-        }
-
-        public class DocumentData
-        {
-            public Guid CommitId { get; set; }
-            public Guid AggregateId { get; set; }
-            public int Version { get; set; }
-            public string EventData { get; set; }
-        }
-        
-    }
-
-    public class InMemoryEventStore : IEventStore
-    {
-        private readonly Dictionary<Guid, List<IEvent>> _inMemoryDB = new Dictionary<Guid, List<IEvent>>();
-
-        public IEnumerable<IEvent> Get(Guid aggregateId, int fromVersion)
-        {
-            List<IEvent> events;
-            _inMemoryDB.TryGetValue(aggregateId, out events);
-            return events?.Where(x => x.Version > fromVersion) ?? new List<IEvent>();
-        }
-
-        public void Save(IEvent @event)
-        {
-            List<IEvent> list;
-            _inMemoryDB.TryGetValue(@event.Id, out list);
-            if (list == null)
-            {
-                list = new List<IEvent>();
-                _inMemoryDB.Add(@event.Id, list);
-            }
-            list.Add(@event);
-        }
-    }
+    
 }
