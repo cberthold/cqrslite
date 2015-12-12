@@ -19,15 +19,27 @@ angular.module('customersModuleProviders')
         provider.apiUri = uri;
     };
 
-    this.getEndpointAddress = function (endpointName) {
-
+    this.getEndpointUri = function () {
         var uri = provider.apiUri;
 
         if (uri.match("/" + "$") != "/") {
             uri += "/";
         }
 
-        var endpointAddress = uri + endpointName + "/:id";
+        return uri;
+    };
+
+    this.getEndpointAddressNameOnlyUri = function (endpointName) {
+        var uri = this.getEndpointUri();
+        var endpointAddress = uri + endpointName;
+
+        return endpointAddress;
+    };
+
+    this.getEndpointAddress = function (endpointName) {
+
+        var uri = this.getEndpointAddressNameOnlyUri(endpointName);
+        var endpointAddress = uri + "/:id";
 
         return endpointAddress;
 
@@ -44,7 +56,10 @@ angular.module('customersModuleProviders')
                     var urlPattern = provider.getEndpointAddress(resourceName);
 
                     return $resource(urlPattern, paramDefaults, actions);
-                }
+                },
+                getEndpointUri: provider.getEndpointUri,
+                getEndpointAddressNameOnlyUri: provider.getEndpointAddressNameOnlyUri,
+                getEndpointAddress: provider.getEndpointAddress
             };
         }]
 
