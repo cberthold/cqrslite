@@ -63,12 +63,12 @@ angular
                     {
                         name: 'ngSanitize',
                         files: ['bower_components/angular-sanitize/angular-sanitize.js']
-                    })
+                    }),
                     $ocLazyLoad.load(
                     {
                         name: 'ngTouch',
                         files: ['bower_components/angular-touch/angular-touch.js']
-                    })
+                    }),
                     $ocLazyLoad.load({
                         name: 'CustomerApiConfig',
                         files: [
@@ -86,23 +86,38 @@ angular
               resolve: {
                   loadMyFile: function ($ocLazyLoad) {
                       return $ocLazyLoad.load({
-                          name: 'customersModule',
+                          name: 'customersModuleAdd',
                           files: ['/app/customers/scripts/controllers/customer-add.js']
-                      }),
-                    $ocLazyLoad.load({
-                        name: 'CustomerApiConfig',
-                        files: [
-                            'app/customers/scripts/factory/customerApiConfigProvider.js',
-                            'app/customers/scripts/factory/customerResource.js'
-                        ]
-                    })
+                      })
                   }
               }
           })
         .state('customers.list', {
             templateUrl: '/app/customers/views/list.html',
-            url: '/list'
+            url: '/list',
+            controller: 'CustomerListController as vm',
+            resolve: {
+                loadMyFile: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'customersModuleList',
+                        files: ['/app/customers/scripts/controllers/customer-list.js']
+                    })
+                }
+            }
         })
+      .state('customers.edit', {
+          templateUrl: '/app/customers/views/edit.html',
+          url: '/edit/:id',
+          controller: 'CustomerEditController as vm',
+          resolve: {
+              loadMyFile: function ($ocLazyLoad) {
+                  return $ocLazyLoad.load({
+                      name: 'customersModuleEdit',
+                      files: ['/app/customers/scripts/controllers/customer-edit.js']
+                  })
+              }
+          }
+      })
         
   }]);
 
