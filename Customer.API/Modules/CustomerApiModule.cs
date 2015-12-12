@@ -71,22 +71,7 @@ namespace Customer.API.Modules
             builder.RegisterType<CustomerReadModelFacade>()
                 .AsImplementedInterfaces();
 
-
-            //x.For<IRepository>().HybridHttpOrThreadLocalScoped().Use(y =>
-            //    new CacheRepository(new Repository(y.GetInstance<IEventStore>(), y.GetInstance<IEventPublisher>()),
-            //        y.GetInstance<IEventStore>()));
-
-            //x.Scan(s =>
-            //{
-            //    s.AssemblyContainingType<SmDependencyResolver>();
-            //    s.AssemblyContainingType<ReadModelFacade>();
-            //    s.Convention<FirstInterfaceConvention>();
-            //});
             base.Load(builder);
         }
     }
-
-    
-
-    
 }
