@@ -7,6 +7,7 @@ using Customer.BoundedContext.Domain;
 using Customer.BoundedContext.Handlers;
 using Customer.BoundedContext.ReadModel;
 using Customer.BoundedContext.ReadModel.DTO;
+using Infrastructure.Command;
 using Infrastructure.Domain;
 using Infrastructure.Events;
 using System;
@@ -21,20 +22,16 @@ namespace Customer.API.Controllers
     public class CustomerController : ApiController
     {
         
-        
-        private ICommandSender dispatcher;
+        private CommandDispatcher dispatcher;
         private ICustomerReadModelFacade readModel;
-        private IRepository writeRepository;
         
         
-        public CustomerController(ICommandSender dispatcher, ICustomerReadModelFacade readModel, IRepository writeRepository)
+        public CustomerController(CommandDispatcher dispatcher, ICustomerReadModelFacade readModel, IRepository writeRepository)
         {
             this.dispatcher = dispatcher;
             this.readModel = readModel;
-            this.writeRepository = writeRepository;
         }
-
-
+        
         // GET: api/Customer
         public IEnumerable<CustomerListDTO> Get()
         {
@@ -44,7 +41,7 @@ namespace Customer.API.Controllers
         // GET: api/Customer/5
         public CustomerAggregate Get(Guid id)
         {
-            return writeRepository.Get<CustomerAggregate>(id);
+            return readModel.Get(id);
         }
 
         // POST: api/Customer

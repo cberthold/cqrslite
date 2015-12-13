@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\CommandDispatcher.cs" />
     <Compile Include="Domain\SequentialGuid.cs" />
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="EventStore\InMemoryEventStore.cs" />

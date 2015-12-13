@@ -1,4 +1,5 @@
-﻿using Customer.BoundedContext.ReadModel.DTO;
+﻿using Customer.BoundedContext.Domain;
+using Customer.BoundedContext.ReadModel.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Customer.BoundedContext.ReadModel
 {
     public interface ICustomerReadModelFacade
     {
+        CustomerAggregate Get(Guid id);
         IEnumerable<CustomerListDTO> GetCustomers();
     }
 }

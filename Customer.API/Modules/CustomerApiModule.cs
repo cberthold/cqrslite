@@ -7,6 +7,7 @@ using CQRSlite.Events;
 using Customer.BoundedContext.Handlers;
 using Customer.BoundedContext.ReadModel;
 using Customer.BoundedContext.ReadModel.Handlers;
+using Infrastructure.Command;
 using Infrastructure.EventStore;
 using Infrastructure.Repository;
 using Newtonsoft.Json;
@@ -54,6 +55,9 @@ namespace Customer.API.Modules
             })
             .As<IRepository>()
             .InstancePerRequest();
+
+            builder.RegisterType<CommandDispatcher>()
+                .AsSelf();
 
             builder.RegisterType<CustomerCommandHandlers>()
                 .AsImplementedInterfaces()
