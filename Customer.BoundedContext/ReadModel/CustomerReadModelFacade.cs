@@ -17,6 +17,7 @@ namespace Customer.BoundedContext.ReadModel
 
         public CustomerReadModelFacade(IRepository writeRepository, IReadRepository<CustomerListDTO> customerListRepository)
         {
+            this.writeRepository = writeRepository;
             this.customerListRepository = customerListRepository;
         }
 
