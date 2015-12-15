@@ -13,15 +13,25 @@ angular.module('customersModule')
       var data = {};
       vm.data = data;
 
-      var availableActions = [
+      var availableActionsIsActive = [
           { description: 'Edit', action: 'edit' },
-          { description: 'Delete', action: 'delete' }
+          { description: 'Deactivate', action: 'deactivate' }
+      ];
+      var availableActionsNotIsActive = [
+          { description: 'Activate', action: 'activate' }
       ];
       
 
      
       vm.getAvailableActions = function (item) {
-          return availableActions;
+          if (item == null) {
+              return [];
+          }
+          else if (item.IsActive) {
+              return availableActionsIsActive;
+          } else {
+              return availableActionsNotIsActive;
+          }
       };
 
       vm.reload = function () {
@@ -39,8 +49,11 @@ angular.module('customersModule')
               case 'edit':
                   vm.editCustomer(item);
                   break;
-              case 'delete':
-                  vm.deleteCustomer(item);
+              case 'deactivate':
+                  vm.deactivateCustomer(item);
+                  break;
+              case 'activate':
+                  vm.activateCustomer(item);
                   break;
               default:
                   alert('unknown action: ' + action);
@@ -48,10 +61,23 @@ angular.module('customersModule')
           }
      };
 
-      vm.deleteCustomer = function (item) {
+      vm.activateCustomer = function (item) {
+          var queryParms = { id: item.Id };
+          var query = CustomerResource.activate(queryParms).$promise
+            .then(function (result) {
+                console.log(result);
+                $state.forceReload();
+            },
+            // on failure...
+            function (errorMsg) {
+                console.log('Something went wrong: ' + errorMsg);
+            });
+      };
+
+      vm.deactivateCustomer = function (item) {
 
           var queryParms = { id: item.Id };
-          var query = CustomerResource.delete(queryParms).$promise
+          var query = CustomerResource.deactivate(queryParms).$promise
             .then(function (result) {
                 console.log(result);
                 $state.forceReload();

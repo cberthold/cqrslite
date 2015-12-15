@@ -73,7 +73,7 @@ namespace Customer.BoundedContext.Handlers
 
         public void Handle(ActivateCustomer command)
         {
-            var customer = session.Get<CustomerAggregate>(command.Id, command.ExpectedVersion);
+            var customer = session.Get<CustomerAggregate>(command.Id);
             customer.Activate();
             session.Add(customer);
             session.Commit();

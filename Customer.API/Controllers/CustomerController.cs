@@ -44,6 +44,20 @@ namespace Customer.API.Controllers
             return readModel.Get(id);
         }
 
+        // GET: api/Customer/5/activate
+        [HttpGet]
+        [Route("api/Customer/{Id}/activate")]
+        public void Activate(Guid id)
+        {
+            var command = new ActivateCustomer()
+            {
+                Id = id
+            };
+
+            dispatcher.Send(command);
+            Ok();
+        }
+
         // POST: api/Customer
         public void Post([FromBody]CreateCustomer command)
         {

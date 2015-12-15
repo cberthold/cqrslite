@@ -48,7 +48,7 @@
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li ng-repeat="a in vm.getAvailableActions()"><a ng-click="vm.actionSelected(item, a)">{{a.description}}</a></li>
+                <li ng-repeat="a in vm.getAvailableActions(item)"><a ng-click="vm.actionSelected(item, a)">{{a.description}}</a></li>
             </ul>
         </div>
     </div>

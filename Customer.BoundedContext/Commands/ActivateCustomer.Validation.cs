@@ -24,14 +24,10 @@ namespace Customer.BoundedContext.Commands.Validation
 			RuleFor(w=>w)
 				.Cascade(CascadeMode.StopOnFirstFailure)
 				.Must(Exist)
-                .WithName("")
-                .WithMessage("Customer does not exist.");
-
-            RuleFor(w => w)
+                .WithMessage("Customer does not exist.")
                 .Must(NotAlreadyBeActive)
-                .WithName("")
                 .WithMessage("Customer is already activated.");
-			
+            
         }
 
         private bool Exist(ActivateCustomer command)
