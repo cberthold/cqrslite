@@ -4,12 +4,16 @@ using CQRSlite.Cache;
 using CQRSlite.Commands;
 using CQRSlite.Domain;
 using CQRSlite.Events;
+using Customer.BoundedContext.Commands;
 using Customer.BoundedContext.Handlers;
 using Customer.BoundedContext.ReadModel;
 using Customer.BoundedContext.ReadModel.Handlers;
+using FluentValidation;
 using Infrastructure.Command;
 using Infrastructure.EventStore;
+using Infrastructure.Exceptions;
 using Infrastructure.Repository;
+using Infrastructure.Validation;
 using Newtonsoft.Json;
 using Raven.Client;
 using Raven.Client.Embedded;
@@ -24,8 +28,18 @@ namespace Customer.API.Modules
 {
     public class CustomerApiModule : Module
     {
+        private IEnumerable<System.Reflection.Assembly> GetAvailableAssemblies()
+        {
+            yield return typeof(ActivateCustomer).Assembly;
+            yield return typeof(Infrastructure.Exceptions.ValidationException).Assembly;
+        }
+
         protected override void Load(ContainerBuilder builder)
         {
+
+            var assembliesToCheck = 
+                GetAvailableAssemblies()
+                .ToArray();
 
             builder.RegisterType<InProcessBus>()
                 .AsSelf()
@@ -39,7 +53,7 @@ namespace Customer.API.Modules
             //    .SingleInstance();
             builder.RegisterType<RavenDbEventStore>()
                 .As<IEventStore>()
-                .SingleInstance();
+                .InstancePerRequest();
 
             builder.RegisterType<Session>()
                 .As<ISession>()
@@ -56,24 +70,37 @@ namespace Customer.API.Modules
             .As<IRepository>()
             .InstancePerRequest();
 
+            builder.RegisterAssemblyTypes(assembliesToCheck)
+               .AsClosedTypesOf(typeof(IValidator<>))
+               .InstancePerRequest();
+
+            builder.RegisterType<ValidationFactory>()
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
+
             builder.RegisterType<CommandDispatcher>()
-                .AsSelf();
+                .AsSelf()
+                .InstancePerRequest();
 
             builder.RegisterType<CustomerCommandHandlers>()
                 .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf()
+                .InstancePerRequest();
 
             builder.RegisterType<CustomerListEventHandlers>()
                 .AsImplementedInterfaces()
-                .AsSelf();
+                .AsSelf()
+                .InstancePerRequest();
 
             //builder.RegisterGeneric(typeof(MongoReadRepository<>))
             //    .As(typeof(IReadRepository<>));
             builder.RegisterGeneric(typeof(RavenDbReadRepository<>))
-                .As(typeof(IReadRepository<>));
+                .As(typeof(IReadRepository<>))
+                .InstancePerRequest();
 
             builder.RegisterType<CustomerReadModelFacade>()
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .InstancePerRequest();
 
             base.Load(builder);
         }
