@@ -52,12 +52,8 @@ namespace Customer.BoundedContext.Handlers
         {
             var customer = session.Get<CustomerAggregate>(command.Id);
             customer.Update(command.Name);
-
-            if (customer.BillingAddress != command.BillingAddress)
-            {
-                customer.UpdateBillingAddress(command.BillingAddress);
-            }
-
+            customer.UpdateBillingAddress(command.BillingAddress);
+            
             session.Add(customer);
             session.Commit();
 
