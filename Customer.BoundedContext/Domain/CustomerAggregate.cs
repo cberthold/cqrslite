@@ -102,7 +102,10 @@ namespace Customer.BoundedContext.Domain
 
         internal void UpdateBillingAddress(Address billingAddress)
         {
-            ApplyChange(new CustomerBillingAddressUpdated(Id, billingAddress));
+            if (!this.BillingAddress.Equals(billingAddress))
+            {
+                ApplyChange(new CustomerBillingAddressUpdated(Id, billingAddress));
+            }
         }
 
         internal void Update(string name)
