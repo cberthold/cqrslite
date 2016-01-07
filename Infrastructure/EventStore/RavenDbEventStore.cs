@@ -1,7 +1,9 @@
 ﻿using CQRSlite.Events;
 using Newtonsoft.Json;
 using Raven.Client;
+using Raven.Client.Document;
 using Raven.Client.Embedded;
+using Raven.Database.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +22,47 @@ namespace Infrastructure.EventStore
 
         static RavenDbEventStore()
         {
-            store = new EmbeddableDocumentStore { ConnectionStringName = "EventStoreDb" };
-            store.Conventions.AllowQueriesOnId = true;
+            
+            store = new EmbeddableDocumentStore {
+                ConnectionStringName = "EventStoreDb"
+            };
             store.Initialize();
         }
 
         public IEnumerable<IEvent> Get(Guid aggregateId, int fromVersion)
         {
+            // open the document store session
             using (var session = store.OpenSession())
             {
-                var documents = from d in session.Query<DocumentData>()
+                // create a query based on DocumentData entity
+                var query = session.Query<DocumentData>()
+                    // wait for stale indexes to complete
+                    .Customize(c => c.WaitForNonStaleResultsAsOfNow());
+
+                // get all documents
+                var documents = from d in query
+                                // where our aggregate id matches
                                 where d.AggregateId == aggregateId
+                                // and version is greater than our
+                                // beginning version 
                                 && d.Version > fromVersion
+                                // order by the version
                                 orderby d.Version
                                 select d;
 
+                // create a function to deserialize event data
                 Func<string, IEvent> func = (data) =>
                 {
                     var output = JsonConvert.DeserializeObject(data, settings);
 
                     return (IEvent)output;
                 };
-
-
+                
+                // deserialize the events from our documents
                 var events = from e in documents.ToList()
                              select func(e.EventData);
-
-
-
+                
+                // return the data as events
                 return events.Cast<IEvent>();
             }
         }
