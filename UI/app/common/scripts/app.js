@@ -31,8 +31,8 @@ angular
     });
 
     $ocLazyLoadProvider.config({
-        debug: true,
-        events: true,
+        //debug: true,
+        //events: true,
     });
 
     CustomerApiConfigProvider.setApiUri("http://localhost:16463/api/");
