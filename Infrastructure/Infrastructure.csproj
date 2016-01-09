@@ -85,7 +85,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\CommandDispatcher.cs" />
+    <Compile Include="Domain\HookableSession.cs" />
+    <Compile Include="Domain\ISessionHook.cs" />
     <Compile Include="Domain\SequentialGuid.cs" />
+    <Compile Include="Domain\SessionHookBase.cs" />
     <Compile Include="Domain\ValueObject.cs" />
     <Compile Include="EventStore\InMemoryEventStore.cs" />
     <Compile Include="EventStore\RavenDbEventStore.cs" />
