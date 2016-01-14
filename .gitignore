@@ -213,3 +213,4 @@ ModelManifest.xml
 /UI/bower_components
 /Customer.API/App_Data/Database
 /Customer.API/App_Data/EventStoreDb
+/Customer.API/CompiledIndexCache

@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservice.Customer", "Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRSlite", "..\CQRSlite\Framework\CQRSlite\CQRSlite.csproj", "{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.NotifcationEndpoint", "Customer.NotifcationEndpoint\Customer.NotifcationEndpoint.csproj", "{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,5 +63,6 @@ Global
 		{1CD16A35-BA3A-459D-B523-FD124707413F} = {F3C49C8F-FFAE-496A-80FF-F321614FDFEE}
 		{9720ACFE-75F4-40D8-BFDD-E6F773EA4482} = {7F7CBC91-C687-49D7-9FAF-889D18AF5C73}
 		{DAFD2A8A-D6B0-4433-8DDF-B98460C64EC6} = {0F550E98-E035-41D9-8A1B-766C4500AB44}
+		{A10FE604-A3B9-4E6E-8E70-F2FC7A31E5A2} = {7F7CBC91-C687-49D7-9FAF-889D18AF5C73}
 	EndGlobalSection
 EndGlobal
