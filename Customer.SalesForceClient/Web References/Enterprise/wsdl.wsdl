@@ -81,6 +81,7 @@
               <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="DunsNumber" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="DuplicateRecordItems" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="EnterpriseEntityId__c" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Events" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="Fax" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="FeedSubscriptionsForEntity" nillable="true" type="tns:QueryResult" />
@@ -1436,6 +1437,7 @@
               <xsd:element minOccurs="0" name="Asset" nillable="true" type="ens:Asset" />
               <xsd:element minOccurs="0" name="AssetId" nillable="true" type="tns:ID" />
               <xsd:element minOccurs="0" name="AttachedContentDocuments" nillable="true" type="tns:QueryResult" />
+              <xsd:element minOccurs="0" name="Attachment_Last_Updated__c" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="Attachments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="CaseComments" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="CaseContactRoles" nillable="true" type="tns:QueryResult" />
@@ -1451,6 +1453,7 @@
               <xsd:element minOccurs="0" name="CreatedDate" nillable="true" type="xsd:dateTime" />
               <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="EngineeringReqNumber__c" nillable="true" type="xsd:string" />
+              <xsd:element minOccurs="0" name="EnterpriseEntityId__c" nillable="true" type="xsd:string" />
               <xsd:element minOccurs="0" name="Events" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="FeedSubscriptionsForEntity" nillable="true" type="tns:QueryResult" />
               <xsd:element minOccurs="0" name="Feeds" nillable="true" type="tns:QueryResult" />

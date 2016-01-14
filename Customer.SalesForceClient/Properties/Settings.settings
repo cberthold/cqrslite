@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Customer.SalesForceClient.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
+    <Setting Name="Customer_SalesForceClient_Partner_SforceService" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://login.salesforce.com/services/Soap/u/35.0</Value>
+    </Setting>
     <Setting Name="Customer_SalesForceClient_Enterprise_SforceService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://login.salesforce.com/services/Soap/c/35.0</Value>
-    </Setting>
-    <Setting Name="Customer_SalesForceClient_Partner_SforceService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://login.salesforce.com/services/Soap/u/35.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

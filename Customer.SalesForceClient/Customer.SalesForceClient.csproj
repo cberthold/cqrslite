@@ -68,30 +68,6 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="https://na34.salesforce.com/soap/wsdl.jsp">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\Partner\</RelPath>
-      <UpdateFromURL>https://na34.salesforce.com/soap/wsdl.jsp</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Customer_SalesForceClient_Partner_SforceService</CachedSettingsPropName>
-    </WebReferenceUrl>
-    <WebReferenceUrl Include="https://na34.salesforce.com/soap/wsdl.jsp%3ftype=%2a">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\Enterprise\</RelPath>
-      <UpdateFromURL>https://na34.salesforce.com/soap/wsdl.jsp%3ftype=%2a</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Customer_SalesForceClient_Enterprise_SforceService</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -242,7 +218,9 @@
     <None Include="Web References\Enterprise\UpsertResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\Enterprise\wsdl.wsdl" />
+    <None Include="Web References\Enterprise\wsdl.wsdl">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\Partner\DeleteResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -389,6 +367,30 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\Partner\wsdl.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://na34.salesforce.com/soap/wsdl.jsp">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Partner\</RelPath>
+      <UpdateFromURL>https://na34.salesforce.com/soap/wsdl.jsp</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Customer_SalesForceClient_Partner_SforceService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://na34.salesforce.com/soap/wsdl.jsp%3ftype=%2a">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Enterprise\</RelPath>
+      <UpdateFromURL>https://na34.salesforce.com/soap/wsdl.jsp%3ftype=%2a</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Customer_SalesForceClient_Enterprise_SforceService</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

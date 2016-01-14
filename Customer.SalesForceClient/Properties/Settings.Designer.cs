@@ -25,21 +25,20 @@ namespace Customer.SalesForceClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/c/35.0")]
-        public string Customer_SalesForceClient_Enterprise_SforceService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/u/35.0")]
+        public string Customer_SalesForceClient_Partner_SforceService {
             get {
-                return ((string)(this["Customer_SalesForceClient_Enterprise_SforceService"]));
+                return ((string)(this["Customer_SalesForceClient_Partner_SforceService"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/u/35.0")]
-        public string Customer_SalesForceClient_Partner_SforceService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/c/35.0")]
+        public string Customer_SalesForceClient_Enterprise_SforceService {
             get {
-                return ((string)(this["Customer_SalesForceClient_Partner_SforceService"]));
+                return ((string)(this["Customer_SalesForceClient_Enterprise_SforceService"]));
             }
         }
     }
