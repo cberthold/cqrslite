@@ -214,3 +214,4 @@ ModelManifest.xml
 /Customer.API/App_Data/Database
 /Customer.API/App_Data/EventStoreDb
 /Customer.API/CompiledIndexCache
+/Customer.API/salesForceSecrets.config

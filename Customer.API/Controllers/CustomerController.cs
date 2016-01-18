@@ -85,5 +85,19 @@ namespace Customer.API.Controllers
             Ok();
 
         }
+
+        [HttpGet]
+        [Route("api/Customer/SyncToSalesForce")]
+        public void SyncToSalesForce()
+        {
+            var command = new SynchronizeToSalesForce()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            dispatcher.Send(command);
+
+            Ok();
+        }
     }
 }

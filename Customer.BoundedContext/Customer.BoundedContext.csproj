@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Customer.BoundedContext</RootNamespace>
     <AssemblyName>Customer.BoundedContext</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ActivateCustomer.cs" />
+    <Compile Include="Commands\SynchronizeToSalesForce.cs" />
     <Compile Include="Commands\UpdateCustomer.Validation.cs" />
     <Compile Include="Commands\DeactivateCustomer.Validation.cs" />
     <Compile Include="Commands\CreateCustomer.cs" />
@@ -82,13 +85,19 @@
       <Project>{dafd2a8a-d6b0-4433-8ddf-b98460c64ec6}</Project>
       <Name>CQRSlite</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Customer.SalesForceClient\Customer.SalesForceClient.csproj">
+      <Project>{3c4632d4-4608-4455-bc9c-8e60d5ff4aa7}</Project>
+      <Name>Customer.SalesForceClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{44da2e8f-70b2-4e54-b96f-955e955149c4}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Commands\ActivateCustomer.Validation.cs" />
     <None Include="packages.config" />
   </ItemGroup>
