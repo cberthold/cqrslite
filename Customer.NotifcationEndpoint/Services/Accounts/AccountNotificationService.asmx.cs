@@ -19,7 +19,6 @@ namespace Customer.NotifcationEndpoint.Services.Accounts
             foreach(var item in accountNotification)
             {
                 var account = item.sObject;
-
                 var name = account.Name;
             }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 Salesforce.com Outbound Notification Web Services API Version 1.0 
-Generated on 2016-01-13 04:48:36 +0000.
+Generated on 2016-01-18 02:31:09 +0000.
 
 Copyright 2005-2016 Salesforce.com, Inc.
 All Rights Reserved
@@ -59,6 +59,7 @@ All Rights Reserved
                         <element name="BillingStreet" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="CreatedById" nillable="true" minOccurs="0" type="ent:ID"/>
                         <element name="CreatedDate" nillable="true" minOccurs="0" type="xsd:dateTime"/>
+                        <element name="EnterpriseEntityId__c" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="Fax" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="IsDeleted" nillable="true" minOccurs="0" type="xsd:boolean"/>
                         <element name="LastActivityDate" nillable="true" minOccurs="0" type="xsd:date"/>
@@ -66,13 +67,17 @@ All Rights Reserved
                         <element name="LastModifiedDate" nillable="true" minOccurs="0" type="xsd:dateTime"/>
                         <element name="MasterRecordId" nillable="true" minOccurs="0" type="ent:ID"/>
                         <element name="Name" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="OwnerId" nillable="true" minOccurs="0" type="ent:ID"/>
+                        <element name="ParentId" nillable="true" minOccurs="0" type="ent:ID"/>
                         <element name="Phone" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="ShippingCity" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="ShippingCountry" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="ShippingPostalCode" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="ShippingState" nillable="true" minOccurs="0" type="xsd:string"/>
                         <element name="ShippingStreet" nillable="true" minOccurs="0" type="xsd:string"/>
+                        <element name="SystemAccountLink__c" nillable="true" minOccurs="0" type="ent:ID"/>
                         <element name="SystemModstamp" nillable="true" minOccurs="0" type="xsd:dateTime"/>
+                        <element name="Website" nillable="true" minOccurs="0" type="xsd:string"/>
                         </sequence>
                     </extension>
                 </complexContent>
@@ -154,7 +159,7 @@ All Rights Reserved
     <service name="NotificationService">
         <documentation>Notification Service Implementation</documentation>
         <port binding="tns:NotificationBinding" name="Notification">
-            <soap:address location="https://customerupdates.azurewebsites.net/AccountNotification.svc"/>
+            <soap:address location="https://customerupdates.azurewebsites.net/Services/Accounts/AccountNotificationService.asmx"/>
         </port>
     </service>
     

@@ -179,6 +179,8 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         private bool createdDateFieldSpecified;
         
+        private string enterpriseEntityId__cField;
+        
         private string faxField;
         
         private System.Nullable<bool> isDeletedField;
@@ -199,6 +201,10 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         private string nameField;
         
+        private string ownerIdField;
+        
+        private string parentIdField;
+        
         private string phoneField;
         
         private string shippingCityField;
@@ -211,9 +217,13 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         private string shippingStreetField;
         
+        private string systemAccountLink__cField;
+        
         private System.Nullable<System.DateTime> systemModstampField;
         
         private bool systemModstampFieldSpecified;
+        
+        private string websiteField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
@@ -338,6 +348,17 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string EnterpriseEntityId__c {
+            get {
+                return this.enterpriseEntityId__cField;
+            }
+            set {
+                this.enterpriseEntityId__cField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string Fax {
             get {
                 return this.faxField;
@@ -448,6 +469,28 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string OwnerId {
+            get {
+                return this.ownerIdField;
+            }
+            set {
+                this.ownerIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string ParentId {
+            get {
+                return this.parentIdField;
+            }
+            set {
+                this.parentIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public string Phone {
             get {
                 return this.phoneField;
@@ -514,6 +557,17 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string SystemAccountLink__c {
+            get {
+                return this.systemAccountLink__cField;
+            }
+            set {
+                this.systemAccountLink__cField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<System.DateTime> SystemModstamp {
             get {
                 return this.systemModstampField;
@@ -531,6 +585,17 @@ namespace Customer.NotifcationEndpoint.Services.Accounts {
             }
             set {
                 this.systemModstampFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string Website {
+            get {
+                return this.websiteField;
+            }
+            set {
+                this.websiteField = value;
             }
         }
     }
