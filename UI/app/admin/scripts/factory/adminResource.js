@@ -10,7 +10,7 @@
 angular.module('adminModuleProviders')
     .factory('AdminResource', ['AdminApiConfig', function (AdminApiConfig) {
 
-        var getUrl = AdminApiConfig.getEndpointAddress('admin');
+        var getUrl = AdminApiConfig.getEndpointAddress('adminApi');
         var rebuildReadUrl = getUrl + '/rebuildReadDb';
         var rebuildSearchUrl = getUrl + '/rebuildSearchDb';
 
