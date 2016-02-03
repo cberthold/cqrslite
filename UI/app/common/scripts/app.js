@@ -12,11 +12,12 @@ angular
     'ng',
     'oc.lazyLoad',
     'dashboardModule',
-    'customersModule'
+    'customersModule',
+    'adminModule'
     
   ])
 
-.config(['$ocLazyLoadProvider', 'CustomerApiConfigProvider', '$provide', function ($ocLazyLoadProvider, CustomerApiConfigProvider, $provide) {
+.config(['$ocLazyLoadProvider', 'AdminApiConfigProvider', 'CustomerApiConfigProvider', '$provide', function ($ocLazyLoadProvider, AdminApiConfigProvider, CustomerApiConfigProvider, $provide) {
 
     $provide.decorator('$state', function ($delegate, $stateParams) {
         $delegate.forceReload = function () {
@@ -35,5 +36,6 @@ angular
         //events: true,
     });
 
+    AdminApiConfigProvider.setApiUri("http://localhost:16463/api/");
     CustomerApiConfigProvider.setApiUri("http://localhost:16463/api/");
 }]);

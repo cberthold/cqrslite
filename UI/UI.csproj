@@ -233,9 +233,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\admin\views\main.html" />
     <Content Include="app\common\scripts\app.js" />
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.js" />
     <Content Include="app\common\scripts\services\angular-uuid\angular-uuid-service.min.js" />
+    <Content Include="app\admin\scripts\app.js" />
+    <Content Include="app\admin\scripts\controllers\admin-rebuild-read.js" />
+    <Content Include="app\admin\scripts\controllers\admin-rebuild-search.js" />
+    <Content Include="app\admin\scripts\factory\adminApiConfigProvider.js" />
+    <Content Include="app\admin\scripts\factory\adminResource.js" />
+    <Content Include="app\admin\views\rebuild-read.html" />
+    <Content Include="app\admin\views\rebuild-search.html" />
     <Content Include="app\customers\scripts\controllers\customer-add.js" />
     <Content Include="app\customers\scripts\controllers\customer-edit.js" />
     <Content Include="app\customers\scripts\controllers\customer-list.js" />
