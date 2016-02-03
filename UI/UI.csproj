@@ -239,14 +239,6 @@
     <Content Include="app\customers\scripts\controllers\customer-add.js" />
     <Content Include="app\customers\scripts\controllers\customer-edit.js" />
     <Content Include="app\customers\scripts\controllers\customer-list.js" />
-    <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.html" />
-    <Content Include="app\customers\scripts\directives\header\header-notification\header-notification.js" />
-    <Content Include="app\customers\scripts\directives\header\header.html" />
-    <Content Include="app\customers\scripts\directives\header\header.js" />
-    <Content Include="app\customers\scripts\directives\sidebar\sidebar-search\sidebar-search.html" />
-    <Content Include="app\customers\scripts\directives\sidebar\sidebar-search\sidebar-search.js" />
-    <Content Include="app\customers\scripts\directives\sidebar\sidebar.html" />
-    <Content Include="app\customers\scripts\directives\sidebar\sidebar.js" />
     <Content Include="app\customers\scripts\factory\customerApiConfigProvider.js" />
     <Content Include="app\customers\scripts\factory\customerResource.js" />
     <Content Include="app\customers\views\edit.html" />
