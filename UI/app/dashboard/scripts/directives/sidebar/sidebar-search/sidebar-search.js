@@ -15,8 +15,24 @@ angular.module('MainApp')
       replace: true,
       scope: {
       },
-      controller:function($scope){
-        $scope.selectedMenu = 'home';
-      }
+      controller: function ($scope) {
+          var vm = this;
+          vm.selectedMenu = 'home';
+
+          
+          vm.search = function () {
+              alert(vm.searchText + ' in dashboard');
+              vm.reset();
+          };
+
+          vm.reset = function () {
+              vm.searchText = '';
+          };
+
+          vm.reset();
+
+      },
+      controllerAs: 'vm'
+
     }
   });

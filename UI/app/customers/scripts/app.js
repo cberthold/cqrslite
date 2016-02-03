@@ -31,10 +31,10 @@ angular
                     {
                         name: 'customersModule',
                         files: [
-                        '/app/customers/scripts/directives/header/header.js',
-                        '/app/customers/scripts/directives/header/header-notification/header-notification.js',
-                        '/app/customers/scripts/directives/sidebar/sidebar.js',
-                        '/app/customers/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                        '/app/dashboard/scripts/directives/header/header.js',
+                        '/app/dashboard/scripts/directives/header/header-notification/header-notification.js',
+                        '/app/dashboard/scripts/directives/sidebar/sidebar.js',
+                        '/app/dashboard/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
                         ]
                     }),
                     $ocLazyLoad.load(
