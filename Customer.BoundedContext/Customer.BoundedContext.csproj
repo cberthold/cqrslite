@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ActivateCustomer.cs" />
+    <Compile Include="Commands\RebuildReadDbCommand.cs" />
+    <Compile Include="Commands\RebuildSearchDbCommand.cs" />
     <Compile Include="Commands\UpdateCustomer.Validation.cs" />
     <Compile Include="Commands\DeactivateCustomer.Validation.cs" />
     <Compile Include="Commands\CreateCustomer.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Events\CustomerDeactivated.cs" />
     <Compile Include="Events\CustomerUpdated.cs" />
     <Compile Include="Handlers\CustomerCommandHandlers.cs" />
+    <Compile Include="Handlers\RebuildCommandHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModel\DTO\CustomerListDTO.cs" />
     <Compile Include="ReadModel\Handlers\CustomerListEventHandlers.cs" />

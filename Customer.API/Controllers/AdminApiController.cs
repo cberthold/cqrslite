@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructure.Command;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -10,6 +11,14 @@ namespace Customer.API.Controllers
 {
     public class AdminApiController : ApiController
     {
+
+        private CommandDispatcher dispatcher;
+
+        public AdminApiController(CommandDispatcher dispatcher)
+        {
+            this.dispatcher = dispatcher;
+        }
+
         // GET: api/Admin
         [HttpGet]
         [Route("api/AdminApi/RebuildSearchDb")]

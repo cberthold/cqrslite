@@ -213,3 +213,8 @@ ModelManifest.xml
 /UI/bower_components
 /Customer.API/App_Data/Database
 /Customer.API/App_Data/EventStoreDb
+/Customer.API/CompiledIndexCache
+/Customer.API/Assemblies
+/Customer.API/Raven.Studio.Html5.zip
+/Customer.BoundedContext/Raven.Studio.Html5.zip
+/Infrastructure/Raven.Studio.Html5.zip
