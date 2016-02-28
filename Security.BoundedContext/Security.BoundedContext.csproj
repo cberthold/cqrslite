@@ -57,13 +57,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\ApiServices\Entities\ApiServiceEntity.cs" />
+    <Compile Include="Domain\ApiServices\Aggregate\ApiServicesAggregate.cs" />
+    <Compile Include="Domain\ApiServices\Entities\ResourceActionEntity.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\CompositePolicyBase.cs" />
+    <Compile Include="Domain\RootPolicy\Identities\CustomerIdentity.cs" />
+    <Compile Include="Domain\RootPolicy\Aggregate\CustomerRootPolicyAggregate.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\CustomerUserMappedPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\Feature.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\FeaturePolicyMapping.cs" />
+    <Compile Include="Domain\RootPolicy\Identities\IIdentity.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\UserMappedPolicyBase.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\NoAccessPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\PolicyBase.cs" />
+    <Compile Include="Domain\RootPolicy\Identities\Identity.cs" />
+    <Compile Include="Domain\RootPolicy\Aggregate\RootPolicyAggregateBase.cs" />
+    <Compile Include="Domain\User\UserAggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Raven.Studio.Html5.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CQRSlite\Framework\CQRSlite\CQRSlite.csproj">
+      <Project>{dafd2a8a-d6b0-4433-8ddf-b98460c64ec6}</Project>
+      <Name>CQRSlite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{44da2e8f-70b2-4e54-b96f-955e955149c4}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security.BoundedContext.Events\Security.BoundedContext.Events.csproj">
+      <Project>{2c3ab314-51cf-47e6-954d-f75ecca28b90}</Project>
+      <Name>Security.BoundedContext.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security.BoundedContext.ValueObjects\Security.BoundedContext.ValueObjects.csproj">
+      <Project>{329340e7-899b-4a9e-a6f5-c37007c441a8}</Project>
+      <Name>Security.BoundedContext.ValueObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\" />
+    <Folder Include="ValueObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
