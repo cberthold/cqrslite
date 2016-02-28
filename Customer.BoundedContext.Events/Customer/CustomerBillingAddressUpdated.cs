@@ -1,5 +1,4 @@
-﻿using Customer.BoundedContext.Domain;
-using Customer.BoundedContext.ValueObjects;
+﻿using Customer.BoundedContext.ValueObjects;
 using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Customer.BoundedContext.Events
 {
-    public class CustomerBillingAddressUpdated : EventBase<CustomerAggregate>
+    public class CustomerBillingAddressUpdated : EventBase
     {
         public Address BillingAddress { get; set; }
 
