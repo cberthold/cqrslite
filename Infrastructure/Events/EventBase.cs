@@ -10,8 +10,7 @@ using CQRSlite.Events;
 
 namespace Infrastructure.Events
 {
-    public abstract class EventBase<TAggregate> : IEvent<TAggregate>
-        where TAggregate : AggregateRoot
+    public abstract class EventBase : IEvent
     {
         public Guid Id { get; set; }
 
