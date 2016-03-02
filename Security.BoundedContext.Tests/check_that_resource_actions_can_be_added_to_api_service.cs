@@ -1,4 +1,6 @@
-﻿using Infrastructure.Exceptions;
+﻿using Autofac;
+using CQRSlite.Domain;
+using Infrastructure.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Security.BoundedContext.Domain;
 using Security.BoundedContext.Events;
@@ -28,7 +30,19 @@ namespace Security.BoundedContext.Tests
         }
 
 
+        protected override void AfterTestInitialized()
+        {
+            repository = TestContainer.Resolve<IRepository>();
+        }
+
+        protected override void AfterTestCleanup()
+        {
+            repository = null;
+        }
+
+
         private ApiServiceAggregate aggregate;
+        private IRepository repository;
 
         public Guid ApiGuid { get; set; }
         public string ApiName { get; set; }
@@ -44,12 +58,14 @@ namespace Security.BoundedContext.Tests
         void TheApiServiceIsAdded()
         {
             aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+            repository.Save(aggregate, aggregate.Version);
             Assert.IsNotNull(aggregate);
         }
 
         void ResourceActionIsAdded()
         {
             aggregate.CreateResourceAction(ResourceName, ActionName);
+            repository.Save(aggregate, aggregate.Version);
         }
 
         void ResourceActionIsEnabled()
@@ -57,6 +73,8 @@ namespace Security.BoundedContext.Tests
             var resourceAction = aggregate.FindResourceAction(ResourceName, ActionName);
 
             aggregate.EnableResourceAction(resourceAction.Id);
+            repository.Save(aggregate, aggregate.Version);
+
         }
 
         void TheAggregateIdShouldEqualApiGuid()
@@ -87,7 +105,7 @@ namespace Security.BoundedContext.Tests
         }
 
         [TestMethod]
-        public void run_check_that_adding_api_service_to_list_works()
+        public void run_check_that_resource_actions_can_be_added_to_api_service()
         {
             this.Given("I have <ApiGuid> to create service")
                 .And(a => a.TheApiServicesAggregateIsNotCreated())
