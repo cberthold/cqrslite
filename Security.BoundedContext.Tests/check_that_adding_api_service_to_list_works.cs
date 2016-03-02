@@ -1,4 +1,7 @@
-﻿using Infrastructure.Exceptions;
+﻿using Autofac;
+using CQRSlite.Domain;
+using CQRSlite.Domain.Exception;
+using Infrastructure.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Security.BoundedContext.Domain;
 using Security.BoundedContext.Events;
@@ -12,9 +15,33 @@ using TestStack.BDDfy;
 namespace Security.BoundedContext.Tests
 {
     [TestClass]
-    public class check_that_adding_api_service_to_list_works
+    public class check_that_adding_api_service_to_list_works : TestBase<check_that_adding_api_service_to_list_works>
     {
+        [ClassInitialize]
+        public static void ClassInit(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
+        {
+            ClassInitInternal(testContext);
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            ClassCleanupInternal();
+        }
+
+        protected override void AfterTestInitialized()
+        {
+            repository = TestContainer.Resolve<IRepository>();
+        }
+
+        protected override void AfterTestCleanup()
+        {
+            repository = null;
+        }
+
+
         private ApiServiceAggregate aggregate;
+        private IRepository repository;
 
         public Guid ApiGuid { get; set; }
         public string ApiName { get; set; }
@@ -28,6 +55,7 @@ namespace Security.BoundedContext.Tests
         void TheApiServiceIsAdded()
         {
             aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+            repository.Save(aggregate, aggregate.Version);
             Assert.IsNotNull(aggregate);
         }
 
@@ -49,21 +77,23 @@ namespace Security.BoundedContext.Tests
             Assert.IsTrue(events.Any(a => (a is ApiServiceCreated) && ((ApiServiceCreated)a).Id == ApiGuid));
         }
 
-        //void AddingTheSameAggregateIdShouldFailWithDomainError()
-        //{
-        //    var duplicateFound = false;
+        void AddingTheSameAggregateIdShouldFailWithConcurrencyError()
+        {
+            var duplicateFound = false;
 
-        //    try
-        //    {
-        //        aggregate.CreateService(ApiGuid);
-        //    }
-        //    catch (DomainException ex) when (ex.Message == "duplicate service")
-        //    {
-        //        duplicateFound = true;
-        //    }
+            try
+            {
+                aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+                repository.Save(aggregate, aggregate.Version);
+                
+            }
+            catch (ConcurrencyException ex)
+            {
+                duplicateFound = true;
+            }
 
-        //    Assert.IsTrue(duplicateFound, "duplicate service not found");
-        //}
+            Assert.IsTrue(duplicateFound, "duplicate service not found");
+        }
 
         [TestMethod]
         public void run_check_that_adding_api_service_to_list_works()
@@ -73,7 +103,7 @@ namespace Security.BoundedContext.Tests
                 .When(a => a.TheApiServiceIsAdded())
                 .Then(a => a.TheAggregateIdShouldEqualApiGuid())
                 .And(a => a.TheAggregateNameShouldEqualApiName())
-                //.And(a => a.AddingTheSameAggregateIdShouldFailWithDomainError())
+                .And(a => a.AddingTheSameAggregateIdShouldFailWithConcurrencyError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName")
                 {
                     { ApiServiceAggregate.CUSTOMER_API, ApiServiceAggregate.CUSTOMER_API_NAME },

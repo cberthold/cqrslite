@@ -12,8 +12,22 @@ using TestStack.BDDfy;
 namespace Security.BoundedContext.Tests
 {
     [TestClass]
-    public class check_that_resource_actions_can_be_added_to_api_service
+    public class check_that_resource_actions_can_be_added_to_api_service : TestBase<check_that_resource_actions_can_be_added_to_api_service>
     {
+
+        [ClassInitialize]
+        public static void ClassInit(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
+        {
+            ClassInitInternal(testContext);
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            ClassCleanupInternal();
+        }
+
+
         private ApiServiceAggregate aggregate;
 
         public Guid ApiGuid { get; set; }
