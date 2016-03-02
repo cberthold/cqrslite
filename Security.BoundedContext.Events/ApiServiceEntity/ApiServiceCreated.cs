@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Security.BoundedContext.Events
 {
-    public class ApiServicesCreated : EventBase
+    public class ApiServiceCreated : EventBase
     {
-        public ApiServicesCreated(Guid id)
+        public string Name { get; protected set; }
+        public ApiServiceCreated(string name)
         {
-            Id = id;
+            Name = name;
         }
     }
 }

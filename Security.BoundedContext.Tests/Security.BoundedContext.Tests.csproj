@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="check_that_resource_actions_can_be_added_to_api_service.cs" />
     <Compile Include="check_that_adding_api_service_to_list_works.cs" />
-    <Compile Include="check_that_api_services_list_is_created.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

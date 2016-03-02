@@ -14,7 +14,7 @@ namespace Security.BoundedContext.Tests
     [TestClass]
     public class check_that_resource_actions_can_be_added_to_api_service
     {
-        private ApiServicesAggregate aggregate;
+        private ApiServiceAggregate aggregate;
 
         public Guid ApiGuid { get; set; }
         public string ApiName { get; set; }
@@ -27,41 +27,32 @@ namespace Security.BoundedContext.Tests
             aggregate = null;
         }
 
-        void TheApiIsCreated()
-        {
-            aggregate = ApiServicesAggregate.Create();
-            Assert.AreEqual(aggregate.Id, ApiServicesAggregate.SERVICES_ID);
-        }
-
         void TheApiServiceIsAdded()
         {
-            aggregate.CreateService(ApiGuid);
-            Assert.IsNotNull(aggregate.FindService(ApiGuid));
+            aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+            Assert.IsNotNull(aggregate);
         }
 
         void ResourceActionIsAdded()
         {
-            aggregate.CreateResourceAction(ApiGuid, ResourceName, ActionName);
+            aggregate.CreateResourceAction(ResourceName, ActionName);
         }
 
         void ResourceActionIsEnabled()
         {
-            var service = aggregate.FindService(ApiGuid);
-            var resourceAction = service.FindResourceAction(ResourceName, ActionName);
+            var resourceAction = aggregate.FindResourceAction(ResourceName, ActionName);
 
-            aggregate.EnableResourceAction(ApiGuid, resourceAction.Id);
+            aggregate.EnableResourceAction(resourceAction.Id);
         }
 
         void TheAggregateIdShouldEqualApiGuid()
         {
-            var service = aggregate.FindService(ApiGuid);
-            Assert.AreEqual(service.Id, ApiGuid);
+            Assert.AreEqual(aggregate.Id, ApiGuid);
         }
 
         void TheAggregateNameShouldEqualApiName()
         {
-            var service = aggregate.FindService(ApiGuid);
-            Assert.AreEqual(service.Name, ApiName);
+            Assert.AreEqual(aggregate.Name, ApiName);
         }
 
         
@@ -86,7 +77,7 @@ namespace Security.BoundedContext.Tests
         {
             this.Given("I have <ApiGuid> to create service")
                 .And(a => a.TheApiServicesAggregateIsNotCreated())
-                .And(a => a.TheApiIsCreated())
+                //.And(a => a.TheApiIsCreated())
                 .And(a=> a.TheApiServiceIsAdded())
                 .When(a => a.ResourceActionIsAdded())
                 .And(a=> a.ResourceActionIsEnabled())
@@ -95,9 +86,9 @@ namespace Security.BoundedContext.Tests
                 .And(a => a.AddingTheSameResourceActionShouldFailWithDomainError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName", "ResourceName", "ActionName")
                 {
-                    { ApiServiceEntity.CUSTOMER_API, ApiServiceEntity.CUSTOMER_API_NAME , "AddressController", "Create"},
-                    { ApiServiceEntity.SECURITY_API, ApiServiceEntity.SECURITY_API_NAME , "RolesController", "Create"},
-                    { ApiServiceEntity.SIGNALR_API, ApiServiceEntity.SIGNALR_API_NAME , "TestServerMethod", "Create"},
+                    { ApiServiceAggregate.CUSTOMER_API, ApiServiceAggregate.CUSTOMER_API_NAME , "AddressController", "Create"},
+                    { ApiServiceAggregate.SECURITY_API, ApiServiceAggregate.SECURITY_API_NAME , "RolesController", "Create"},
+                    { ApiServiceAggregate.SIGNALR_API, ApiServiceAggregate.SIGNALR_API_NAME , "TestServerMethod", "Create"},
                 })
                 .BDDfy();
         }

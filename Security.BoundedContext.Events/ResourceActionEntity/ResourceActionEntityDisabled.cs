@@ -10,11 +10,9 @@ namespace Security.BoundedContext.Events
     public class ResourceActionEntityDisabled : EventBase
     {
         public Guid EntityId { get; protected set; }
-        public Guid ApiServiceId { get; protected set; }
-
-        public ResourceActionEntityDisabled(Guid apiServiceId, Guid entityId)
+        
+        public ResourceActionEntityDisabled(Guid entityId)
         {
-            ApiServiceId = apiServiceId;
             EntityId = entityId;
         }
     }
