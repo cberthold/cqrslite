@@ -17,9 +17,9 @@ namespace Security.BoundedContext.Domain
         public IList<ResourceActionEntity> AvailableResourceActions 
             => availableResourceActions.AsReadOnly();
         
-        protected List<Feature> features 
-            = new List<Feature>();
-        public IList<Feature> Features 
+        protected List<FeatureAggregate> features 
+            = new List<FeatureAggregate>();
+        public IList<FeatureAggregate> Features 
             => features.AsReadOnly();
 
         protected List<UserMappedPolicy<TType>> userMappedPolicies 

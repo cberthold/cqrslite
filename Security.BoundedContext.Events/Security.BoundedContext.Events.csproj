@@ -48,6 +48,7 @@
     <Compile Include="ApiService\ResourceActionEntityEnabled.cs" />
     <Compile Include="ApiService\ResourceActionEntityRemoved.cs" />
     <Compile Include="ApiService\ResourceActionEntityResourceNameChanged.cs" />
+    <Compile Include="Feature\ResourceActionAddedToFeature.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

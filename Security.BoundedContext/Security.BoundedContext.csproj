@@ -64,7 +64,7 @@
     <Compile Include="Domain\RootPolicy\Identities\CustomerIdentity.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\CustomerRootPolicyAggregate.cs" />
     <Compile Include="Domain\RootPolicy\Entities\CustomerUserMappedPolicy.cs" />
-    <Compile Include="Domain\Feature\Feature.cs" />
+    <Compile Include="Domain\Feature\FeatureAggregate.cs" />
     <Compile Include="Domain\RootPolicy\Entities\FeaturePolicyMapping.cs" />
     <Compile Include="Domain\RootPolicy\Identities\IIdentity.cs" />
     <Compile Include="Domain\RootPolicy\Entities\UserMappedPolicyBase.cs" />
