@@ -40,14 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiServiceEntity\ApiServiceCreated.cs" />
+    <Compile Include="ApiService\ApiServiceCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceActionEntity\ResourceActionEntityActionNameChanged.cs" />
-    <Compile Include="ApiServiceEntity\ResourceActionEntityCreated.cs" />
-    <Compile Include="ResourceActionEntity\ResourceActionEntityDisabled.cs" />
-    <Compile Include="ResourceActionEntity\ResourceActionEntityEnabled.cs" />
-    <Compile Include="ApiServiceEntity\ResourceActionEntityRemoved.cs" />
-    <Compile Include="ResourceActionEntity\ResourceActionEntityResourceNameChanged.cs" />
+    <Compile Include="ApiService\ResourceActionEntityActionNameChanged.cs" />
+    <Compile Include="ApiService\ResourceActionEntityCreated.cs" />
+    <Compile Include="ApiService\ResourceActionEntityDisabled.cs" />
+    <Compile Include="ApiService\ResourceActionEntityEnabled.cs" />
+    <Compile Include="ApiService\ResourceActionEntityRemoved.cs" />
+    <Compile Include="ApiService\ResourceActionEntityResourceNameChanged.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
