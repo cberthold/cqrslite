@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using Security.BoundedContext.Domain.Api.Aggregate;
 
 namespace Security.BoundedContext.Domain
 {
@@ -21,18 +22,18 @@ namespace Security.BoundedContext.Domain
             {
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiServiceAggregate.CUSTOMER_API,
-                    ServiceName = ApiServiceAggregate.CUSTOMER_API_NAME,
+                    ServiceId = ApiAggregate.CUSTOMER_API,
+                    ServiceName = ApiAggregate.CUSTOMER_API_NAME,
                 },
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiServiceAggregate.SECURITY_API,
-                    ServiceName = ApiServiceAggregate.SECURITY_API_NAME,
+                    ServiceId = ApiAggregate.SECURITY_API,
+                    ServiceName = ApiAggregate.SECURITY_API_NAME,
                 },
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiServiceAggregate.SIGNALR_API,
-                    ServiceName = ApiServiceAggregate.SIGNALR_API_NAME,
+                    ServiceId = ApiAggregate.SIGNALR_API,
+                    ServiceName = ApiAggregate.SIGNALR_API_NAME,
                 },
             };
 

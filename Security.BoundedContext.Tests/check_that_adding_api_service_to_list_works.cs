@@ -4,6 +4,7 @@ using CQRSlite.Domain.Exception;
 using Infrastructure.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Security.BoundedContext.Domain;
+using Security.BoundedContext.Domain.Api.Aggregate;
 using Security.BoundedContext.Events;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace Security.BoundedContext.Tests
         }
 
 
-        private ApiServiceAggregate aggregate;
+        private ApiAggregate aggregate;
         private IRepository repository;
 
         public Guid ApiGuid { get; set; }
@@ -54,7 +55,7 @@ namespace Security.BoundedContext.Tests
         
         void TheApiServiceIsAdded()
         {
-            aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+            aggregate = ApiAggregate.CreateService(ApiGuid);
             repository.Save(aggregate, aggregate.Version);
             Assert.IsNotNull(aggregate);
         }
@@ -83,7 +84,7 @@ namespace Security.BoundedContext.Tests
 
             try
             {
-                aggregate = ApiServiceAggregate.CreateService(ApiGuid);
+                aggregate = ApiAggregate.CreateService(ApiGuid);
                 repository.Save(aggregate, aggregate.Version);
                 
             }
@@ -106,9 +107,9 @@ namespace Security.BoundedContext.Tests
                 .And(a => a.AddingTheSameAggregateIdShouldFailWithConcurrencyError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName")
                 {
-                    { ApiServiceAggregate.CUSTOMER_API, ApiServiceAggregate.CUSTOMER_API_NAME },
-                    { ApiServiceAggregate.SECURITY_API, ApiServiceAggregate.SECURITY_API_NAME },
-                    { ApiServiceAggregate.SIGNALR_API, ApiServiceAggregate.SIGNALR_API_NAME },
+                    { ApiAggregate.CUSTOMER_API, ApiAggregate.CUSTOMER_API_NAME },
+                    { ApiAggregate.SECURITY_API, ApiAggregate.SECURITY_API_NAME },
+                    { ApiAggregate.SIGNALR_API, ApiAggregate.SIGNALR_API_NAME },
                 })
                 .BDDfy();
         }

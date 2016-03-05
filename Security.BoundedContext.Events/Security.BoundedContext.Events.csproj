@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiService\ApiServiceCreated.cs" />
+    <Compile Include="Feature\FeatureActivated.cs" />
+    <Compile Include="Feature\FeatureDeactivated.cs" />
+    <Compile Include="Feature\FeatureCreated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiService\ResourceActionEntityActionNameChanged.cs" />
     <Compile Include="ApiService\ResourceActionEntityCreated.cs" />

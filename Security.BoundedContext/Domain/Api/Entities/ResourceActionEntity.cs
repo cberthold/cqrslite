@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Security.BoundedContext.Domain
+namespace Security.BoundedContext.Domain.Api.Entities
 {
     public class ResourceActionEntity : IEntity
     {

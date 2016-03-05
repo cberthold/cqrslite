@@ -57,24 +57,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\ApiService\Aggregate\ApiServiceAggregate.cs" />
+    <Compile Include="Domain\Api\Aggregate\ApiAggregate.cs" />
+    <Compile Include="Domain\Api\Services\ApiService.cs" />
+    <Compile Include="Domain\Api\Services\IApiService.cs" />
+    <Compile Include="Domain\Feature\Entities\AddedResourceAction.cs" />
+    <Compile Include="Domain\RootPolicy\Aggregate\IPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\FeatureToAddToPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Identities\UserIdentity.cs" />
+    <Compile Include="Domain\RootPolicy\Services\IPolicyService.cs" />
+    <Compile Include="Domain\RootPolicy\Services\PolicyService.cs" />
     <Compile Include="ValueObjects\ApiServiceList.cs" />
-    <Compile Include="Domain\ApiService\Entities\ResourceActionEntity.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\CompositePolicyBase.cs" />
+    <Compile Include="Domain\Api\Entities\ResourceActionEntity.cs" />
     <Compile Include="Domain\RootPolicy\Identities\CustomerIdentity.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\CustomerRootPolicyAggregate.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\CustomerUserMappedPolicy.cs" />
-    <Compile Include="Domain\Feature\FeatureAggregate.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\FeaturePolicyMapping.cs" />
+    <Compile Include="Domain\Feature\Aggregate\FeatureAggregate.cs" />
     <Compile Include="Domain\RootPolicy\Identities\IIdentity.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\UserMappedPolicyBase.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\NoAccessPolicy.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\PolicyBase.cs" />
     <Compile Include="Domain\RootPolicy\Identities\Identity.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\RootPolicyAggregateBase.cs" />
     <Compile Include="Domain\User\UserAggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ApiServiceListValueObject.cs" />
+    <Compile Include="ValueObjects\FeatureState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -101,9 +104,7 @@
       <Name>Security.BoundedContext.ValueObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

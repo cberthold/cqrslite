@@ -1,6 +1,7 @@
 ﻿using CQRSlite.Domain;
 using Infrastructure.Domain;
 using Infrastructure.Exceptions;
+using Security.BoundedContext.Domain.Api.Entities;
 using Security.BoundedContext.Events;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Security.BoundedContext.Domain
+namespace Security.BoundedContext.Domain.Api.Aggregate
 {
     /// <summary>
     /// Entity represents the 
     /// </summary>
-    public class ApiServiceAggregate : AggregateRoot
+    public class ApiAggregate : AggregateRoot
     {
         public static readonly Guid SECURITY_API = new Guid(@"4D04D504-71A5-4D2A-8A4E-16327F0D6BD7");
         public static readonly Guid CUSTOMER_API = new Guid(@"09B1B02B-9369-4AAB-A91A-0DFACC51F86F");
@@ -27,31 +28,29 @@ namespace Security.BoundedContext.Domain
 
         IDictionary<Guid, ResourceActionEntity> _resourceActions;
 
-        public ApiServiceAggregate() : base()
+        public ApiAggregate() : base()
         {
             _resourceActions = new Dictionary<Guid, ResourceActionEntity>();
         }
-        private ApiServiceAggregate(Guid id, string name) : this()
+        private ApiAggregate(Guid id, string name) : this()
         {
-            ApplyChange(new ApiServiceCreated(name));
-
             Id = id;
-            Name = name;
+            ApplyChange(new ApiServiceCreated(name));
         }
 
-        public static ApiServiceAggregate CreateService(Guid id)
+        public static ApiAggregate CreateService(Guid id)
         {
             if (id == SECURITY_API)
             {
-                return new ApiServiceAggregate(id, SECURITY_API_NAME);
+                return new ApiAggregate(id, SECURITY_API_NAME);
             }
             else if (id == CUSTOMER_API)
             {
-                return new ApiServiceAggregate(id, CUSTOMER_API_NAME);
+                return new ApiAggregate(id, CUSTOMER_API_NAME);
             }
             else if (id == SIGNALR_API)
             {
-                return new ApiServiceAggregate(id, SIGNALR_API_NAME);
+                return new ApiAggregate(id, SIGNALR_API_NAME);
             }
             else
             {
@@ -66,13 +65,11 @@ namespace Security.BoundedContext.Domain
             return resourceAction;
         }
 
-        public ResourceActionEntity AddResourceAction(string resourceName, string actionName)
+        public ResourceActionEntity AddResourceAction(Guid entityId, string resourceName, string actionName)
         {
-            var newId = Guid.NewGuid();
+            var resourceAction = ResourceActionEntity.Create(entityId, Id, resourceName, actionName);
 
-            var resourceAction = ResourceActionEntity.Create(newId, Id, resourceName, actionName);
-
-            _resourceActions[newId] = resourceAction;
+            _resourceActions[entityId] = resourceAction;
 
             return resourceAction;
         }
@@ -156,14 +153,12 @@ namespace Security.BoundedContext.Domain
         
         public void Apply(ApiServiceCreated @event)
         {
-            Id = @event.Id;
-            Version = @event.Version;
             Name = @event.Name;
         }
 
         public void Apply(ResourceActionEntityCreated @event)
         {
-            AddResourceAction(@event.ResourceName, @event.ActionName);
+            AddResourceAction(@event.EntityId, @event.ResourceName, @event.ActionName);
         }
 
         public void Apply(ResourceActionEntityDisabled @event)
