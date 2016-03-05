@@ -11,7 +11,7 @@ namespace Infrastructure.Domain
     /// </summary>
     [Serializable]
     public abstract class ValueObject<T> : IEquatable<T>
-        where T : ValueObject<T>, new()
+        where T : ValueObject<T>
     {
         /// <summary>
         /// Helper function for implementing overloaded equality operator.
