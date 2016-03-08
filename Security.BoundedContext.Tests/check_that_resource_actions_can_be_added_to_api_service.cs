@@ -73,7 +73,7 @@ namespace Security.BoundedContext.Tests
         {
             var resourceAction = aggregate.FindResourceAction(ResourceName, ActionName);
 
-            aggregate.EnableResourceAction(resourceAction.Id);
+            aggregate.ActivateResourceAction(resourceAction.Id);
             repository.Save(aggregate, aggregate.Version);
 
         }

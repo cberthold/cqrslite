@@ -81,12 +81,7 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
             return null;
         }
-
-        public void RenameResourceActionResourceName(Guid entityId, string resourceName)
-        {
-
-        }
-
+        
         public bool IsDuplicateResourceAction(string resourceName, string actionName, Guid? entityIdToExclude = null)
         {
             if(entityIdToExclude == null)
@@ -123,34 +118,62 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
         }
 
-        public void DisableResourceAction(Guid entityId)
+        public void DeactivateResourceAction(Guid entityId)
         {
             if (entityId == Guid.Empty)
                 throw new DomainException("entityId cannot be empty");
 
             var resourceAction = FindResourceAction(entityId);
 
-            if (!resourceAction.IsEnabled)
+            if (!resourceAction.IsActive)
                 throw new DomainException($"Resource \"{resourceAction.ResourceName}\" with Action \"{resourceAction.ActionName}\" is already disabled.");
 
-            ApplyChange(new ResourceActionEntityDisabled(entityId));
+            ApplyChange(new ResourceActionEntityDeactivated(entityId));
 
         }
 
-        public void EnableResourceAction(Guid entityId)
+        public void ActivateResourceAction(Guid entityId)
         {
             if (entityId == Guid.Empty)
                 throw new DomainException("entityId cannot be empty");
             
             var resourceAction = FindResourceAction(entityId);
 
-            if (resourceAction.IsEnabled)
+            if (resourceAction.IsActive)
                 throw new DomainException($"Resource \"{resourceAction.ResourceName}\" with Action \"{resourceAction.ActionName}\" is already enabled.");
 
-            ApplyChange(new ResourceActionEntityEnabled(entityId));
+            ApplyChange(new ResourceActionEntityActivated(entityId));
 
         }
-        
+
+        public void RenameResourceActionResourceName(Guid entityId, string resourceName)
+        {
+            if (entityId == Guid.Empty)
+                throw new DomainException("entityId cannot be empty");
+            if (string.IsNullOrWhiteSpace(resourceName))
+                throw new DomainException($"{nameof(resourceName)} cannot be null or empty");
+
+            var resourceAction = FindResourceAction(entityId);
+            
+            if (resourceAction.ResourceName == resourceName) return;
+
+            ApplyChange(new ResourceActionEntityResourceNameChanged(entityId, resourceName));
+        }
+
+        public void RenameResourceActionActionName(Guid entityId, string actionName)
+        {
+            if (entityId == Guid.Empty)
+                throw new DomainException("entityId cannot be empty");
+            if (string.IsNullOrWhiteSpace(actionName))
+                throw new DomainException($"{nameof(actionName)} cannot be null or empty");
+
+            var resourceAction = FindResourceAction(entityId);
+
+            if (resourceAction.ResourceName == actionName) return;
+
+            ApplyChange(new ResourceActionEntityActionNameChanged(entityId, actionName));
+        }
+
         public void Apply(ApiServiceCreated @event)
         {
             Name = @event.Name;
@@ -161,25 +184,39 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
             AddResourceAction(@event.EntityId, @event.ResourceName, @event.ActionName);
         }
 
-        public void Apply(ResourceActionEntityDisabled @event)
+        public void Apply(ResourceActionEntityDeactivated @event)
         {
             var resourceAction = FindResourceAction(@event.EntityId);
 
-            resourceAction.Disable();
+            resourceAction.Deactivate();
         }
 
-        public void Apply(ResourceActionEntityEnabled @event)
+        public void Apply(ResourceActionEntityActivated @event)
         {
             var resourceAction = FindResourceAction(@event.EntityId);
 
-            resourceAction.Enable();
+            resourceAction.Activate();
         }
 
         public void Apply(ResourceActionEntityRemoved @event)
         {
             var resourceAction = FindResourceAction(@event.EntityId);
 
-            resourceAction.Enable();
+            resourceAction.Activate();
+        }
+
+        public void Apply(ResourceActionEntityActionNameChanged @event)
+        {
+            var resourceAction = FindResourceAction(@event.EntityId);
+
+            resourceAction.SetActionName(@event.ActionName);
+        }
+
+        public void Apply(ResourceActionEntityResourceNameChanged @event)
+        {
+            var resourceAction = FindResourceAction(@event.EntityId);
+
+            resourceAction.SetResourceName(@event.ResourceName);
         }
 
 

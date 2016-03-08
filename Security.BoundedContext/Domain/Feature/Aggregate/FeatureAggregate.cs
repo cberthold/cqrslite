@@ -15,7 +15,7 @@ namespace Security.BoundedContext.Domain.Feature.Aggregate
     public class FeatureAggregate : AggregateRoot
     {
         public string Name { get; protected set; }
-        public bool IsEnabled { get; protected set; }
+        public bool IsActive { get; protected set; }
 
         protected List<AddedResourceAction> resourceActions;
         public IList<AddedResourceAction> ResourceActions => resourceActions.AsReadOnly();
@@ -41,7 +41,7 @@ namespace Security.BoundedContext.Domain.Feature.Aggregate
 
         public void ActivateFeature()
         {
-            if (IsEnabled)
+            if (IsActive)
                 throw new DomainException("Feature already activated");
 
             ApplyChange(new FeatureActivated());
@@ -49,7 +49,7 @@ namespace Security.BoundedContext.Domain.Feature.Aggregate
 
         public void DeactivateFeature()
         {
-            if (!IsEnabled)
+            if (!IsActive)
                 throw new DomainException("Feature already deactivated");
 
             ApplyChange(new FeatureDeactivated());
@@ -71,12 +71,12 @@ namespace Security.BoundedContext.Domain.Feature.Aggregate
 
         public void Apply(FeatureActivated @event)
         {
-            IsEnabled = true;
+            IsActive = true;
         }
 
         public void Apply(FeatureDeactivated @event)
         {
-            IsEnabled = false;
+            IsActive = false;
         }
 
         public void Apply(ResourceActionAddedToFeature @event)

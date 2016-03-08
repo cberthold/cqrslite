@@ -8,6 +8,7 @@ using TestStack.BDDfy;
 using Security.BoundedContext.Domain.Feature;
 using Security.BoundedContext.Domain.Feature.Aggregate;
 using Security.BoundedContext.Domain.Api.Aggregate;
+using Security.BoundedContext.Domain.Api.Services;
 
 namespace Security.BoundedContext.Tests
 {
@@ -31,6 +32,7 @@ namespace Security.BoundedContext.Tests
         protected override void AfterTestInitialized()
         {
             repository = TestContainer.Resolve<IRepository>();
+            apiService = TestContainer.Resolve<IApiService>();
         }
 
         protected override void AfterTestCleanup()
@@ -41,6 +43,7 @@ namespace Security.BoundedContext.Tests
 
         private FeatureAggregate aggregate;
         private IRepository repository;
+        private IApiService apiService;
 
         public Guid ApiGuid { get; set; }
         public string ApiName { get; set; }
@@ -58,22 +61,14 @@ namespace Security.BoundedContext.Tests
 
         void ResourceActionIsAddedToServiceApi()
         {
-            var serviceAggregate = ApiAggregate.CreateService(ApiGuid);
-            repository.Save(serviceAggregate, serviceAggregate.Version);
+            var serviceAggregate = apiService.CreateService(ApiGuid);
 
-            serviceAggregate = repository.Get<ApiAggregate>(ApiGuid);
+            Assert.IsNotNull(serviceAggregate);
+            Assert.IsFalse(serviceAggregate.Id == Guid.Empty);
+            Assert.IsTrue(serviceAggregate.Id == ApiGuid);
 
-            serviceAggregate.CreateResourceAction(ResourceName, ActionName);
-            repository.Save(serviceAggregate, serviceAggregate.Version);
-
-            serviceAggregate = repository.Get<ApiAggregate>(ApiGuid);
-
-            var resourceAction = serviceAggregate.FindResourceAction(ResourceName, ActionName);
-
-            serviceAggregate.EnableResourceAction(resourceAction.Id);
-            repository.Save(serviceAggregate, serviceAggregate.Version);
-
-            serviceAggregate = repository.Get<ApiAggregate>(ApiGuid);
+            apiService.CreateAndEnableResourceAction(ApiGuid, ResourceName, ActionName);
+            
         }
 
 
@@ -86,8 +81,7 @@ namespace Security.BoundedContext.Tests
 
         void TheResourceActionIsAddedToTheFeature()
         {
-            var serviceAggregate = repository.Get<ApiAggregate>(ApiGuid);
-            var resourceAction = serviceAggregate.FindResourceAction(ResourceName, ActionName);
+            var resourceAction = apiService.FindResourceAction(ApiGuid, ResourceName, ActionName);
             aggregate.AddResourceActionToFeature(resourceAction);
         }
 
@@ -115,16 +109,13 @@ namespace Security.BoundedContext.Tests
             {
                 var serviceId = addedResourceAction.ApiServiceId;
                 var resourceActionId = addedResourceAction.ResourceActionEntityId;
-
-                var serviceAggregate = repository.Get<ApiAggregate>(serviceId);
-
-                Assert.IsNotNull(serviceAggregate, "Api service aggregate could not be found");
-
-                var resourceAction = serviceAggregate.FindResourceAction(resourceActionId);
+                
+                var resourceAction = apiService.FindResourceAction(serviceId, resourceActionId);
 
                 Assert.IsNotNull(resourceAction, $"Unable to find the resource action with Id {resourceActionId}");
                 Assert.AreEqual(resourceAction.ResourceName, ResourceName);
                 Assert.AreEqual(resourceAction.ActionName, ActionName);
+                Assert.IsTrue(resourceAction.IsActive);
 
             }
         }

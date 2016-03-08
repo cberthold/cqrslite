@@ -14,7 +14,7 @@ namespace Security.BoundedContext.Domain.Api.Entities
         public Guid ApiServiceId { get; protected set; }
         public string ResourceName { get; protected set; }
         public string ActionName { get; protected set; }
-        public bool IsEnabled { get; protected set; }
+        public bool IsActive { get; protected set; }
 
         private ResourceActionEntity(Guid entityId, Guid apiServiceId, string resourceName, string actionName)
         {
@@ -40,17 +40,17 @@ namespace Security.BoundedContext.Domain.Api.Entities
             this.ActionName = actionName;
         }
 
-        public void Enable()
+        public void Activate()
         {
-            IsEnabled = true;
+            IsActive = true;
         }
 
-        public void Disable()
+        public void Deactivate()
         {
-            if (!IsEnabled)
-                throw new DomainException($"Resource \"{ResourceName}\" with Action \"{ActionName}\" is already disabled.");
+            if (!IsActive)
+                throw new DomainException($"Resource \"{ResourceName}\" with Action \"{ActionName}\" is already deactivated.");
             
-            IsEnabled = false;
+            IsActive = false;
         }
 
         public static ResourceActionEntity Create(Guid entityId, Guid apiServiceId, string resourceName, string actionName)

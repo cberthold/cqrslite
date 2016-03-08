@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Security.BoundedContext.Events
 {
-    public class ResourceActionEntityDisabled : EventBase
+    public class ResourceActionEntityDeactivated : EventBase
     {
         public Guid EntityId { get; protected set; }
         
-        public ResourceActionEntityDisabled(Guid entityId)
+        public ResourceActionEntityDeactivated(Guid entityId)
         {
             EntityId = entityId;
         }

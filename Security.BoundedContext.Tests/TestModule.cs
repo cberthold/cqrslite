@@ -4,9 +4,11 @@ using CQRSlite.Commands;
 using CQRSlite.Domain;
 using CQRSlite.Events;
 using Infrastructure.Command;
+using Infrastructure.Domain;
 using Infrastructure.EventStore;
 using Infrastructure.Validation;
 using Security.BoundedContext.Domain;
+using Security.BoundedContext.Domain.Api.Services;
 using Security.BoundedContext.Events;
 using System;
 using System.Collections.Generic;
@@ -71,6 +73,14 @@ namespace Security.BoundedContext.Tests
 
             builder.RegisterType<CommandDispatcher>()
                 .AsSelf()
+                .InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(typeof(IApiService).Assembly)
+                .Where(t => {
+                    return typeof(IDomainService).IsAssignableFrom(t);
+                    })
+                .AsSelf()
+                .AsImplementedInterfaces()
                 .InstancePerRequest();
 
             //builder.RegisterType<CustomerCommandHandlers>()
