@@ -109,6 +109,7 @@
     <Compile Include="Bus\AzureInProcessBus.cs" />
     <Compile Include="Command\CommandDispatcher.cs" />
     <Compile Include="Domain\HookableSession.cs" />
+    <Compile Include="Domain\IDomainService.cs" />
     <Compile Include="Domain\IEntity.cs" />
     <Compile Include="Domain\ISessionHook.cs" />
     <Compile Include="Domain\SequentialGuid.cs" />
