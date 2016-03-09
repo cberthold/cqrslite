@@ -10,26 +10,25 @@ using System.Threading.Tasks;
 
 namespace Security.BoundedContext.Domain
 {
-    public class CustomerRootPolicyAggregate : RootPolicyAggregate<CustomerRootPolicyAggregate>
+    public class AdminRootPolicyAggregate : RootPolicyAggregate<AdminRootPolicyAggregate>
     {
+        
+        public static readonly Guid NO_ACCESS_POLICY_ID = new Guid("0BE976F1-BDE2-414D-B7BE-F9F60D673A51");
 
-        public static readonly Guid NO_ACCESS_POLICY_ID = new Guid("A4E97CCC-F4AC-4781-A782-502287A5D33D");
-
-        protected CustomerRootPolicyAggregate() 
+        protected AdminRootPolicyAggregate()
             : base()
         {
 
         }
 
-        protected CustomerRootPolicyAggregate(Guid id, string name, Guid? parentPolicyId)
+        protected AdminRootPolicyAggregate(Guid id, string name, Guid? parentPolicyId)
             : base(id, name, parentPolicyId)
         {
-            
-        }
-        
-        public static CustomerRootPolicyAggregate Create(IPolicyService policyService, Guid? parentPolicyId, string policyName)
-        {
 
+        }
+
+        public static AdminRootPolicyAggregate Create(IPolicyService policyService, Guid? parentPolicyId, string policyName)
+        {
             var aggregate = CheckRootPolicyCreationInvariantsAndCreateAggregate(
                 NO_ACCESS_POLICY_ID,
                 policyService,
@@ -37,9 +36,9 @@ namespace Security.BoundedContext.Domain
                 policyName,
                 (newPolicyId) =>
                 {
-                    return new CustomerRootPolicyAggregate(newPolicyId, policyName, parentPolicyId);
+                    return new AdminRootPolicyAggregate(newPolicyId, policyName, parentPolicyId);
                 });
-            
+
             return aggregate;
         }
 

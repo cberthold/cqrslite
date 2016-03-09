@@ -43,7 +43,7 @@ namespace Security.BoundedContext.Tests
 
             builder.RegisterType<InMemoryEventStore>()
                 .As<IEventStore>()
-                .SingleInstance();
+                .InstancePerRequest();
             //builder.RegisterType<RavenDbEventStore>()
             //    .As<IEventStore>()
             //    .InstancePerRequest();

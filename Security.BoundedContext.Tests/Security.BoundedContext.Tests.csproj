@@ -60,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="check_that_adding_a_child_policy_to_a_root_policy_recursively_adds_features.cs" />
     <Compile Include="check_that_resource_actions_can_be_added_to_api_service.cs" />
     <Compile Include="check_that_adding_api_service_to_list_works.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

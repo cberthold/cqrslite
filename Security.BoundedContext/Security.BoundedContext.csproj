@@ -61,8 +61,11 @@
     <Compile Include="Domain\Api\Services\ApiService.cs" />
     <Compile Include="Domain\Api\Services\IApiService.cs" />
     <Compile Include="Domain\Feature\Entities\AddedResourceAction.cs" />
+    <Compile Include="Domain\RootPolicy\Aggregate\AdminRootPolicyAggregate.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\IPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Aggregate\UserRootPolicyAggregate.cs" />
     <Compile Include="Domain\RootPolicy\Entities\FeatureToAddToPolicy.cs" />
+    <Compile Include="Domain\RootPolicy\Identities\PolicyTypes.cs" />
     <Compile Include="Domain\RootPolicy\Identities\UserIdentity.cs" />
     <Compile Include="Domain\RootPolicy\Services\IPolicyService.cs" />
     <Compile Include="Domain\RootPolicy\Services\PolicyService.cs" />

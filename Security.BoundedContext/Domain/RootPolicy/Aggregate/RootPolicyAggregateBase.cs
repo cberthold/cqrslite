@@ -1,9 +1,11 @@
 ﻿using CQRSlite.Domain;
+using CQRSlite.Domain.Exception;
 using Infrastructure.Domain;
 using Infrastructure.Exceptions;
 using Security.BoundedContext.Domain.RootPolicy;
 using Security.BoundedContext.Domain.RootPolicy.Aggregate;
 using Security.BoundedContext.Domain.RootPolicy.Services;
+using Security.BoundedContext.Events.RootPolicy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace Security.BoundedContext.Domain
         where TRoot : RootPolicyAggregate<TRoot>
     {
 
+        public string Name { get; private set; }
         public Guid? ParentPolicyId { get; private set; }
         public TRoot ParentPolicy { get; private set; }
         public bool IsRootPolicy => ParentPolicyId == null;
@@ -33,6 +36,13 @@ namespace Security.BoundedContext.Domain
         {
             //_addedFeatures = new Dictionary<Guid, FeatureToAddToPolicy>();
             _childPolicies = new List<TRoot>();
+        }
+
+        protected RootPolicyAggregate(Guid id, string name, Guid? parentPolicyId)
+            : this()
+        {
+            Id = id;
+            ApplyChange(new RootPolicyCreated(name, parentPolicyId));
         }
 
         //public virtual void AddFeatureToPolicy(FeatureAggregate feature)
@@ -64,5 +74,42 @@ namespace Security.BoundedContext.Domain
                 
             }
         }
+
+        public void Apply(RootPolicyCreated @event)
+        {
+            Name = @event.Name;
+            ParentPolicyId = @event.ParentPolicyId;
+        }
+
+        protected static TRoot CheckRootPolicyCreationInvariantsAndCreateAggregate(Guid noAccessPolicyId, IPolicyService policyService, Guid? parentPolicyId, string policyName, Func<Guid, TRoot> createAggregate)
+        {
+            Guid newPolicyId = noAccessPolicyId;
+            if (parentPolicyId != null)
+            {
+                newPolicyId = Guid.NewGuid();
+            }
+
+            TRoot aggregate = null;
+
+            try
+            {
+                aggregate = policyService.LoadRootPolicy<TRoot>(newPolicyId);
+
+                if (aggregate != null)
+                {
+                    throw new DomainException($"Policy with policy id {newPolicyId} already exists with the name '{aggregate.Name}'");
+                }
+            }
+            catch (AggregateNotFoundException)
+            {
+                // we want to get here and just continue
+            }
+
+            aggregate = createAggregate(newPolicyId);
+
+            aggregate.LoadParentPolicies(policyService);
+
+            return aggregate;
+        } 
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="ApiService\ResourceActionEntityRemoved.cs" />
     <Compile Include="ApiService\ResourceActionEntityResourceNameChanged.cs" />
     <Compile Include="Feature\ResourceActionAddedToFeature.cs" />
+    <Compile Include="RootPolicy\RootPolicyCreated.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
