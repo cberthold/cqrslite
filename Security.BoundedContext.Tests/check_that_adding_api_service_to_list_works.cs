@@ -107,9 +107,9 @@ namespace Security.BoundedContext.Tests
                 .And(a => a.AddingTheSameAggregateIdShouldFailWithConcurrencyError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName")
                 {
-                    { ApiAggregate.CUSTOMER_API, ApiAggregate.CUSTOMER_API_NAME },
-                    { ApiAggregate.SECURITY_API, ApiAggregate.SECURITY_API_NAME },
-                    { ApiAggregate.SIGNALR_API, ApiAggregate.SIGNALR_API_NAME },
+                    { Constants.CUSTOMER_API, Constants.CUSTOMER_API_NAME },
+                    { Constants.SECURITY_API, Constants.SECURITY_API_NAME },
+                    { Constants.SIGNALR_API, Constants.SIGNALR_API_NAME },
                 })
                 .BDDfy();
         }

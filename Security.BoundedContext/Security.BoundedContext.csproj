@@ -57,27 +57,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Domain\Api\Aggregate\ApiAggregate.cs" />
     <Compile Include="Domain\Api\Services\ApiService.cs" />
     <Compile Include="Domain\Api\Services\IApiService.cs" />
-    <Compile Include="Domain\Feature\Entities\AddedResourceAction.cs" />
+    <Compile Include="Domain\Feature\Entities\FeatureEntity.cs" />
+    <Compile Include="Domain\Feature\Services\FeatureService.cs" />
+    <Compile Include="Domain\Feature\Services\IFeatureService.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\AdminRootPolicyAggregate.cs" />
-    <Compile Include="Domain\RootPolicy\Aggregate\IPolicy.cs" />
-    <Compile Include="Domain\RootPolicy\Aggregate\UserRootPolicyAggregate.cs" />
-    <Compile Include="Domain\RootPolicy\Entities\FeatureToAddToPolicy.cs" />
-    <Compile Include="Domain\RootPolicy\Identities\PolicyTypes.cs" />
-    <Compile Include="Domain\RootPolicy\Identities\UserIdentity.cs" />
     <Compile Include="Domain\RootPolicy\Services\IPolicyService.cs" />
     <Compile Include="Domain\RootPolicy\Services\PolicyService.cs" />
+    <Compile Include="Domain\User\Identities\UserId.cs" />
+    <Compile Include="Domain\User\Services\IUserService.cs" />
+    <Compile Include="Domain\User\Services\UserService.cs" />
+    <Compile Include="ReadModel\DTO\CustomerListDTO.cs" />
+    <Compile Include="ReadModel\Handlers\CustomerListEventHandlers.cs" />
     <Compile Include="ValueObjects\ApiServiceList.cs" />
     <Compile Include="Domain\Api\Entities\ResourceActionEntity.cs" />
-    <Compile Include="Domain\RootPolicy\Identities\CustomerIdentity.cs" />
-    <Compile Include="Domain\RootPolicy\Aggregate\CustomerRootPolicyAggregate.cs" />
-    <Compile Include="Domain\Feature\Aggregate\FeatureAggregate.cs" />
-    <Compile Include="Domain\RootPolicy\Identities\IIdentity.cs" />
-    <Compile Include="Domain\RootPolicy\Identities\Identity.cs" />
-    <Compile Include="Domain\RootPolicy\Aggregate\RootPolicyAggregateBase.cs" />
-    <Compile Include="Domain\User\UserAggregate.cs" />
+    <Compile Include="Domain\Feature\Aggregate\FeatureBookAggregate.cs" />
+    <Compile Include="Domain\User\Aggregate\UserAggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ApiServiceListValueObject.cs" />
     <Compile Include="ValueObjects\FeatureState.cs" />
@@ -94,6 +92,18 @@
       <Project>{dafd2a8a-d6b0-4433-8ddf-b98460c64ec6}</Project>
       <Name>CQRSlite</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Customer.BoundedContext.Events\Customer.BoundedContext.Events.csproj">
+      <Project>{321a449d-f7bc-4da8-90a3-e9be6a296164}</Project>
+      <Name>Customer.BoundedContext.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer.BoundedContext.Identities\Customer.BoundedContext.Identities.csproj">
+      <Project>{cdf1bc28-0084-48ea-95ed-8770dd0f7dd8}</Project>
+      <Name>Customer.BoundedContext.Identities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Customer.BoundedContext.ValueObjects\Customer.BoundedContext.ValueObjects.csproj">
+      <Project>{5febef59-9de8-436d-95b8-9816019da38a}</Project>
+      <Name>Customer.BoundedContext.ValueObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{44da2e8f-70b2-4e54-b96f-955e955149c4}</Project>
       <Name>Infrastructure</Name>
@@ -102,12 +112,20 @@
       <Project>{2c3ab314-51cf-47e6-954d-f75ecca28b90}</Project>
       <Name>Security.BoundedContext.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Security.BoundedContext.Identities\Security.BoundedContext.Identities.csproj">
+      <Project>{3cb4f78b-a204-4540-b86b-085478d725e8}</Project>
+      <Name>Security.BoundedContext.Identities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Security.BoundedContext.ValueObjects\Security.BoundedContext.ValueObjects.csproj">
       <Project>{329340e7-899b-4a9e-a6f5-c37007c441a8}</Project>
       <Name>Security.BoundedContext.ValueObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Domain\RootPolicy\Entities\" />
+    <Folder Include="Domain\User\Entities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

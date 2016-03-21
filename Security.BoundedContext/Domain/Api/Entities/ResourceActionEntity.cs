@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Domain;
 using Infrastructure.Exceptions;
+using Security.BoundedContext.Identities.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace Security.BoundedContext.Domain.Api.Entities
 {
     public class ResourceActionEntity : IEntity
     {
-        public Guid Id { get; protected set; }
-        public Guid ApiServiceId { get; protected set; }
+        public Guid Id => ResourceActionId.Value;
+        public ResourceActionId ResourceActionId { get; private set; }
+
         public string ResourceName { get; protected set; }
         public string ActionName { get; protected set; }
         public bool IsActive { get; protected set; }
 
-        private ResourceActionEntity(Guid entityId, Guid apiServiceId, string resourceName, string actionName)
+        private ResourceActionEntity(ResourceActionId resourceActionId, string resourceName, string actionName)
         {
-            Id = entityId;
-            ApiServiceId = apiServiceId;
+            ResourceActionId = resourceActionId;
             ResourceName = resourceName;
             ActionName = actionName;
         }
@@ -53,18 +54,16 @@ namespace Security.BoundedContext.Domain.Api.Entities
             IsActive = false;
         }
 
-        public static ResourceActionEntity Create(Guid entityId, Guid apiServiceId, string resourceName, string actionName)
+        public static ResourceActionEntity Create(ResourceActionId resourceActionId, string resourceName, string actionName)
         {
-            if (entityId == Guid.Empty)
-                throw new DomainException("entityId is empty");
-            if(apiServiceId == Guid.Empty)
-                throw new DomainException("apiServiceId is empty");
+            if(resourceActionId == null)
+                throw new DomainException($"{nameof(resourceActionId)} is empty");
             if (string.IsNullOrWhiteSpace(resourceName))
-                throw new DomainException("resourceName is null or empty");
+                throw new DomainException($"{nameof(resourceName)} is null or empty");
             if (string.IsNullOrWhiteSpace(actionName))
-                throw new DomainException("actionName is null or empty");
+                throw new DomainException($"{nameof(actionName)} is null or empty");
 
-            return new ResourceActionEntity(entityId, apiServiceId, resourceName, actionName);
+            return new ResourceActionEntity(resourceActionId, resourceName, actionName);
         }
     }
 }

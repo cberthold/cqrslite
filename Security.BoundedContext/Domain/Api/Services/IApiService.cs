@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Domain;
 using Security.BoundedContext.Domain.Api.Aggregate;
 using Security.BoundedContext.Domain.Api.Entities;
+using Security.BoundedContext.Identities.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,6 @@ namespace Security.BoundedContext.Domain.Api.Services
         ApiAggregate LoadService(Guid serviceId);
         ResourceActionEntity CreateAndEnableResourceAction(Guid serviceId, string resourceName, string actionName);
         ResourceActionEntity FindResourceAction(Guid serviceId, string resourceName, string actionName);
-        ResourceActionEntity FindResourceAction(Guid serviceId, Guid resourceActionId);
+        ResourceActionEntity FindResourceAction(ResourceActionId resourceActionId);
     }
 }

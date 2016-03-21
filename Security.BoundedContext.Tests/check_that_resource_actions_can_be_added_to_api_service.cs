@@ -73,7 +73,7 @@ namespace Security.BoundedContext.Tests
         {
             var resourceAction = aggregate.FindResourceAction(ResourceName, ActionName);
 
-            aggregate.ActivateResourceAction(resourceAction.Id);
+            aggregate.ActivateResourceAction(resourceAction);
             repository.Save(aggregate, aggregate.Version);
 
         }
@@ -119,9 +119,9 @@ namespace Security.BoundedContext.Tests
                 .And(a => a.AddingTheSameResourceActionShouldFailWithDomainError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName", "ResourceName", "ActionName")
                 {
-                    { ApiAggregate.CUSTOMER_API, ApiAggregate.CUSTOMER_API_NAME , "AddressController", "Create"},
-                    { ApiAggregate.SECURITY_API, ApiAggregate.SECURITY_API_NAME , "RolesController", "Create"},
-                    { ApiAggregate.SIGNALR_API, ApiAggregate.SIGNALR_API_NAME , "TestServerMethod", "Create"},
+                    { Constants.CUSTOMER_API, Constants.CUSTOMER_API_NAME , "AddressController", "Create"},
+                    { Constants.SECURITY_API, Constants.SECURITY_API_NAME , "RolesController", "Create"},
+                    { Constants.SIGNALR_API, Constants.SIGNALR_API_NAME , "TestServerMethod", "Create"},
                 })
                 .BDDfy();
         }

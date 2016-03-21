@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Security.BoundedContext.Events.RootPolicy
 {
-    public class RootPolicyCreated : EventBase
+    public class TopLevelRootPolicyCreated : EventBase
     {
+        public short PolicyType { get; protected set; }
         public string Name { get; protected set; }
-        public Guid? ParentPolicyId { get; protected set; }
-        public RootPolicyCreated(string name, Guid? parentPolicyId)
+
+        public TopLevelRootPolicyCreated(string name, short policyType)
         {
             Name = name;
-            ParentPolicyId = parentPolicyId;
+            PolicyType = policyType;
         }
     }
 }

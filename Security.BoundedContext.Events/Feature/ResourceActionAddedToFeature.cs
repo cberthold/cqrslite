@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Events;
+using Security.BoundedContext.Identities.Api;
+using Security.BoundedContext.Identities.Feature;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +11,13 @@ namespace Security.BoundedContext.Events
 {
     public class ResourceActionAddedToFeature : EventBase
     {
-        public Guid ApiServiceId { get; private set; }
-        public Guid ResourceActionEntityId { get; private set; }
+        public FeatureId FeatureId { get; private set; }
+        public ResourceActionId ResourceActionId { get; private set; }
 
-        public ResourceActionAddedToFeature(Guid apiServiceId, Guid resourceActionEntityId)
+        public ResourceActionAddedToFeature(FeatureId featureId, ResourceActionId resourceActionId)
         {
-            ApiServiceId = apiServiceId;
-            ResourceActionEntityId = resourceActionEntityId;
+            FeatureId = featureId;
+            ResourceActionId = resourceActionId;
         }
     }
 }

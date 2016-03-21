@@ -3,6 +3,7 @@ using Infrastructure.Domain;
 using Infrastructure.Exceptions;
 using Security.BoundedContext.Domain.Api.Entities;
 using Security.BoundedContext.Events;
+using Security.BoundedContext.Identities.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,41 +17,48 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
     /// </summary>
     public class ApiAggregate : AggregateRoot
     {
-        public static readonly Guid SECURITY_API = new Guid(@"4D04D504-71A5-4D2A-8A4E-16327F0D6BD7");
-        public static readonly Guid CUSTOMER_API = new Guid(@"09B1B02B-9369-4AAB-A91A-0DFACC51F86F");
-        public static readonly Guid SIGNALR_API = new Guid(@"138CC799-0FF5-42C1-A7FA-099ECA359F9E");
+        #region Identity
+        public override Guid Id
+        {
+            get { return ApiId.Value; }
+            protected set { ApiId = new ApiId(value); }
+        }
 
-        public const string SECURITY_API_NAME = "Security API";
-        public const string CUSTOMER_API_NAME = "Customer API";
-        public const string SIGNALR_API_NAME = "SignalR API";
+        public ApiId ApiId { get; protected set; }
+
+        #endregion
+
+        #region State
 
         public string Name { get; protected set; }
 
-        IDictionary<Guid, ResourceActionEntity> _resourceActions;
+        IDictionary<ResourceActionId, ResourceActionEntity> _resourceActions;
+
+        #endregion
 
         public ApiAggregate() : base()
         {
-            _resourceActions = new Dictionary<Guid, ResourceActionEntity>();
+            _resourceActions = new Dictionary<ResourceActionId, ResourceActionEntity>();
         }
-        private ApiAggregate(Guid id, string name) : this()
+        private ApiAggregate(ApiId apiId, string name) : this()
         {
-            Id = id;
-            ApplyChange(new ApiServiceCreated(name));
+            ApplyChange(new ApiServiceCreated(apiId, name));
         }
 
         public static ApiAggregate CreateService(Guid id)
         {
-            if (id == SECURITY_API)
+            var apiId = new ApiId(id);
+            if (id == Constants.SECURITY_API)
             {
-                return new ApiAggregate(id, SECURITY_API_NAME);
+                return new ApiAggregate(apiId, Constants.SECURITY_API_NAME);
             }
-            else if (id == CUSTOMER_API)
+            else if (id == Constants.CUSTOMER_API)
             {
-                return new ApiAggregate(id, CUSTOMER_API_NAME);
+                return new ApiAggregate(apiId, Constants.CUSTOMER_API_NAME);
             }
-            else if (id == SIGNALR_API)
+            else if (id == Constants.SIGNALR_API)
             {
-                return new ApiAggregate(id, SIGNALR_API_NAME);
+                return new ApiAggregate(apiId, Constants.SIGNALR_API_NAME);
             }
             else
             {
@@ -65,39 +73,39 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
             return resourceAction;
         }
 
-        public ResourceActionEntity AddResourceAction(Guid entityId, string resourceName, string actionName)
+        public ResourceActionEntity AddResourceAction(ResourceActionId id, string resourceName, string actionName)
         {
-            var resourceAction = ResourceActionEntity.Create(entityId, Id, resourceName, actionName);
+            var resourceAction = ResourceActionEntity.Create(id, resourceName, actionName);
 
-            _resourceActions[entityId] = resourceAction;
+            _resourceActions[id] = resourceAction;
 
             return resourceAction;
         }
 
-        public ResourceActionEntity FindResourceAction(Guid entityId)
+        public ResourceActionEntity FindResourceAction(ResourceActionId entityId)
         {
             if (_resourceActions.ContainsKey(entityId))
                 return _resourceActions[entityId];
 
             return null;
         }
-        
-        public bool IsDuplicateResourceAction(string resourceName, string actionName, Guid? entityIdToExclude = null)
+
+        public bool IsDuplicateResourceAction(string resourceName, string actionName, ResourceActionId entityIdToExclude = null)
         {
-            if(entityIdToExclude == null)
+            if (entityIdToExclude == null)
             {
                 return _resourceActions.Any(
-                        a=>a.Value.ResourceName == resourceName
+                        a => a.Value.ResourceName == resourceName
                         && a.Value.ActionName == actionName);
             }
             else
             {
-                return _resourceActions.Any(a => 
-                        a.Key !=  entityIdToExclude.Value
+                return _resourceActions.Any(a =>
+                        a.Key != entityIdToExclude
                         && a.Value.ResourceName == resourceName
                         && a.Value.ActionName == actionName);
             }
-            
+
         }
 
         public ResourceActionEntity CreateResourceAction(string resourceName, string actionName)
@@ -110,7 +118,7 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
             if (IsDuplicateResourceAction(resourceName, actionName))
                 throw new DomainException("resource action already exists");
 
-            var newId = Guid.NewGuid();
+            var newId = new ResourceActionId(ApiId, Guid.NewGuid());
 
             ApplyChange(new ResourceActionEntityCreated(newId, resourceName, actionName));
 
@@ -118,10 +126,10 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
         }
 
-        public void DeactivateResourceAction(Guid entityId)
+        public void DeactivateResourceAction(ResourceActionId entityId)
         {
-            if (entityId == Guid.Empty)
-                throw new DomainException("entityId cannot be empty");
+            if (entityId == null)
+                throw new DomainException("entityId cannot be null");
 
             var resourceAction = FindResourceAction(entityId);
 
@@ -132,11 +140,17 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
         }
 
-        public void ActivateResourceAction(Guid entityId)
+        public void ActivateResourceAction(ResourceActionEntity resourceAction)
         {
-            if (entityId == Guid.Empty)
-                throw new DomainException("entityId cannot be empty");
-            
+            if (resourceAction == null)
+                throw new DomainException("resourceAction cannot be null");
+            ActivateResourceAction(resourceAction.ResourceActionId);
+        }
+        public void ActivateResourceAction(ResourceActionId entityId)
+        {
+            if (entityId == null)
+                throw new DomainException("entityId cannot be null");
+
             var resourceAction = FindResourceAction(entityId);
 
             if (resourceAction.IsActive)
@@ -146,23 +160,36 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
         }
 
-        public void RenameResourceActionResourceName(Guid entityId, string resourceName)
+        public void RemoveResourceAction(ResourceActionId entityId)
         {
-            if (entityId == Guid.Empty)
-                throw new DomainException("entityId cannot be empty");
+            if (entityId == null)
+                throw new DomainException("entityId cannot be null");
+
+            var resourceAction = FindResourceAction(entityId);
+
+            if (resourceAction == null) return;
+
+            ApplyChange(new ResourceActionEntityRemoved(entityId));
+
+        }
+
+        public void RenameResourceActionResourceName(ResourceActionId entityId, string resourceName)
+        {
+            if (entityId == null)
+                throw new DomainException("entityId cannot be null");
             if (string.IsNullOrWhiteSpace(resourceName))
                 throw new DomainException($"{nameof(resourceName)} cannot be null or empty");
 
             var resourceAction = FindResourceAction(entityId);
-            
+
             if (resourceAction.ResourceName == resourceName) return;
 
             ApplyChange(new ResourceActionEntityResourceNameChanged(entityId, resourceName));
         }
 
-        public void RenameResourceActionActionName(Guid entityId, string actionName)
+        public void RenameResourceActionActionName(ResourceActionId entityId, string actionName)
         {
-            if (entityId == Guid.Empty)
+            if (entityId == null)
                 throw new DomainException("entityId cannot be empty");
             if (string.IsNullOrWhiteSpace(actionName))
                 throw new DomainException($"{nameof(actionName)} cannot be null or empty");
@@ -176,6 +203,7 @@ namespace Security.BoundedContext.Domain.Api.Aggregate
 
         public void Apply(ApiServiceCreated @event)
         {
+            ApiId = @event.ApiId;
             Name = @event.Name;
         }
 

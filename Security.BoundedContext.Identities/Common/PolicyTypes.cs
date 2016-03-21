@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Security.BoundedContext.Domain.RootPolicy.Identities
 {
-    public enum PolicyTypes : short
+    public enum PolicyTypes
     {
         Customer = 0,
         User = 1,

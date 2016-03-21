@@ -22,18 +22,18 @@ namespace Security.BoundedContext.Domain
             {
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiAggregate.CUSTOMER_API,
-                    ServiceName = ApiAggregate.CUSTOMER_API_NAME,
+                    ServiceId = Constants.CUSTOMER_API,
+                    ServiceName = Constants.CUSTOMER_API_NAME,
                 },
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiAggregate.SECURITY_API,
-                    ServiceName = ApiAggregate.SECURITY_API_NAME,
+                    ServiceId = Constants.SECURITY_API,
+                    ServiceName = Constants.SECURITY_API_NAME,
                 },
                 new ApiServiceListValueObject()
                 {
-                    ServiceId = ApiAggregate.SIGNALR_API,
-                    ServiceName = ApiAggregate.SIGNALR_API_NAME,
+                    ServiceId = Constants.SIGNALR_API,
+                    ServiceName = Constants.SIGNALR_API_NAME,
                 },
             };
 

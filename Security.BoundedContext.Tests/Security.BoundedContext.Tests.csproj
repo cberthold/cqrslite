@@ -85,6 +85,10 @@
       <Project>{2c3ab314-51cf-47e6-954d-f75ecca28b90}</Project>
       <Name>Security.BoundedContext.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Security.BoundedContext.Identities\Security.BoundedContext.Identities.csproj">
+      <Project>{3cb4f78b-a204-4540-b86b-085478d725e8}</Project>
+      <Name>Security.BoundedContext.Identities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Security.BoundedContext.ValueObjects\Security.BoundedContext.ValueObjects.csproj">
       <Project>{329340e7-899b-4a9e-a6f5-c37007c441a8}</Project>
       <Name>Security.BoundedContext.ValueObjects</Name>

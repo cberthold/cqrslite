@@ -9,6 +9,8 @@ using Security.BoundedContext.Domain.Feature;
 using Security.BoundedContext.Domain.Feature.Aggregate;
 using Security.BoundedContext.Domain.Api.Aggregate;
 using Security.BoundedContext.Domain.Api.Services;
+using Security.BoundedContext.Identities.Feature;
+using Security.BoundedContext.Domain.Feature.Entities;
 
 namespace Security.BoundedContext.Tests
 {
@@ -41,7 +43,8 @@ namespace Security.BoundedContext.Tests
         }
 
 
-        private FeatureAggregate aggregate;
+        private FeatureBookAggregate aggregate;
+        private FeatureEntity feature;
         private IRepository repository;
         private IApiService apiService;
 
@@ -50,7 +53,8 @@ namespace Security.BoundedContext.Tests
         public string ResourceName { get; set; }
         public string ActionName { get; set; }
         public string FeatureName { get; set; }
-        public Guid FeatureId { get; set; }
+        public Guid FeatureBookId { get; set; }
+        public FeatureId FeatureId { get; set; }
 
 
         // You can override step text using executable attributes
@@ -68,21 +72,23 @@ namespace Security.BoundedContext.Tests
             Assert.IsTrue(serviceAggregate.Id == ApiGuid);
 
             apiService.CreateAndEnableResourceAction(ApiGuid, ResourceName, ActionName);
-            
+
         }
 
 
         void TheFeatureIsCreated()
         {
-            aggregate = FeatureAggregate.Create(FeatureName);
-            FeatureId = aggregate.Id;
+            aggregate = FeatureBookAggregate.Create();
+            FeatureBookId = aggregate.Id;
+            feature = aggregate.AddFeature(FeatureName);
+            FeatureId = feature.FeatureId;
 
         }
 
         void TheResourceActionIsAddedToTheFeature()
         {
             var resourceAction = apiService.FindResourceAction(ApiGuid, ResourceName, ActionName);
-            aggregate.AddResourceActionToFeature(resourceAction);
+            aggregate.AddResourceActionToFeature(feature, resourceAction);
         }
 
         void TheFeatureAggregateIsSavedToTheRepository()
@@ -92,27 +98,26 @@ namespace Security.BoundedContext.Tests
 
         void TheFeatureShouldBeAbleToBeLoadedFromRepository()
         {
-            aggregate = repository.Get<FeatureAggregate>(FeatureId);
-            Assert.IsNotNull(aggregate, "Feature couldnt be found in repository");
+            aggregate = repository.Get<FeatureBookAggregate>(FeatureBookId);
+            Assert.IsNotNull(aggregate, "Feature Book couldnt be found in repository");
+            var foundFeature = aggregate.GetFeature(FeatureId);
+            Assert.IsNotNull(foundFeature, "Feature couldnt be found in feature book");
         }
 
         void TheFeatureAggregateNameShouldEqualToFeatureName()
         {
-            Assert.AreEqual(aggregate.Name, FeatureName);
+            Assert.AreEqual(feature.Name, FeatureName);
         }
 
         void TheLoadedResourceActionEntityIdsShouldBeFoundOnTheApiService()
         {
-            Assert.IsTrue(aggregate.ResourceActions.Count > 0);
+            Assert.IsTrue(feature.ResourceActions.Count > 0);
 
-            foreach (var addedResourceAction in aggregate.ResourceActions)
+            foreach (var addedResourceAction in feature.ResourceActions)
             {
-                var serviceId = addedResourceAction.ApiServiceId;
-                var resourceActionId = addedResourceAction.ResourceActionEntityId;
-                
-                var resourceAction = apiService.FindResourceAction(serviceId, resourceActionId);
+                var resourceAction = apiService.FindResourceAction(addedResourceAction);
 
-                Assert.IsNotNull(resourceAction, $"Unable to find the resource action with Id {resourceActionId}");
+                Assert.IsNotNull(resourceAction, $"Unable to find the resource action with Id {addedResourceAction.Value}");
                 Assert.AreEqual(resourceAction.ResourceName, ResourceName);
                 Assert.AreEqual(resourceAction.ActionName, ActionName);
                 Assert.IsTrue(resourceAction.IsActive);
@@ -137,7 +142,7 @@ namespace Security.BoundedContext.Tests
                 //.And(a => a.AddingTheSameResourceActionShouldFailWithDomainError())
                 .WithExamples(new ExampleTable("ApiGuid", "ApiName", "ResourceName", "ActionName", "FeatureName")
                 {
-                    { ApiAggregate.CUSTOMER_API, ApiAggregate.CUSTOMER_API_NAME , "AddressController", "Create", "New Feature"},
+                    { Constants.CUSTOMER_API, Constants.CUSTOMER_API_NAME , "AddressController", "Create", "New Feature"},
                 })
                 .BDDfy();
         }

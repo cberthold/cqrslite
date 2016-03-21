@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Events;
+using Security.BoundedContext.Identities.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Security.BoundedContext.Events
 {
     public class ResourceActionEntityCreated : EventBase
     {
-        public Guid EntityId { get; protected set; }
+        public ResourceActionId EntityId { get; protected set; }
         public string ResourceName { get; protected set; }
         public string ActionName { get; protected set; }
         
-        public ResourceActionEntityCreated(Guid entityId, string resourceName, string actionName)
+        public ResourceActionEntityCreated(ResourceActionId entityId, string resourceName, string actionName)
         {
             EntityId = entityId;
             ResourceName = resourceName;
