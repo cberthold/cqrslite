@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Customer.BoundedContext.Identities\Customer.BoundedContext.Identities.csproj">
+      <Project>{cdf1bc28-0084-48ea-95ed-8770dd0f7dd8}</Project>
+      <Name>Customer.BoundedContext.Identities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Customer.BoundedContext.ValueObjects\Customer.BoundedContext.ValueObjects.csproj">
       <Project>{5febef59-9de8-436d-95b8-9816019da38a}</Project>
       <Name>Customer.BoundedContext.ValueObjects</Name>

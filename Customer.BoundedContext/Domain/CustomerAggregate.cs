@@ -1,6 +1,7 @@
 ﻿
 using CQRSlite.Domain;
 using Customer.BoundedContext.Events;
+using Customer.BoundedContext.Identities;
 using Customer.BoundedContext.ValueObjects;
 using Infrastructure.Domain;
 using System;
@@ -13,8 +14,24 @@ using System.Threading.Tasks;
 namespace Customer.BoundedContext.Domain
 {
     public class CustomerAggregate : AggregateRoot
-    { 
-        #region Domain Properties
+    {
+
+        #region Identity
+
+        public override Guid Id
+        {
+            get { return CustomerId.Value; }
+            protected set
+            {
+                CustomerId = new CustomerId(value);
+            }
+        }
+
+        public CustomerId CustomerId { get; private set; }
+
+        #endregion
+
+        #region State
 
         public string Name { get; protected set; }
         public Address BillingAddress { get; protected set; }
@@ -22,7 +39,7 @@ namespace Customer.BoundedContext.Domain
 
         #endregion
 
-        #region Apply Events to Domain
+        #region Apply State
 
         private void Apply(CustomerCreated @event)
         {
@@ -70,16 +87,17 @@ namespace Customer.BoundedContext.Domain
 
         #region Aggregate Creation
 
-        protected CustomerAggregate(Guid id, string name)
+        protected CustomerAggregate(CustomerId customerId, string name)
         {
-            ApplyChange(new CustomerCreated(id, name));
-            ApplyChange(new CustomerActivated(id));
+            ApplyChange(new CustomerCreated(customerId, name));
+            ApplyChange(new CustomerActivated(customerId));
         }
 
         internal static CustomerAggregate Create(Guid id, string name)
         {
+            var newId = new CustomerId(id);
             return new CustomerAggregate(
-                id,
+                newId,
                 name
                 );
 
@@ -91,12 +109,12 @@ namespace Customer.BoundedContext.Domain
 
         internal void Activate()
         {
-            ApplyChange(new CustomerActivated(Id));
+            ApplyChange(new CustomerActivated(CustomerId));
         }
 
         internal void Deactivate()
         {
-            ApplyChange(new CustomerDeactivated(Id));
+            ApplyChange(new CustomerDeactivated(CustomerId));
         }
 
 
@@ -104,13 +122,13 @@ namespace Customer.BoundedContext.Domain
         {
             if (!object.Equals(this.BillingAddress, billingAddress))
             {
-                ApplyChange(new CustomerBillingAddressUpdated(Id, billingAddress));
+                ApplyChange(new CustomerBillingAddressUpdated(CustomerId, billingAddress));
             }
         }
 
         internal void Update(string name)
         {
-            ApplyChange(new CustomerUpdated(Id, name));
+            ApplyChange(new CustomerUpdated(CustomerId, name));
         }
 
         #endregion

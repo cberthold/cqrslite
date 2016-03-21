@@ -1,11 +1,15 @@
-﻿using Infrastructure.Events;
+﻿using Customer.BoundedContext.Identities;
+using Infrastructure.Events;
 using System;
 
 namespace Customer.BoundedContext.Events
 {
     public class CustomerActivated : EventBase
     {
-        public CustomerActivated(Guid id) : base(id)
-        { }
+        public CustomerId CustomerId { get; private set; }
+        public CustomerActivated(CustomerId customerId)
+        {
+            CustomerId = customerId;
+        }
     }
 }

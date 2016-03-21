@@ -1,4 +1,5 @@
-﻿using Customer.BoundedContext.ValueObjects;
+﻿using Customer.BoundedContext.Identities;
+using Customer.BoundedContext.ValueObjects;
 using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace Customer.BoundedContext.Events
 {
     public class CustomerBillingAddressUpdated : EventBase
     {
+        public CustomerId CustomerId { get; private set; }
         public Address BillingAddress { get; set; }
 
-        public CustomerBillingAddressUpdated(Guid id, Address billingAddress) : base(id)
+        public CustomerBillingAddressUpdated(CustomerId customerId, Address billingAddress)
         {
+            CustomerId = customerId;
             BillingAddress = billingAddress;
         }
     }

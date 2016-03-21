@@ -53,11 +53,10 @@
     <Compile Include="ApiService\ResourceActionEntityRemoved.cs" />
     <Compile Include="ApiService\ResourceActionEntityResourceNameChanged.cs" />
     <Compile Include="Feature\ResourceActionAddedToFeature.cs" />
+    <Compile Include="RootPolicy\AdminChildPolicyAdded.cs" />
     <Compile Include="RootPolicy\AdminRootPolicyInitialized.cs" />
     <Compile Include="RootPolicy\FeatureAddedToAdminRootPolicy.cs" />
     <Compile Include="RootPolicy\FeatureRemoveFromAdminRootPolicy.cs" />
-    <Compile Include="RootPolicy\RootPolicyAddedToParent.cs" />
-    <Compile Include="RootPolicy\TopLevelRootPolicyCreated.cs" />
     <Compile Include="User\UserProvisioned.cs" />
   </ItemGroup>
   <ItemGroup />

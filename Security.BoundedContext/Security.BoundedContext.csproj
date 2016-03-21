@@ -65,6 +65,7 @@
     <Compile Include="Domain\Feature\Services\FeatureService.cs" />
     <Compile Include="Domain\Feature\Services\IFeatureService.cs" />
     <Compile Include="Domain\RootPolicy\Aggregate\AdminRootPolicyAggregate.cs" />
+    <Compile Include="Domain\RootPolicy\Entities\AdminChildPolicyEntity.cs" />
     <Compile Include="Domain\RootPolicy\Services\IPolicyService.cs" />
     <Compile Include="Domain\RootPolicy\Services\PolicyService.cs" />
     <Compile Include="Domain\User\Identities\UserId.cs" />
@@ -123,7 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Domain\RootPolicy\Entities\" />
     <Folder Include="Domain\User\Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

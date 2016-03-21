@@ -3,6 +3,7 @@ using Infrastructure.Events;
 using Infrastructure.Exceptions;
 using Security.BoundedContext.Domain.Feature.Aggregate;
 using Security.BoundedContext.Domain.Feature.Entities;
+using Security.BoundedContext.Domain.RootPolicy.Entities;
 using Security.BoundedContext.Events.RootPolicy;
 using Security.BoundedContext.Identities.Feature;
 using Security.BoundedContext.Identities.RootPolicy;
@@ -37,14 +38,17 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
         private List<FeatureId> availableFeatureList;
         public IList<FeatureId> AvailableFeatures => availableFeatureList.AsReadOnly();
 
+        private List<AdminChildPolicyEntity> childPolicies;
+        public IList<AdminChildPolicyEntity> ChildPolicies => childPolicies.AsReadOnly();
 
         #endregion
 
-        #region constructors
+        #region Constructors
 
         private AdminRootPolicyAggregate()
         {
             availableFeatureList = new List<FeatureId>();
+            childPolicies = new List<AdminChildPolicyEntity>();
         }
 
         private AdminRootPolicyAggregate(AdminRootPolicyId id) : this()
@@ -54,7 +58,7 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
 
         #endregion
 
-        #region domain methods
+        #region Domain methods
 
         public void AddFeature(FeatureEntity feature)
         {
@@ -68,6 +72,12 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
             if (!this.PolicyAlreadyHasTheFeature(feature.FeatureId)) return;
 
             ApplyChange(new FeatureRemoveFromAdminRootPolicy(feature.FeatureId));
+        }
+
+        public void AddChildPolicy(string policyName)
+        {
+            var id = new AdminChildPolicyId(PolicyId, Guid.NewGuid());
+            ApplyChange(new AdminChildPolicyAdded(id, policyName));
         }
 
         #endregion
@@ -96,6 +106,8 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
             if (availableFeatureList.Contains(@event.FeatureId)) return;
 
             availableFeatureList.Add(@event.FeatureId);
+
+            UpdateFeaturesOnPolicies();
         }
 
         public void Apply(FeatureRemoveFromAdminRootPolicy @event)
@@ -103,6 +115,40 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
             if (!availableFeatureList.Contains(@event.FeatureId)) return;
 
             availableFeatureList.Remove(@event.FeatureId);
+
+            UpdateFeaturesOnPolicies();
+        }
+
+        public void Apply(AdminChildPolicyAdded @event)
+        {
+            var entity = new AdminChildPolicyEntity(@event.PolicyId, @event.Name);
+            childPolicies.Add(entity);
+            UpdateFeaturesOnPolicy(entity);
+        }
+
+
+
+        #endregion
+
+        #region Private methods
+
+        private void UpdateFeaturesOnPolicies()
+        {
+            var availableFeatures = availableFeatureList.ToArray();
+            foreach (var policy in childPolicies)
+            {
+                UpdateFeaturesOnPolicy(policy, availableFeatures);
+            }
+        }
+
+        private void UpdateFeaturesOnPolicy(AdminChildPolicyEntity childPolicy, FeatureId[] features = null)
+        {
+            if (features == null)
+            {
+                features = availableFeatureList.ToArray();
+            }
+            childPolicy.UpdateFeatures(features);
+
         }
 
         #endregion
@@ -119,6 +165,6 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
             return exists;
         }
     }
-    
-    
+
+
 }

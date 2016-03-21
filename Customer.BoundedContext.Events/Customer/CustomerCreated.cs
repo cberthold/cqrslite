@@ -1,4 +1,5 @@
-﻿using Infrastructure.Events;
+﻿using Customer.BoundedContext.Identities;
+using Infrastructure.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ namespace Customer.BoundedContext.Events
 {
     public class CustomerCreated : EventBase
     {
-        public string Name { get; set; }
+        public CustomerId CustomerId { get; private set; }
+        public string Name { get; private set; }
 
-        public CustomerCreated(Guid id, string name) : base(id)
+        public CustomerCreated(CustomerId customerId, string name)
         {
+            CustomerId = customerId;
             Name = name;
         }
         
