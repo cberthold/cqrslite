@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Security.BoundedContext.ValueObjects
+namespace Security.BoundedContext.Identities.Common
 {
     public enum FeatureState
     {

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Api\ApiId.cs" />
     <Compile Include="Api\ResourceActionId.cs" />
+    <Compile Include="Common\FeatureState.cs" />
     <Compile Include="Common\PolicyMemberTypes.cs" />
     <Compile Include="Common\PolicyTypes.cs" />
     <Compile Include="Feature\FeatureBookId.cs" />
@@ -49,6 +50,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootPolicy\AdminChildPolicyId.cs" />
     <Compile Include="RootPolicy\AdminRootPolicyId.cs" />
+    <Compile Include="User\UserId.cs" />
+    <Compile Include="User\AdminUserPolicyId.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

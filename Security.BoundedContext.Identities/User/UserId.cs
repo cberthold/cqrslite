@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Security.BoundedContext.Domain.User.Identities
+namespace Security.BoundedContext.Identities.User
 {
     public class UserId
     {
