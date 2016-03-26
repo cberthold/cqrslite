@@ -57,6 +57,11 @@
     <Compile Include="RootPolicy\AdminRootPolicyInitialized.cs" />
     <Compile Include="RootPolicy\FeatureAddedToAdminRootPolicy.cs" />
     <Compile Include="RootPolicy\FeatureRemoveFromAdminRootPolicy.cs" />
+    <Compile Include="RootPolicy\UserLinkedToChildPolicy.cs" />
+    <Compile Include="RootPolicy\UserUnlinkedFromChildPolicy.cs" />
+    <Compile Include="User\AdminUserPolicyLinked.cs" />
+    <Compile Include="User\AdminUserPolicyPermissionsChanged.cs" />
+    <Compile Include="User\AdminUserPolicyUnlinked.cs" />
     <Compile Include="User\UserProvisioned.cs" />
   </ItemGroup>
   <ItemGroup />
