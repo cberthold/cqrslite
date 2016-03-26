@@ -68,8 +68,10 @@
     <Compile Include="Domain\RootPolicy\Entities\AdminChildPolicyEntity.cs" />
     <Compile Include="Domain\RootPolicy\Services\IPolicyService.cs" />
     <Compile Include="Domain\RootPolicy\Services\PolicyService.cs" />
-    <Compile Include="Domain\User\Identities\UserId.cs" />
+    <Compile Include="Domain\User\Entities\AdminUserPolicyEntity.cs" />
+    <Compile Include="Domain\User\Services\ILinkUserToAdminPolicyService.cs" />
     <Compile Include="Domain\User\Services\IUserService.cs" />
+    <Compile Include="Domain\User\Services\LinkUserToAdminPolicyService.cs" />
     <Compile Include="Domain\User\Services\UserService.cs" />
     <Compile Include="ReadModel\DTO\CustomerListDTO.cs" />
     <Compile Include="ReadModel\Handlers\CustomerListEventHandlers.cs" />
@@ -79,7 +81,6 @@
     <Compile Include="Domain\User\Aggregate\UserAggregate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ApiServiceListValueObject.cs" />
-    <Compile Include="ValueObjects\FeatureState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -124,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Domain\User\Entities\" />
+    <Folder Include="Domain\User\Identities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,9 +4,11 @@ using Infrastructure.Exceptions;
 using Security.BoundedContext.Domain.Feature.Aggregate;
 using Security.BoundedContext.Domain.Feature.Entities;
 using Security.BoundedContext.Domain.RootPolicy.Entities;
+using Security.BoundedContext.Domain.User.Aggregate;
 using Security.BoundedContext.Events.RootPolicy;
 using Security.BoundedContext.Identities.Feature;
 using Security.BoundedContext.Identities.RootPolicy;
+using Security.BoundedContext.Identities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +42,7 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
 
         private List<AdminChildPolicyEntity> childPolicies;
         public IList<AdminChildPolicyEntity> ChildPolicies => childPolicies.AsReadOnly();
-
+        
         #endregion
 
         #region Constructors
@@ -78,6 +80,47 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
         {
             var id = new AdminChildPolicyId(PolicyId, Guid.NewGuid());
             ApplyChange(new AdminChildPolicyAdded(id, policyName));
+        }
+
+        public void LinkAdminChildPolicyToUser(AdminChildPolicyEntity childPolicy, UserAggregate user)
+        {
+            if (childPolicy == null)
+                throw new DomainException($"{nameof(childPolicy)} cannot be null");
+            if (user == null)
+                throw new DomainException($"{nameof(user)} cannot be null");
+            if (!childPolicies.Contains(childPolicy))
+                throw new DomainException($"policy {Id} does not contain child policy {childPolicy.Id}");
+
+            var userPolicyId = user.AdminPolicy.UserPolicyId;
+            var childPolicyId = childPolicy.ChildPolicyId;
+
+            ApplyChange(new UserLinkedToChildPolicy(childPolicyId, userPolicyId));
+        }
+
+        public void UnlinkAdminChildPolicyFromUser(AdminChildPolicyEntity childPolicy, UserAggregate user)
+        {
+            if (childPolicy == null)
+                throw new DomainException($"{nameof(childPolicy)} cannot be null");
+            if (user == null)
+                throw new DomainException($"{nameof(user)} cannot be null");
+            if (!childPolicies.Contains(childPolicy))
+                throw new DomainException($"policy {Id} does not contain child policy {childPolicy.Id}");
+
+            var userPolicyId = user.AdminPolicy.UserPolicyId;
+            var childPolicyId = childPolicy.ChildPolicyId;
+
+            ApplyChange(new UserUnlinkedFromChildPolicy(childPolicyId, userPolicyId));
+        }
+
+        public AdminChildPolicyEntity FindChildPolicy(AdminChildPolicyId childPolicyId)
+        {
+            if (childPolicyId == null)
+                throw new DomainException($"{nameof(childPolicyId)} cannot be null");
+            if (childPolicyId.Value != Id)
+                throw new DomainException($"{nameof(childPolicyId)} with Id {childPolicyId.PolicyIdValue} does not relate to the Id {Id}");
+
+            var childPolicy = ChildPolicies.FirstOrDefault(a => a.ChildPolicyId == childPolicyId);
+            return childPolicy;
         }
 
         #endregion
@@ -126,7 +169,25 @@ namespace Security.BoundedContext.Domain.RootPolicy.Aggregate
             UpdateFeaturesOnPolicy(entity);
         }
 
+        public void Apply(UserLinkedToChildPolicy @event)
+        {
+            var childPolicy = childPolicies.FirstOrDefault(a => a.ChildPolicyId == @event.AdminChildPolicyId);
+            if(childPolicy != null)
+            {
+                childPolicy.AddUserLink(@event.UserPolicyId);
+            }
 
+        }
+
+        public void Apply(UserUnlinkedFromChildPolicy @event)
+        {
+            var childPolicy = childPolicies.FirstOrDefault(a => a.ChildPolicyId == @event.AdminChildPolicyId);
+            if (childPolicy != null)
+            {
+                childPolicy.RemoveUserLink(@event.UserPolicyId);
+            }
+
+        }
 
         #endregion
 

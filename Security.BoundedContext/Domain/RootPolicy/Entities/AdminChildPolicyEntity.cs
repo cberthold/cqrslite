@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Security.BoundedContext.Identities.User;
+using Security.BoundedContext.Identities.Common;
 
 namespace Security.BoundedContext.Domain.RootPolicy.Entities
 {
@@ -26,12 +28,16 @@ namespace Security.BoundedContext.Domain.RootPolicy.Entities
         public IDictionary<FeatureId, FeatureState> FeatureEnablement => featureEnablements.AsReadOnly();
         private IDictionary<FeatureId, FeatureState> featureEnablements;
 
+        private List<AdminUserPolicyId> userPolicies;
+        public IList<AdminUserPolicyId> UserPolicies => userPolicies.AsReadOnly();
+
         #endregion
 
         #region constructors
         private AdminChildPolicyEntity()
         {
             featureEnablements = new Dictionary<FeatureId, FeatureState>();
+            userPolicies = new List<AdminUserPolicyId>();
         }
 
         public AdminChildPolicyEntity(AdminChildPolicyId childPolicyId, string policyName)
@@ -64,6 +70,18 @@ namespace Security.BoundedContext.Domain.RootPolicy.Entities
                 if (!featureEnablements.ContainsKey(feature))
                     featureEnablements.Add(feature, FeatureState.Inherited);
             }
+        }
+
+        internal void AddUserLink(AdminUserPolicyId userPolicyId)
+        {
+            if (!userPolicies.Contains(userPolicyId))
+                userPolicies.Add(userPolicyId);
+        }
+
+        internal void RemoveUserLink(AdminUserPolicyId userPolicyId)
+        {
+            if (userPolicies.Contains(userPolicyId))
+                userPolicies.Remove(userPolicyId);
         }
 
         #endregion
